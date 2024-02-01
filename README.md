@@ -53,11 +53,14 @@ My personal boilerplate for a MERN-stack app with GraphQL, Apollo Server and aut
 
 1. Created a [./pages](./client/src/pages/) and a [./components](./client/src/components/) diretory to house pages and components respectively.
 
-2. Added boilerplate "Home", "Error" and "Link 1" pages and a generic [Navbar](./client/src/components/Navbar/index.js) component with links to each page.
+1. Added additional dependencies for the front end:
+   `npm i react-router-dom @apollo/client`
 
-3. Set up app.jsx to use Apollo to provide context for user authentication, and added
+1. Added boilerplate "Home", "Error" and "Link 1" pages and a generic [Navbar](./client/src/components/Navbar/index.js) component with links to each page.
 
-4. Configured main.jsx to use React Router and link to the above pages.
+1. Set up app.jsx to use Apollo to provide context for user authentication, and added
+
+1. Configured main.jsx to use React Router and link to the above pages.
 
 ### Server
 

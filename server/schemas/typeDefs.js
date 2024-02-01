@@ -1,9 +1,24 @@
 const typeDefs = `
   type User {
     id: ID!
-    userName: String!
+    firstName: String!
+    lastName: String!
     email: String!
     password: String!
+    dateOfBirth: String!
+    recommendations: [Recommendation]
+    watchlist: [Watchlist]
+    friends: [User]
+    pendingFriendRequests: [User]
+    sentFriendRequests: [User]
+  }
+
+  type Recommendation {
+    id: ID!
+  }
+
+  type Watchlist {
+    id: ID!
   }
 
   type Auth {
@@ -12,13 +27,16 @@ const typeDefs = `
   }
 
   input UserInput {
-    userName: String!
+    firstName: String!
+    lastName: String!
     email: String!
     password: String!
+    dateOfBirth: String!
   }
 
   input UserUpdateInput {
-    userName: String
+    firstName: String
+    lastName: String
     email: String
     password: String
   }
@@ -31,6 +49,9 @@ const typeDefs = `
   type Query {
     users: [User]
     user(id: ID!): User
+    friends(id: ID!): [User]
+    pendingFriendRequests(id: ID!): [User]
+    sentFriendRequests(id: ID!): [User]
   }
 
   type Mutation {
@@ -38,6 +59,9 @@ const typeDefs = `
     updateUser(id: ID!, user: UserUpdateInput!): User
     deleteUser(id: ID!): User
     login(input: LoginInput!): Auth
+    sendFriendRequest(fromUserId: ID!, toUserId: ID!): User
+    acceptFriendRequest(fromUserId: ID!, toUserId: ID!): User
+    rejectFriendRequest(fromUserId: ID!, toUserId: ID!): User
   }
 `;
 

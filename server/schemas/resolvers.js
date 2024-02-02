@@ -12,13 +12,13 @@ const resolvers = {
 			if (context.user) {
 				return User.find({});
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		user: async (parent, { id }, context) => {
 			if (context.user) {
 				return User.findById(id);
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		// Query to find list of users friends
 		friends: async (parent, { id }, context) => {
@@ -26,7 +26,7 @@ const resolvers = {
 				const user = await User.findById(id);
 				return user.friends;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		// Query to find list of users pending requests
 		pendingFriendRequests: async (parent, { id }, context) => {
@@ -34,7 +34,7 @@ const resolvers = {
 				const user = await User.findById(id);
 				return user.pendingFriendRequests;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		// Query to find list of users sent requests
 		sentFriendRequests: async (parent, { id }, context) => {
@@ -42,25 +42,25 @@ const resolvers = {
 				const user = await User.findById(id);
 				return user.sentFriendRequests;
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 	},
 	Mutation: {
 		// Mutation to add a new user
 		// Sign token and return user
 		// Context is not required as this is an unauthenticated mutation that results in authentication
-		addUser: async (parent, { user }) => {
-			const newUser = await User.create(user);
+		addUser: async (parent, { input }) => {
+			const newUser = await User.create(input);
 			const token = signToken(newUser);
-			return { token, newUser };
+			return { token, user: newUser };
 		},
 		// Mutation to update a user - consider if we want to implement this
 		// If so, require password to confirm changes?
-		updateUser: async (parent, { id, user }, context) => {
+		updateUser: async (parent, { id, input }, context) => {
 			if (context.user) {
-				return User.findByIdAndUpdate(id, user, { new: true });
+				return User.findByIdAndUpdate(id, input, { new: true });
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		// Mutation to delete a user
 		// See comment above at updateUser
@@ -68,22 +68,23 @@ const resolvers = {
 			if (context.user) {
 				return User.findByIdAndDelete(id);
 			}
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 		// Mutation to login
 		// Context is not required as this is an unauthenticated mutation that results in authentication
+		// Input destructured to get email and password
 		login: async (parent, { input: { email, password } }) => {
 			// Find user by email
 			const user = await User.findOne({ email });
 			// If user does not exist, throw error
 			if (!user) {
-				throw new AuthenticationError('Incorrect username or password'); // Do we want to be more specific?
+				throw AuthenticationError;
 			}
 			// Check password
 			const correctPw = await user.isCorrectPassword(password);
 			// If password is incorrect, throw error
 			if (!correctPw) {
-				throw new AuthenticationError('Incorrect username or password'); // Do we want to be more specific?
+				throw AuthenticationError;
 			}
 			// Otherwise, sign token and return user
 			const token = signToken(user);
@@ -111,7 +112,7 @@ const resolvers = {
 			}
 
 			// Throw error if not authenticated
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 
 		// Mutation to ACCEPT friend request
@@ -144,7 +145,7 @@ const resolvers = {
 			}
 
 			// Throw error if not authenticated
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 
 		// Mutation to REJECT friend request
@@ -174,7 +175,7 @@ const resolvers = {
 			}
 
 			// If the user is not authenticated, throw an error
-			throw new AuthenticationError('You need to be logged in!');
+			throw AuthenticationError;
 		},
 	},
 };

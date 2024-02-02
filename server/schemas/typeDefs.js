@@ -6,19 +6,9 @@ const typeDefs = `
     email: String!
     password: String!
     dateOfBirth: String!
-    recommendations: [Recommendation]
-    watchlist: [Watchlist]
     friends: [User]
     pendingFriendRequests: [User]
     sentFriendRequests: [User]
-  }
-
-  type Recommendation {
-    id: ID!
-  }
-
-  type Watchlist {
-    id: ID!
   }
 
   type Auth {
@@ -55,7 +45,7 @@ const typeDefs = `
   }
 
   type Mutation {
-    addUser(user: UserInput!): User
+    addUser(input: UserInput!): Auth
     updateUser(id: ID!, user: UserUpdateInput!): User
     deleteUser(id: ID!): User
     login(input: LoginInput!): Auth

@@ -10,20 +10,38 @@ const resolvers = {
 	Query: {
 		users: async (parent, args, context) => {
 			if (context.user) {
-				return User.find({});
+				return (
+					User.find({})
+						// populate but exclude password and __v (version)
+						// first parameter is the field to populate, second is what to select ('-' prefix means exclude)
+						// we may want to be more selective about what we populate in future
+						// see // populate but exclude password and __v (version)
+						.populate('friends', '-password -__v')
+						.populate('pendingFriendRequests', '-password -__v')
+						.populate('sentFriendRequests', '-password -__v')
+				);
 			}
 			throw AuthenticationError;
 		},
 		user: async (parent, { id }, context) => {
 			if (context.user) {
-				return User.findById(id);
+				return (
+					User.findById(id)
+						// populate but exclude password and __v (version)
+						.populate('friends', '-password -__v')
+						.populate('pendingFriendRequests', '-password -__v')
+						.populate('sentFriendRequests', '-password -__v')
+				);
 			}
 			throw AuthenticationError;
 		},
 		// Query to find list of users friends
 		friends: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id).populate('friends');
+				const user = await User.findById(id).populate(
+					'friends',
+					'-password -__v'
+				);
 				return user.friends;
 			}
 			throw AuthenticationError;
@@ -31,7 +49,10 @@ const resolvers = {
 		// Query to find list of users pending requests
 		pendingFriendRequests: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id).populate('pendingFriendRequests');
+				const user = await User.findById(id).populate(
+					'pendingFriendRequests',
+					'-password -__v'
+				);
 				return user.pendingFriendRequests;
 			}
 			throw AuthenticationError;
@@ -39,7 +60,10 @@ const resolvers = {
 		// Query to find list of users sent requests
 		sentFriendRequests: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id).populate('sentFriendRequests');
+				const user = await User.findById(id).populate(
+					'sentFriendRequests',
+					'-password -__v'
+				);
 				return user.sentFriendRequests;
 			}
 			throw AuthenticationError;
@@ -107,8 +131,11 @@ const resolvers = {
 				await fromUser.save();
 				await toUser.save();
 
-				// Return the user who sent the request
-				return fromUser;
+				// Return the user who sent the request and their sentFriendRequests
+				return User.findById(fromUserId).populate(
+					'sentFriendRequests',
+					'-password -__v'
+				);
 			}
 
 			// Throw error if not authenticated
@@ -143,8 +170,10 @@ const resolvers = {
 				await fromUser.save();
 				await toUser.save();
 
-				// Return user who received request/accepted
-				return toUser;
+				// Return user who received request/accepted and their friends list + pendingFriendRequests
+				return User.findById(toUserId)
+					.populate('friends', '-password -__v')
+					.populate('pendingFriendRequests', '-password -__v');
 			}
 
 			// Throw error if not authenticated
@@ -177,8 +206,10 @@ const resolvers = {
 				await fromUser.save();
 				await toUser.save();
 
-				// Return the user who received request/rejected it
-				return toUser;
+				// Return user who received request/accepted and their friends list + pendingFriendRequests
+				return User.findById(toUserId)
+					.populate('friends', '-password -__v')
+					.populate('pendingFriendRequests', '-password -__v');
 			}
 
 			// If the user is not authenticated, throw an error

@@ -23,7 +23,7 @@ const resolvers = {
 		// Query to find list of users friends
 		friends: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id);
+				const user = await User.findById(id).populate('friends');
 				return user.friends;
 			}
 			throw AuthenticationError;
@@ -31,7 +31,7 @@ const resolvers = {
 		// Query to find list of users pending requests
 		pendingFriendRequests: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id);
+				const user = await User.findById(id).populate('pendingFriendRequests');
 				return user.pendingFriendRequests;
 			}
 			throw AuthenticationError;
@@ -39,7 +39,7 @@ const resolvers = {
 		// Query to find list of users sent requests
 		sentFriendRequests: async (parent, { id }, context) => {
 			if (context.user) {
-				const user = await User.findById(id);
+				const user = await User.findById(id).populate('sentFriendRequests');
 				return user.sentFriendRequests;
 			}
 			throw AuthenticationError;
@@ -128,12 +128,15 @@ const resolvers = {
 				fromUser.friends.push(toUser);
 
 				// Remove user who sent request from pendingFriendRequests list of recipient
+				// Remove user who sent request from pendingFriendRequests list of recipient
 				toUser.pendingFriendRequests = toUser.pendingFriendRequests.filter(
-					(user) => user.id !== fromUserId
+					// userId.toString() converts the ObjectId to a string so it can be compared with fromUserId and toUserId
+					(userId) => userId.toString() !== fromUserId
 				);
 				// Remove user who received request from sentFriendRequests list of sender
 				fromUser.sentFriendRequests = fromUser.sentFriendRequests.filter(
-					(user) => user.id !== toUserId
+					// userId.toString() converts the ObjectId to a string so it can be compared with fromUserId and toUserId
+					(userId) => userId.toString() !== toUserId
 				);
 
 				// Save changes to db
@@ -158,12 +161,16 @@ const resolvers = {
 				const toUser = await User.findById(toUserId);
 
 				// Remove user who sent request from pendingFriendRequests list of recipient
+
 				toUser.pendingFriendRequests = toUser.pendingFriendRequests.filter(
-					(user) => user.id !== fromUserId
+					// userId.toString() converts the ObjectId to a string so it can be compared with fromUserId and toUserId
+
+					(userId) => userId.toString() !== fromUserId
 				);
 				// Remove user who received request from sentFriendRequests list of sender
 				fromUser.sentFriendRequests = fromUser.sentFriendRequests.filter(
-					(user) => user.id !== toUserId
+					// userId.toString() converts the ObjectId to a string so it can be compared with fromUserId and toUserId
+					(userId) => userId.toString() !== toUserId
 				);
 
 				// Save the changes to the database

@@ -3,4 +3,4 @@
 const User = require('./User');
 const Recommendation = require('./Recommendation');
 
-module.exports = { User };
+module.exports = { User, Recommendation };

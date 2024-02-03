@@ -59,6 +59,6 @@ const recommendationSchema = new Schema(
 
 
 
-const Recommendation = model('recommendation', recommendationSchema);
+const Recommendation = model('Recommendation', recommendationSchema);
 
 module.exports = Recommendation;

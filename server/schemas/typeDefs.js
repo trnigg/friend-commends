@@ -12,7 +12,7 @@ const userTypeDefs = `
     friends: [User]
     pendingFriendRequests: [User]
     sentFriendRequests: [User]
-    recommendations: [Recommendation]
+    recommendations: [Recommendation]!
   }
 
   type Auth {

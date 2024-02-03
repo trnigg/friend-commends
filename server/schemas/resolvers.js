@@ -10,12 +10,16 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
    Recommendation: {
+		//__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
 		__resolveType(recommendation,context,info) {
-		  if (recommendation.type === "Movie") {
-			return "Movie";
-		  }
-		  if (recommendation.type === "TV") {
-			return "TV";
+		//   if (recommendation.type === "Movie") {
+		// 	return "Movie";
+		//   }
+		//   if (recommendation.type === "TV") {
+		// 	return "TV";
+		//   }
+		  if (recommendation.type) {
+			return recommendation.type;
 		  }
 		  return null; // GraphQLError is thrown
 		},
@@ -250,6 +254,7 @@ const resolvers = {
       // If the user is not authenticated, throw an error
       throw AuthenticationError;
     },
+	//add Movie to users recommendation list
     addMovie: async (parent, args, context) => {
       if (context.user) {
         console.log("args:", args.input);
@@ -264,6 +269,7 @@ const resolvers = {
         ).populate("recommendations");
       }
     },
+	//add TV show to users recommendation list
 	addTV: async (parent, args, context) => {
 		if (context.user) {
 		  console.log("args:", args.input);

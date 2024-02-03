@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import 'semantic-ui-css/semantic.min.css'
 
 import ErrorPage from './pages/Error.jsx'
 import Home from './pages/Home.jsx'
@@ -11,6 +12,7 @@ import Indiv_Shows from './pages/Indiv_Shows.jsx'
 import Nav_Page from './pages/Nav_Page.jsx'
 import Overview from './pages/Overview.jsx'
 import Recommendations from './pages/Recommendations.jsx'
+
 
 const router = createBrowserRouter([
   {

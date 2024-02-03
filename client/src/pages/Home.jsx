@@ -1,6 +1,20 @@
 import { Button, List, ListItem } from 'semantic-ui-react'
+import { useQuery } from '@apollo/client';
+import { QUERY_ALL } from '../utils/queries';
+
 
 function Home(){
+
+    const { loading, error, data } = useQuery(QUERY_ALL)
+    if(data){
+        console.log(data);
+    }
+
+
+    const findUsers=async()=>{
+        console.log("Hello");
+    }
+
     return(
         <div>
             <h1>Home</h1>
@@ -13,7 +27,7 @@ function Home(){
                 <ListItem>Item5</ListItem>
             </List>
 
-            <Button>Click Me!</Button>
+            <Button className='searchAllBtn' onClick={findUsers}>Click Me!</Button>
         </div>
     )
 }

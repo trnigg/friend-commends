@@ -12,12 +12,6 @@ const resolvers = {
    Recommendation: {
 		//__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
 		__resolveType(recommendation,context,info) {
-		//   if (recommendation.type === "Movie") {
-		// 	return "Movie";
-		//   }
-		//   if (recommendation.type === "TV") {
-		// 	return "TV";
-		//   }
 		  if (recommendation.type) {
 			return recommendation.type;
 		  }

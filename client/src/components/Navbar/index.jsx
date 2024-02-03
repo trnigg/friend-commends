@@ -19,6 +19,7 @@ const Navbar = () => {
                 <option value='indiv_shows'>Individual Shows</option>
                 <option value='overview'>Overview</option>
                 <option value='friends'>Friends</option>
+                <option value='nav_page'>Nav Page</option>
             </select>
         </div>
     );

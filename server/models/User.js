@@ -4,14 +4,20 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	firstName: {
+	userName: {
 		type: String,
 		required: true,
+		trim: true,
+		unique: true,
+	},
+	firstName: {
+		type: String,
+		required: false,
 		trim: true,
 	},
 	lastName: {
 		type: String,
-		required: true,
+		required: false,
 		trim: true,
 	},
 	email: {
@@ -43,7 +49,7 @@ const userSchema = new Schema({
 	},
 	dateOfBirth: {
 		type: Date, // Confirm date is compatible type - possibly add validation somewhere for date if we want minimum age.
-		required: true,
+		required: false,
 	},
 	// recommendations: [
 	// 	{

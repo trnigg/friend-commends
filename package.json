@@ -14,7 +14,8 @@
 	"author": "",
 	"license": "MIT",
 	"devDependencies": {
-		"concurrently": "^8.2.2"
+		"concurrently": "^8.2.2",
+		"vite-plugin-pwa": "^0.17.5"
 	},
 	"dependencies": {
 		"dotenv": "^16.4.1"

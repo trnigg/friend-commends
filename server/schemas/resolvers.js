@@ -98,6 +98,7 @@ const resolvers = {
 		// Context is not required as this is an unauthenticated mutation that results in authentication
 		// Input destructured to get email and password
 		login: async (parent, { input: { email, password } }) => {
+			console.log("Logging in")
 			// Find user by email
 			const user = await User.findOne({ email });
 			// If user does not exist, throw error

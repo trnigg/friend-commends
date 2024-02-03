@@ -1,11 +1,14 @@
-const typeDefs = `
+//scalar Date - removed not really required anymore
+
+const typeDefs = ` 
   type User {
     id: ID!
-    firstName: String!
-    lastName: String!
+    userName: String!
+    firstName: String
+    lastName: String
     email: String!
     password: String!
-    dateOfBirth: String!
+    dateOfBirth: String
     friends: [User]
     pendingFriendRequests: [User]
     sentFriendRequests: [User]
@@ -17,18 +20,21 @@ const typeDefs = `
   }
 
   input UserInput {
-    firstName: String!
-    lastName: String!
+    userName: String!
+    firstName: String
+    lastName: String
     email: String!
     password: String!
-    dateOfBirth: String!
+    dateOfBirth: String
   }
 
   input UserUpdateInput {
+    username: String
     firstName: String
     lastName: String
     email: String
     password: String
+    dateOfBirth: String
   }
 
   input LoginInput {

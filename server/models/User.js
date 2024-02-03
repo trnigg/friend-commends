@@ -51,12 +51,13 @@ const userSchema = new Schema({
 		type: Date, // Confirm date is compatible type - possibly add validation somewhere for date if we want minimum age.
 		required: false,
 	},
-	// recommendations: [
-	// 	{
-	// 		type: Schema.Types.ObjectId,
-	// 		ref: 'Recommendation',
-	// 	},
-	// ],
+	recommendations: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Recommendation',
+			default:[]
+		},
+	],
 	// watchlist: [
 	// 	{
 	// 		type: Schema.Types.ObjectId,

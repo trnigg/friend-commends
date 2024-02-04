@@ -43,20 +43,20 @@ function Nav_Page(){
             <div>
                 <Header as='h1'>Welcome to your profile page</Header>
                 <div>
-                    {/* {auth.loggedIn() ? (console.log("logged in")):(console.log('logged out'))} */}
-                    <Image src='/images/47456306.jpg' avatar />
-                    <span>{userDetails.user.userName}</span>
+                    <div height='400px'>
+                        <span>{userDetails.user.userName}</span>
+                        {/* <Image src='/images/47456306.jpg' size='small'  circular/> */}
+                    </div>
 
-                    <h2>You have friend requests</h2>
+                    <h2>You have {userDetails.user.pendingFriendRequests.length} friend requests</h2>
 
                     <Header as='h2'>Movies</Header>
                     <div className='movieBox'>
                     <>
                     {movieRecommend.map(function(data){
                         return(
-                           <div>
+                           <div key={data.original_title}>
                             <CardExampleCard 
-                                key={data.original_title}
                                 movietitle={data.original_title}/>
                            </div>
                         )

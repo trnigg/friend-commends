@@ -1,0 +1,4 @@
+.movieBox, .tvBox, .bookBox{
+    display: flex;
+    flex-wrap: wrap;
+}

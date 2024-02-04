@@ -58,6 +58,20 @@ const userSchema = new Schema({
 			default:[]
 		},
 	],
+	shareSent: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Share',
+			default:[]
+		},
+	],
+	shareReceived: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Share',
+			default:[]
+		},
+	],
 	// watchlist: [
 	// 	{
 	// 		type: Schema.Types.ObjectId,

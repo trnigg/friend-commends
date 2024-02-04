@@ -13,6 +13,9 @@ const userTypeDefs = `
     pendingFriendRequests: [User]
     sentFriendRequests: [User]
     recommendations: [Recommendation]!
+    shareSent:[Share]!
+    shareReceived:[Share]!
+
   }
 
   type Auth {

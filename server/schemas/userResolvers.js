@@ -37,6 +37,16 @@ const userResolvers = {
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
             .populate("recommendations")
+            .populate({
+              path:"shareSent",
+              // populate: { path: "sharedTo" },
+              // populate: { path: "sharedFrom" },
+            })
+            .populate({
+              path:"shareReceived",
+              // populate: { path: "sharedTo" },
+              // populate: { path: "sharedFrom" },
+            })
         );
       }
       throw AuthenticationError;
@@ -50,6 +60,8 @@ const userResolvers = {
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
             .populate("recommendations")
+            .populate("shareSent")
+            .populate("shareReceived")
         );
       }
       throw AuthenticationError;

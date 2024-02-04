@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const { Recommendation } = require("../models");
 
-const { signToken, AuthenticationError } = require("../utils/auth");
+const { AuthenticationError } = require("../utils/auth");
 
 const recommendationResolvers = {
   Recommendation: {
@@ -118,3 +118,7 @@ module.exports = recommendationResolvers;
 //{
 //     "removeRecommendId": "65bf0e80965638907fdea9e6"
 //}
+
+// {
+//   "userId": "65bf6743c23eca151f71f3fa"
+// }

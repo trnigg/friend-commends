@@ -1,4 +1,6 @@
-import "dotenv/config";
+// import "dotenv/config";
+import "dotenv"
+
 const TOKEN = process.env.API_BEARER_TOKEN;
 
 //search movie from TMDB by keyword - call function searchMoviesByQuery("harry+potter");

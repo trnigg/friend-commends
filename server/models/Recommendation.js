@@ -10,6 +10,7 @@ const recommendationSchema = new Schema(
     type:{
         type: String,
         required: true,
+        enum: ['Movie', 'TV','Book'],
     },
     original_title: {
         type: String,

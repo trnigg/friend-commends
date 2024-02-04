@@ -3,28 +3,27 @@
 
 // IMPORT MODELS HERE
 const { User } = require("../models");
-const { Recommendation } = require("../models");
 
 // Import Auth middleware
 const { signToken, AuthenticationError } = require("../utils/auth");
 
-const resolvers = {
-   Recommendation: {
-		//__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
-		__resolveType(recommendation,context,info) {
-		  if (recommendation.type) {
-			return recommendation.type;
-		  }
-		  return null; // GraphQLError is thrown
-		},
-		__resolveType(user,context,info) {
-			console.log("user:",user)
-			if (user.type) {
-				return user.type;
-			  }
-			return null; // GraphQLError is thrown
-		  },
-	  },
+const userResolvers = {
+  Recommendation: {
+    //__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
+    __resolveType(recommendation, context, info) {
+      if (recommendation.type) {
+        return recommendation.type;
+      }
+      return null; // GraphQLError is thrown
+    },
+    __resolveType(user, context, info) {
+      //console.log("user:", user);
+      if (user.type) {
+        return user.type;
+      }
+      return null; // GraphQLError is thrown
+    },
+  },
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
@@ -37,7 +36,7 @@ const resolvers = {
             .populate("friends", "-password -__v")
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
-			.populate("recommendations")
+            .populate("recommendations")
         );
       }
       throw AuthenticationError;
@@ -50,7 +49,7 @@ const resolvers = {
             .populate("friends", "-password -__v")
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
-			.populate("recommendations")
+            .populate("recommendations")
         );
       }
       throw AuthenticationError;
@@ -88,18 +87,6 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    recommendations: async (parent, args, context) => {
-      if (context.user) {
-        return Recommendation.find({});
-      }
-      throw AuthenticationError;
-    },
-    // movies: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Recommendation.find({ type: "Movie" });
-    //   }
-    //   throw AuthenticationError;
-    // },
   },
   Mutation: {
     // Mutation to add a new user
@@ -248,39 +235,9 @@ const resolvers = {
       // If the user is not authenticated, throw an error
       throw AuthenticationError;
     },
-	//add Movie to users recommendation list
-    addMovie: async (parent, args, context) => {
-      if (context.user) {
-        console.log("args:", args.input);
-        console.log("context.user._id:", context.user._id);
-        const recommendation = await Recommendation.create(args.input);
-        console.log("recommendation", recommendation);
-
-        return await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { recommendations: recommendation } },
-          { new: true }
-        ).populate("recommendations");
-      }
-    },
-	//add TV show to users recommendation list
-	addTV: async (parent, args, context) => {
-		if (context.user) {
-		  console.log("args:", args.input);
-		  console.log("context.user._id:", context.user._id);
-		  const recommendation = await Recommendation.create(args.input);
-		  console.log("recommendation", recommendation);
-  
-		  return await User.findOneAndUpdate(
-			{ _id: context.user._id },
-			{ $addToSet: { recommendations: recommendation } },
-			{ new: true }
-		  ).populate("recommendations");
-		}
-	  },
   },
 
   //Date: dateScalar,
 };
 
-module.exports = resolvers;
+module.exports = userResolvers;

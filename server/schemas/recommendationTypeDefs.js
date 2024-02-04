@@ -60,8 +60,9 @@ const recommendationTypeDefs = `
    }
 
   type Mutation {
-    addMovie(input: MovieInput!): User
-    addTV(input: TVInput!):User
+    addMovieRecommend(input: MovieInput!): User
+    addTVRecommend(input: TVInput!):User
+    removeRecommend(id: ID!): User
   }
   `;
 

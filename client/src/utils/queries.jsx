@@ -15,16 +15,47 @@ export const QUERY_ALL = gql`
 `;
 
 export const QUERY_USER = gql`
-    query user($userId: ID!) {
-        user(id: $userId) {
+query user($userId: ID!) {
+    user(id: $userId) {
+      id
+      userName
+      firstName
+      lastName
+      email
+      password
+      dateOfBirth
+      friends {
+        id
         userName
         firstName
         lastName
-        email
-        password
-        dateOfBirth
+      }
+      pendingFriendRequests {
+        id
+        userName
+        firstName
+        lastName
+      }
+      sentFriendRequests {
+        id
+        userName
+        firstName
+        lastName
+      }
+      recommendations {
+        ... on Movie {
+          id
+          original_title
+          tmdbID
         }
+        ... on TV {
+          id
+          original_name
+          tmdbID
+        }
+      }
     }
+  }  
 `;
 
 export const QUERY_FRIENDS = gql`

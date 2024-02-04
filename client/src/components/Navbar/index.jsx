@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import './index.css'
 
 const Navbar = () => {
 
@@ -11,7 +12,7 @@ const Navbar = () => {
       }
 
     return (
-        <div>
+        <div className='navcontainer'>
             <h1>Welcome to the navbar</h1>
             <select onChange={event => handleChange(event.target.value)}> 
                 <option value=''>Landing screen</option>

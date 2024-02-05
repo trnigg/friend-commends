@@ -48,7 +48,7 @@ function Friends() {
 				<HeaderContent>
 					Friend Requests
 					<HeaderSubheader>
-						You have <strong>{data.user.pendingFriendRequests.length}</strong>
+						You have <strong>{data.user.pendingFriendRequests.length}</strong>{' '}
 						friend requests awaiting your response.
 					</HeaderSubheader>
 				</HeaderContent>
@@ -57,9 +57,7 @@ function Friends() {
 				{data.user.pendingFriendRequests.map((request) => (
 					<FriendRequestCard
 						key={request.id}
-						firstName={request.firstName}
-						lastName={request.lastName}
-						userName={request.userName}
+						request={request}
 						onAccept={() => handleAccept(request.id)}
 						onReject={() => handleDecline(request.id)}
 					/>
@@ -74,7 +72,11 @@ function Friends() {
 					</HeaderSubheader>
 				</HeaderContent>
 			</Header>
-			<CardGroup></CardGroup>
+			<CardGroup>
+				{data.user.friends.map((friend) => (
+					<FriendCard key={friend.id} friend={friend} />
+				))}
+			</CardGroup>
 		</div>
 	);
 }

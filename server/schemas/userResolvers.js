@@ -77,6 +77,36 @@ const userResolvers = {
       }
       throw AuthenticationError;
     },
+
+    friendRecommendations: async (parent, args, context) => {
+      if (context.user) {
+          return (
+            User.find({friends: '65bdf4089d1efc62380f2f52'})
+              // populate but exclude password and __v (version)
+              // first parameter is the field to populate, second is what to select ('-' prefix means exclude)
+              // we may want to be more selective about what we populate in future
+              // see // populate but exclude password and __v (version)
+              .populate("friends", "-password -__v")
+              .populate("pendingFriendRequests", "-password -__v")
+              .populate("sentFriendRequests", "-password -__v")
+              .populate("recommendations")
+              .populate({
+                path:"shareSent",
+                // populate: { path: "sharedTo" },
+                // populate: { path: "sharedFrom" },
+              })
+              .populate({
+                path:"shareReceived",
+                // populate: { path: "sharedTo" },
+                // populate: { path: "sharedFrom" },
+              })
+          );
+        }
+        throw AuthenticationError;
+      },
+
+
+
     // Query to find list of users pending requests
     pendingFriendRequests: async (parent, { id }, context) => {
       if (context.user) {

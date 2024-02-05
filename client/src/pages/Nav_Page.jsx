@@ -29,7 +29,7 @@ function Nav_Page(){
 
 
 
-    if(userDetails!=={}){
+    if(userDetails){
         console.log(userDetails)
         console.log(userDetails.user.userName)
         const recommended = userDetails.user.recommendations;
@@ -108,17 +108,6 @@ function Nav_Page(){
         console.log("No")
     }
 
-    // return(
-    //     <div>
-    //         <Header as='h1'>Welcome to your profile page</Header>
-    //         <div>
-    //             {/* {auth.loggedIn() ? (console.log("logged in")):(console.log('logged out'))} */}
-    //             <Image src='/images/47456306.jpg' avatar />
-    //             <span>name</span>
-
-    //         </div>
-    //     </div>
-    // )
 }
 
 export default Nav_Page;

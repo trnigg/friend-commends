@@ -10,6 +10,12 @@ export const QUERY_ALL = gql`
         password
         dateOfBirth
         userName
+        friends {
+            id
+            userName
+            firstName
+            lastName
+          }  
         }
     }
 `;
@@ -68,3 +74,32 @@ export const QUERY_FRIENDS = gql`
         }
     }
 `;
+
+export const QUERY_FRIENREQ = gql`
+query friendRecommendations {
+  friendRecommendations {
+    id
+    userName
+    firstName
+    lastName
+    email
+    friends {
+      id
+      userName
+      firstName
+      lastName
+    }
+    recommendations {
+      ... on Movie {
+        id
+        original_title
+      }
+      ... on TV {
+        id
+        original_name
+      }
+    }
+  }
+}
+`;
+

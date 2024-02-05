@@ -1,0 +1,7 @@
+.results > div:not(.button) {
+	pointer-events: none;
+}
+
+.results .button {
+	pointer-events: auto;
+}

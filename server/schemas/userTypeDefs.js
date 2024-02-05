@@ -15,6 +15,7 @@ const userTypeDefs = `
     recommendations: [Recommendation]!
     shareSent:[Share]!
     shareReceived:[Share]!
+    watchList:[Watch]!
 
   }
 

@@ -30,10 +30,24 @@ const shareResolvers = {
 
         const shares = await Share.find({
           sharedFrom: new ObjectId(userId),
-        }).populate("sharedFrom")
-        .populate("sharedTo");
+        })
+          .populate("sharedFrom")
+          .populate("sharedTo");
         console.log("shares:", shares);
         return shares;
+      }
+      throw AuthenticationError;
+    },
+    sharedWithMe: async (parent, args, context) => {
+      if (context.user && args.userId) {
+        return await Share.find({
+          sharedTo: new ObjectId(context.user._id),
+          sharedFrom: new ObjectId(args.userId),
+        }).populate("sharedFrom");
+      } else if (context.user) {
+        return await Share.find({
+          sharedTo: new ObjectId(context.user._id),
+        }).populate("sharedFrom");
       }
       throw AuthenticationError;
     },
@@ -41,8 +55,8 @@ const shareResolvers = {
     shareSentTo: async (parent, { userId }, context) => {
       if (context.user) {
         return Share.find({ sharedTo: new ObjectId(userId) })
-        .populate("sharedTo")
-        .populate("sharedFrom");
+          .populate("sharedTo")
+          .populate("sharedFrom");
       }
       throw AuthenticationError;
     },
@@ -60,9 +74,11 @@ const shareResolvers = {
         console.log("share", share);
         console.log("share._id", share._id);
 
-        await User.findByIdAndUpdate(sender._id, {
-          $addToSet: { shareSent: share },
-        });
+        await User.findByIdAndUpdate(
+          sender._id,
+          { $addToSet: { shareSent: share } },
+          { new: true }
+        );
         await User.findByIdAndUpdate(
           receiver._id,
           { $addToSet: { shareReceived: share } },
@@ -88,9 +104,11 @@ const shareResolvers = {
         const share = await Share.create(shareObj);
         console.log("share", share);
 
-        await User.findByIdAndUpdate(sender._id, {
-          $addToSet: { shareSent: share },
-        });
+        await User.findByIdAndUpdate(
+          sender._id,
+          { $addToSet: { shareSent: share } },
+          { new: true }
+        );
         await User.findByIdAndUpdate(
           receiver._id,
           { $addToSet: { shareReceived: share } },
@@ -152,7 +170,6 @@ module.exports = shareResolvers;
 //     "original_name": "simpsons"
 //   },
 // }
-
 
 // share Movie
 // {

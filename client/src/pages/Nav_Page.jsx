@@ -29,7 +29,7 @@ function Nav_Page(){
 
 
 
-    if(userDetails!=={}){
+    if(userDetails){
         console.log(userDetails)
         console.log(userDetails.user.userName)
         const recommended = userDetails.user.recommendations;

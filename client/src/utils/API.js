@@ -1,5 +1,7 @@
 // import "dotenv/config";
 import "dotenv"
+// const path = require('path'); // required to resolve the path to the .env file
+// require('dotenv').config({ path: path.resolve(__dirname, '../../.env') }); // Getting secret from .env file in root directory
 
 const TOKEN = process.env.API_BEARER_TOKEN;
 

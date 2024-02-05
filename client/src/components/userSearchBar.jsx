@@ -6,11 +6,15 @@
 
 // https://react.semantic-ui.com/modules/search/#variations-fluid
 import { useState, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import _ from 'lodash'; // lodash allows for debouncing (delaying) of search requests and escaping special characters in regex
 import { Search, Button, Icon } from 'semantic-ui-react';
-import { QUERY_ALL, QUERY_FRIEND_STATUS } from '../utils/queries';
+import { QUERY_ALL } from '../utils/queries';
+import { ACCEPT_FRIEND_REQUEST } from '../utils/mutations';
+
 import AuthService from '../utils/auth';
+
+import './userSearchBar.css';
 
 function UserSearchBar() {
 	const { data: { _id: userId } = {} } = AuthService.getProfile();
@@ -45,12 +49,31 @@ function UserSearchBar() {
 		}
 	};
 
-	// TODO : Configure conditional rendering to only display button if user is not already friends with the user
-	// IF user is already friends with the user, display "Friends" instead of button
-	// IF user has already sent a friend request to the user, display "Request Sent" instead of button
-	// TODO : user's number of recommendations
-	// TO
+	// TODO: Fix the following funtionality - currently buttons in search don't work because results unfocus when clicked
+	const [acceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 
+	const handleAcceptRequest = async (fromUserId, event) => {
+		try {
+			event.stopPropagation();
+			await acceptFriendRequest({
+				variables: { fromUserId, toUserId: userId },
+			});
+			// handle success (e.g., refetch queries, show a success message)
+		} catch (error) {
+			// handle error (e.g., show an error message)
+		}
+	};
+
+	const handleSendRequest = async (friendId) => {
+		try {
+			await sendRequest({ variables: { friendId } });
+			// handle success (e.g., refetch queries, show a success message)
+		} catch (error) {
+			// handle error (e.g., show an error message)
+		}
+	};
+
+	// TODO: Move CSS to a separate file and remove inline styles
 	// Configure how to render search results
 	const resultRenderer = ({
 		id: friendId,
@@ -114,12 +137,16 @@ function UserSearchBar() {
 						Request Sent
 					</Button>
 				) : friendStatus === 'REQUEST_RECEIVED' ? (
-					<Button basic color="green">
+					<Button
+						basic
+						color="green"
+						onClick={() => handleAcceptRequest(friendId)}
+					>
 						<Icon name="user plus" />
 						Accept their Request
 					</Button>
 				) : (
-					<Button>
+					<Button onClick={() => handleSendRequest(friendId)}>
 						<Icon name="user plus" />
 						Send Friend Request
 					</Button>

@@ -15,6 +15,7 @@ import {
 	Header,
 	Icon,
 	CardGroup,
+	Message,
 } from 'semantic-ui-react';
 
 function Friends() {
@@ -40,43 +41,61 @@ function Friends() {
 	if (loading) return 'Loading...';
 	if (error) return `Error! ${error.message}`;
 	console.log(data);
+
 	return (
 		<div>
 			<Header as="h1">Friends</Header>
-			<Header as="h2" icon textAlign="center">
-				<Icon name="user plus" circular />
-				<HeaderContent>
-					Friend Requests
-					<HeaderSubheader>
-						You have <strong>{data.user.pendingFriendRequests.length}</strong>{' '}
-						friend requests awaiting your response.
-					</HeaderSubheader>
-				</HeaderContent>
-			</Header>
-			<CardGroup>
-				{data.user.pendingFriendRequests.map((request) => (
-					<FriendRequestCard
-						key={request.id}
-						request={request}
-						onAccept={() => handleAccept(request.id)}
-						onReject={() => handleDecline(request.id)}
-					/>
-				))}
-			</CardGroup>
-			<Header as="h2" icon textAlign="center">
-				<Icon name="users" circular />
+			{/* Use React conditional rendering to only render if 1 or more active requests. */}
+			{data.user.pendingFriendRequests.length > 0 && (
+				<>
+					<Header as="h2">
+						<Icon name="user outline" />
+						<HeaderContent>
+							Friend Requests
+							<HeaderSubheader>
+								{/* Pluralise if more not 1 friend */}
+								You have{' '}
+								<strong>{data.user.pendingFriendRequests.length}</strong> friend
+								request{data.user.pendingFriendRequests.length !== 1 ? 's' : ''}{' '}
+								awaiting your response.
+							</HeaderSubheader>
+						</HeaderContent>
+					</Header>
+					<CardGroup>
+						{data.user.pendingFriendRequests.map((request) => (
+							<FriendRequestCard
+								key={request.id}
+								request={request}
+								onAccept={() => handleAccept(request.id)}
+								onReject={() => handleDecline(request.id)}
+							/>
+						))}
+					</CardGroup>
+				</>
+			)}
+			<Header as="h2">
+				<Icon name="users" />
 				<HeaderContent>
 					Your Friends
 					<HeaderSubheader>
-						You have <strong>{data.user.friends.length}</strong> friends.
+						{/* Pluralise if more not 1 friend */}
+						You have <strong>{data.user.friends.length}</strong> friend
+						{data.user.friends.length !== 1 ? 's' : ''}.
 					</HeaderSubheader>
 				</HeaderContent>
 			</Header>
-			<CardGroup>
-				{data.user.friends.map((friend) => (
-					<FriendCard key={friend.id} friend={friend} />
-				))}
-			</CardGroup>
+			{data.user.friends.length > 0 ? (
+				<CardGroup>
+					{data.user.friends.map((friend) => (
+						<FriendCard key={friend.id} friend={friend} />
+					))}
+				</CardGroup>
+			) : (
+				<Message>
+					Start by adding some friends to see their recommendations, and get
+					tailored recommendations for you!
+				</Message>
+			)}
 		</div>
 	);
 }

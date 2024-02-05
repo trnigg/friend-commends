@@ -5,36 +5,41 @@ import {
 } from '../utils/mutations';
 import { QUERY_USER } from '../utils/queries';
 import AuthService from '../utils/auth';
-import GetFriends from '../components/getFriends';
-import FriendRequests from '../components/friendRequests';
+
+import FriendRequestCard from '../components/friendRequestCard';
+import FriendCard from '../components/friendCard';
+
 import {
 	HeaderSubheader,
 	HeaderContent,
 	Header,
 	Icon,
+	CardGroup,
 } from 'semantic-ui-react';
 
 function Friends() {
-	const { data: { _id: id } = {} } = AuthService.getProfile();
+	const { data: { _id: userId } = {} } = AuthService.getProfile();
 
 	const { loading, error, data } = useQuery(QUERY_USER, {
-		variables: { id },
+		variables: { userId },
 	});
+	console.log(userId);
+	console.log(data);
 
 	const [AcceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 	const [rejectFriendRequest] = useMutation(REJECT_FRIEND_REQUEST);
 
 	const handleAccept = (fromUserId) => {
-		AcceptFriendRequest({ variables: { fromUserId, toUserId: id } });
+		AcceptFriendRequest({ variables: { fromUserId, toUserId: userId } });
 	};
 
 	const handleDecline = (fromUserId) => {
-		rejectFriendRequest({ variables: { fromUserId, toUserId: id } });
+		rejectFriendRequest({ variables: { fromUserId, toUserId: userId } });
 	};
 
 	if (loading) return 'Loading...';
 	if (error) return `Error! ${error.message}`;
-
+	console.log(data);
 	return (
 		<div>
 			<Header as="h1">Friends</Header>
@@ -43,16 +48,23 @@ function Friends() {
 				<HeaderContent>
 					Friend Requests
 					<HeaderSubheader>
-						You have <strong>{data.user.pendingFriendRequests.length}</strong>{' '}
+						You have <strong>{data.user.pendingFriendRequests.length}</strong>
 						friend requests awaiting your response.
 					</HeaderSubheader>
 				</HeaderContent>
 			</Header>
-			<FriendRequests
-				requests={data.user.pendingFriendRequests}
-				onAccept={handleAccept}
-				onDecline={handleDecline}
-			/>
+			<CardGroup>
+				{data.user.pendingFriendRequests.map((request) => (
+					<FriendRequestCard
+						key={request.id}
+						firstName={request.firstName}
+						lastName={request.lastName}
+						userName={request.userName}
+						onAccept={() => handleAccept(request.id)}
+						onReject={() => handleDecline(request.id)}
+					/>
+				))}
+			</CardGroup>
 			<Header as="h2" icon textAlign="center">
 				<Icon name="users" circular />
 				<HeaderContent>
@@ -62,7 +74,7 @@ function Friends() {
 					</HeaderSubheader>
 				</HeaderContent>
 			</Header>
-			<GetFriends friends={data.user.friends} />
+			<CardGroup></CardGroup>
 		</div>
 	);
 }

@@ -72,6 +72,7 @@ const shareTypeDefs = `
    type Query {
     shareSentFrom(userId: ID!):[Share]!
     shareSentTo(userId: ID!):[Share]!
+    sharedWithMe(userId: ID):[Share]!
    }
 
   type Mutation {

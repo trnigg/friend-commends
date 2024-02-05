@@ -81,3 +81,32 @@ export const QUERY_FRIEND_STATUS = gql`
 		friendStatus(userId: $userId, friendId: $friendId)
 	}
 `;
+
+export const QUERY_FRIENREQ = gql`
+query friendRecommendations {
+  friendRecommendations {
+    id
+    userName
+    firstName
+    lastName
+    email
+    friends {
+      id
+      userName
+      firstName
+      lastName
+    }
+    recommendations {
+      ... on Movie {
+        id
+        original_title
+      }
+      ... on TV {
+        id
+        original_name
+      }
+    }
+  }
+}
+`;
+

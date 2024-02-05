@@ -15,6 +15,7 @@ const userTypeDefs = `
     recommendations: [Recommendation]!
     shareSent:[Share]!
     shareReceived:[Share]!
+    watchList:[Watch]!
 
   }
 
@@ -52,6 +53,7 @@ const userTypeDefs = `
     friends(id: ID!): [User]
     pendingFriendRequests(id: ID!): [User]
     sentFriendRequests(id: ID!): [User]
+    friendRecommendations: [User]
   }
 
   type Mutation {

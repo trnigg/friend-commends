@@ -24,11 +24,28 @@ const userResolvers = {
       return null; // GraphQLError is thrown
     },
   },
+  Share: {
+    //__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
+    __resolveType(share, context, info) {
+      //console.log("share:",share)
+      if (share.type) {
+        return share.type;
+      }
+      return null; // GraphQLError is thrown
+    },
+    __resolveType(user, context, info) {
+      console.log("user:", user);
+      if (user.type) {
+        return user.type;
+      }
+      return null; // GraphQLError is thrown
+    },
+  },
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
-        return (
-          User.find({})
+
+          const users = await User.find({})
             // populate but exclude password and __v (version)
             // first parameter is the field to populate, second is what to select ('-' prefix means exclude)
             // we may want to be more selective about what we populate in future
@@ -39,30 +56,45 @@ const userResolvers = {
             .populate("recommendations")
             .populate({
               path:"shareSent",
-              // populate: { path: "sharedTo" },
-              // populate: { path: "sharedFrom" },
+              model:"Share",
+              populate: { path: "sharedTo", model: "User" },
+              populate: { path: "sharedFrom", model: "User" },
             })
             .populate({
               path:"shareReceived",
-              // populate: { path: "sharedTo" },
-              // populate: { path: "sharedFrom" },
-            })
-        );
+              model:"Share",
+              populate: { path: "sharedTo", model: "User" },
+              populate: { path: "sharedFrom", model: "User" },
+            });
+        
+            //console.log("users: ",users);
+
+        return users;
+
       }
       throw AuthenticationError;
     },
     user: async (parent, { id }, context) => {
       if (context.user) {
-        return (
-          User.findById(id)
+
+          const user = User.findById(id)
             // populate but exclude password and __v (version)
             .populate("friends", "-password -__v")
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
             .populate("recommendations")
-            .populate("shareSent")
-            .populate("shareReceived")
-        );
+            .populate({
+              path:"shareSent",
+              populate: { path: "sharedTo", model: "User" },
+              populate: { path: "sharedFrom", model: "User" },
+            })
+            .populate({
+              path:"shareReceived",
+              populate: { path: "sharedTo", model: "User" },
+              populate: { path: "sharedFrom", model: "User" },
+            });
+        
+        return user;
       }
       throw AuthenticationError;
     },

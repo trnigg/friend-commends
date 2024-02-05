@@ -72,12 +72,13 @@ const userSchema = new Schema({
 			default:[]
 		},
 	],
-	// watchlist: [
-	// 	{
-	// 		type: Schema.Types.ObjectId,
-	// 		ref: 'Watchlist',
-	// 	},
-	// ],
+	watchList: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Watch',
+			default:[]
+		},
+	],
 	friends: [
 		{
 			type: Schema.Types.ObjectId,

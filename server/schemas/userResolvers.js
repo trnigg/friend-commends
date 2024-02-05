@@ -8,39 +8,6 @@ const { User } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const userResolvers = {
-  Recommendation: {
-    //__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
-    __resolveType(recommendation, context, info) {
-      if (recommendation.type) {
-        return recommendation.type;
-      }
-      return null; // GraphQLError is thrown
-    },
-    __resolveType(user, context, info) {
-      //console.log("user:", user);
-      if (user.type) {
-        return user.type;
-      }
-      return null; // GraphQLError is thrown
-    },
-  },
-  Share: {
-    //__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
-    __resolveType(share, context, info) {
-      //console.log("share:",share)
-      if (share.type) {
-        return share.type;
-      }
-      return null; // GraphQLError is thrown
-    },
-    __resolveType(user, context, info) {
-      console.log("user:", user);
-      if (user.type) {
-        return user.type;
-      }
-      return null; // GraphQLError is thrown
-    },
-  },
   Query: {
     users: async (parent, args, context) => {
       if (context.user) {
@@ -54,6 +21,7 @@ const userResolvers = {
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
             .populate("recommendations")
+            .populate("watchList")
             .populate({
               path:"shareSent",
               model:"Share",
@@ -83,6 +51,7 @@ const userResolvers = {
             .populate("pendingFriendRequests", "-password -__v")
             .populate("sentFriendRequests", "-password -__v")
             .populate("recommendations")
+            .populate("watchList")
             .populate({
               path:"shareSent",
               populate: { path: "sharedTo", model: "User" },

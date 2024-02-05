@@ -1,25 +1,84 @@
-import GetFriends from "../components/getFriends";
-import { QUERY_FRIENDS } from "../utils/queries";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from '@apollo/client';
+import {
+	ACCEPT_FRIEND_REQUEST,
+	REJECT_FRIEND_REQUEST,
+} from '../utils/mutations';
+import { QUERY_USER } from '../utils/queries';
+import AuthService from '../utils/auth';
 
-function Friends(){
-//     const { friends, error, data } = useQuery(QUERY_FRIENDS, ({
-//         variables: {
-//             // friendsId: "65bd838099f80990049443ea"
-//         }
-//     }))
-//     if(data){
-//         console.log(data)
-//     }
+import FriendRequestCard from '../components/friendRequestCard';
+import FriendCard from '../components/friendCard';
 
-    return(
-        <div>
-            <h1>Friends</h1>
-            <button>Press me</button>
+import {
+	HeaderSubheader,
+	HeaderContent,
+	Header,
+	Icon,
+	CardGroup,
+} from 'semantic-ui-react';
 
-            <GetFriends />
-        </div>
-    )
+function Friends() {
+	const { data: { _id: userId } = {} } = AuthService.getProfile();
+
+	const { loading, error, data } = useQuery(QUERY_USER, {
+		variables: { userId },
+	});
+	console.log(userId);
+	console.log(data);
+
+	const [AcceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
+	const [rejectFriendRequest] = useMutation(REJECT_FRIEND_REQUEST);
+
+	const handleAccept = (fromUserId) => {
+		AcceptFriendRequest({ variables: { fromUserId, toUserId: userId } });
+	};
+
+	const handleDecline = (fromUserId) => {
+		rejectFriendRequest({ variables: { fromUserId, toUserId: userId } });
+	};
+
+	if (loading) return 'Loading...';
+	if (error) return `Error! ${error.message}`;
+	console.log(data);
+	return (
+		<div>
+			<Header as="h1">Friends</Header>
+			<Header as="h2" icon textAlign="center">
+				<Icon name="user plus" circular />
+				<HeaderContent>
+					Friend Requests
+					<HeaderSubheader>
+						You have <strong>{data.user.pendingFriendRequests.length}</strong>{' '}
+						friend requests awaiting your response.
+					</HeaderSubheader>
+				</HeaderContent>
+			</Header>
+			<CardGroup>
+				{data.user.pendingFriendRequests.map((request) => (
+					<FriendRequestCard
+						key={request.id}
+						request={request}
+						onAccept={() => handleAccept(request.id)}
+						onReject={() => handleDecline(request.id)}
+					/>
+				))}
+			</CardGroup>
+			<Header as="h2" icon textAlign="center">
+				<Icon name="users" circular />
+				<HeaderContent>
+					Your Friends
+					<HeaderSubheader>
+						You have <strong>{data.user.friends.length}</strong> friends.
+					</HeaderSubheader>
+				</HeaderContent>
+			</Header>
+			<CardGroup>
+				{data.user.friends.map((friend) => (
+					<FriendCard key={friend.id} friend={friend} />
+				))}
+			</CardGroup>
+		</div>
+	);
 }
 
 export default Friends;

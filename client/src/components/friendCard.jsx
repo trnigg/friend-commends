@@ -18,7 +18,6 @@
 
 //NOTE: Can copy to implement user search and replace <a> tag with button to send friend request - "Add as a friend to see their recommendations"
 
-import React from 'react';
 import {
 	CardMeta,
 	CardHeader,

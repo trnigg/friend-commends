@@ -8,6 +8,7 @@ import AuthService from '../utils/auth';
 
 import FriendRequestCard from '../components/friendRequestCard';
 import FriendCard from '../components/friendCard';
+import UserSearchBar from '../components/userSearchBar';
 
 import {
 	HeaderSubheader,
@@ -45,6 +46,7 @@ function Friends() {
 	return (
 		<div>
 			<Header as="h1">Friends</Header>
+			<UserSearchBar />
 			{/* Use React conditional rendering to only render if 1 or more active requests. */}
 			{data.user.pendingFriendRequests.length > 0 && (
 				<>

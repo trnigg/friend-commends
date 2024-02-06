@@ -36,8 +36,8 @@ module.exports = {
 		return req;
 	},
 	// WHAT ELSE DO WE WAN IN THE PAYLOAD?
-	signToken: function ({ email, _id }) {
-		const payload = { email, _id };
+	signToken: function ({ email, _id, firstName, lastName, userName }) {
+		const payload = { email, _id, firstName, lastName, userName };
 		return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
 	},
 };

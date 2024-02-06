@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Menu, Sidebar, Icon, Header } from 'semantic-ui-react';
 import { useMediaQuery } from 'react-responsive'; // allows us to use media queries in our components
 
-// Pass in handleLogout as a prop from App.jsx
-function Navbar({ handleLogout }) {
+// Pass in handleLogout and  as a prop from App.jsx
+function Navbar({ handleLogout, user }) {
+	console.log(user);
 	const [sidebarVisible, setSidebarVisible] = useState(false);
 
 	const handleSidebarHide = () => setSidebarVisible(false);
@@ -18,9 +19,7 @@ function Navbar({ handleLogout }) {
 		<div>
 			{isMobile ? (
 				<>
-					<Header as="h1" as={Link} to="/">
-						Friend-commend
-					</Header>
+					<Header as="h1">Friend-commend</Header>
 					<Menu.Item position="right">
 						<Icon name="sidebar" onClick={handleSidebarShow} />
 					</Menu.Item>
@@ -32,51 +31,62 @@ function Navbar({ handleLogout }) {
 						vertical
 						width="thin"
 					>
-						<Menu.Item as={Link} to="/" onClick={handleSidebarHide}>
-							For You
-						</Menu.Item>
 						<Menu.Item as={Link} to="/user" onClick={handleSidebarHide}>
-							User
+							<Icon name="user circle" />
+							<div>
+								<strong>
+									{user.firstName} {user.lastName}
+								</strong>
+								<p>{user.userName}</p>
+							</div>
+						</Menu.Item>
+						<Menu.Item as={Link} to="/" onClick={handleSidebarHide}>
+							<Icon name="home" /> For You
 						</Menu.Item>
 						<Menu.Item as={Link} to="/movies" onClick={handleSidebarHide}>
-							Movies
+							<Icon name="film" /> Movies
 						</Menu.Item>
 						<Menu.Item as={Link} to="/tv_shows" onClick={handleSidebarHide}>
-							TV Shows
+							<Icon name="tv" /> TV Shows
 						</Menu.Item>
 						<Menu.Item as={Link} to="/books" onClick={handleSidebarHide}>
-							Books
+							<Icon name="book" /> Books
 						</Menu.Item>
 						<Menu.Item as={Link} to="/friends" onClick={handleSidebarHide}>
-							Friends
+							<Icon name="users" /> Friends
 						</Menu.Item>
-						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+						<Menu.Item onClick={handleLogout}>
+							<Icon name="sign out" /> Logout
+						</Menu.Item>
 					</Sidebar>
 				</>
 			) : (
 				<Menu as="nav">
-					<Header as="h1" as={Link} to="/">
-						Your Site Title
-					</Header>
-					<Menu.Item as={Link} to="/">
-						For You
-					</Menu.Item>
+					<Header as="h1">Friend-Commend</Header>
 					<Menu.Item as={Link} to="/user">
-						User
+						<Icon name="user circle" />
+						<strong>
+							{user.firstName} {user.lastName}
+						</strong>
+					</Menu.Item>
+					<Menu.Item as={Link} to="/">
+						<Icon name="home" /> For You
 					</Menu.Item>
 					<Menu.Item as={Link} to="/movies">
-						Movies
+						<Icon name="film" /> Movies
 					</Menu.Item>
 					<Menu.Item as={Link} to="/tv_shows">
-						TV Shows
+						<Icon name="tv" /> TV Shows
 					</Menu.Item>
 					<Menu.Item as={Link} to="/books">
-						Books
+						<Icon name="book" /> Books
 					</Menu.Item>
 					<Menu.Item as={Link} to="/friends">
-						Friends
+						<Icon name="users" /> Friends
 					</Menu.Item>
-					<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
+					<Menu.Item onClick={handleLogout}>
+						<Icon name="sign out" /> Logout
+					</Menu.Item>
 				</Menu>
 			)}
 		</div>

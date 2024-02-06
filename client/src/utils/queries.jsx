@@ -83,8 +83,8 @@ export const QUERY_FRIEND_STATUS = gql`
 `;
 
 export const QUERY_FRIENREQ = gql`
-query friendRecommendations {
-  friendRecommendations {
+query friendRecommendations($userId: ID!) {
+	friendRecommendations(id: $userId) {
     id
     userName
     firstName

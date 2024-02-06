@@ -1,88 +1,125 @@
+import { useState, useEffect } from 'react';
+import { Button, Form, FormField, Message } from 'semantic-ui-react';
 import { MUTATION_ADDUSER } from '../utils/mutations';
-import auth from '../utils/auth';
-import { useMutation, useQuery } from '@apollo/client';
-import { Button, List, ListItem, Form, FormField } from 'semantic-ui-react'
+import { useMutation } from '@apollo/client';
 
+function AddUser({ onAuthenticated }) {
+	const [addUser, { error, data }] = useMutation(MUTATION_ADDUSER);
+	const [userName, setUserName] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [dob, setDob] = useState('');
 
+	useEffect(() => {
+		if (error) {
+			console.log(error);
+		}
+		if (data) {
+			onAuthenticated(data.addUser.token);
+		}
+	}, [error, data, onAuthenticated]);
 
-function AddUser(props){
-    const [ adduser, {error, data}] = useMutation(MUTATION_ADDUSER);
+	const plusUser = async (e) => {
+		e.preventDefault();
+		try {
+			await addUser({
+				variables: {
+					input: {
+						userName,
+						firstName,
+						lastName,
+						email,
+						password,
+						dateOfBirth: dob,
+					},
+				},
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-    const goLogin = () => {
-        props.onSubmit('login')
-    }
-
-    const plusUser = async(e) => {
-        e.preventDefault();
-
-        const uName = document.getElementById('userName').value;
-        const fName = document.getElementById('firstName').value;
-        const lName = document.getElementById('lastName').value;
-        const email = document.getElementById('email').value;
-        const pword = document.getElementById('password').value;
-        const dob = document.getElementById('DOB').value;
-
-        try{
-            await adduser({
-                    variables: {
-                          input: {
-                                userName: uName,
-                                firstName: fName,
-                                lastName: lName,
-                                email: email,
-                                password: pword,
-                                dateOfBirth: dob
-                          }  
-                    }
-            })
-            .then((data)=> {
-                auth.login(data.data.addUser.token);
-            });
-
-        }catch(err){console.log(err)}
-        // console.log(uName, fName)
-    }
-
-
-    return(
-        <div>
-
-            <br />
-            <h2>Input new user details</h2>
-            <Form>
-                <FormField>
-                    <label htmlFor="userName">Username</label>
-                    <input type="text" id='userName' />
-                </FormField>
-                <FormField>
-                    <label htmlFor="firstName">first name</label>
-                    <input type="text" id='firstName'/>
-                </FormField>
-                <FormField>
-                    <label htmlFor="lastName">last name</label>
-                    <input type="text" id='lastName'/>
-                </FormField>
-                <FormField>
-                    <label htmlFor="email">email</label>
-                    <input type="text" id='email'/>
-                </FormField>
-                <FormField>
-                    <label htmlFor="password">password</label>
-                    <input type="text" id='password'/>
-                </FormField>
-                <FormField>
-                    <label htmlFor="DOB">DOB</label>
-                    <input type="text" id='DOB'/>
-                </FormField>
-
-            <Button className='plusUserBtn' onClick={plusUser}>Add User</Button>
-
-            </Form>
-            <Button onClick={goLogin}>Login instead</Button>
-            
-        </div>
-    )
-
+	return (
+		<div>
+			<br />
+			<h2>Input new user details</h2>
+			{error && (
+				<Message
+					error
+					header="Error"
+					content={getFriendlyErrorMessage(error)}
+				/>
+			)}
+			<Form onSubmit={plusUser}>
+				<FormField>
+					<label htmlFor="userName">Username</label>
+					<Form.Input
+						type="text"
+						id="userName"
+						value={userName}
+						onChange={(e) => setUserName(e.target.value)}
+					/>
+				</FormField>
+				<FormField>
+					<label htmlFor="firstName">First Name</label>
+					<Form.Input
+						type="text"
+						id="firstName"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+					/>
+				</FormField>
+				<FormField>
+					<label htmlFor="lastName">Last Name</label>
+					<Form.Input
+						type="text"
+						id="lastName"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+					/>
+				</FormField>
+				<FormField>
+					<label htmlFor="email">Email</label>
+					<Form.Input
+						type="email"
+						id="email"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+					/>
+				</FormField>
+				<FormField>
+					<label htmlFor="password">Password</label>
+					<Form.Input
+						type="password"
+						id="password"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+					/>
+				</FormField>
+				<FormField>
+					<label htmlFor="dob">Date of Birth</label>
+					<Form.Input
+						type="date"
+						id="dob"
+						value={dob}
+						onChange={(e) => setDob(e.target.value)}
+					/>
+				</FormField>
+				<Button type="submit">Add User</Button>
+			</Form>
+		</div>
+	);
 }
 
-export default AddUser
+function getFriendlyErrorMessage(error) {
+	switch (error.message) {
+		case 'Could not authenticate user.':
+			return 'Invalid details. Please try again.';
+		default:
+			return error.message;
+	}
+}
+
+export default AddUser;

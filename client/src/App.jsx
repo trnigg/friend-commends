@@ -53,12 +53,18 @@ function App() {
 		};
 	}, []);
 
+	// Props to pass to navbar which will contain the logout button
+	const handleLogout = () => {
+		AuthService.logout();
+		setIsLoggedIn(false);
+	};
+
 	return (
 		<ApolloProvider client={client}>
 			<div className="contentDiv">
 				{isLoggedIn ? (
 					<>
-						<Navbar />
+						<Navbar handleLogout={handleLogout} />
 						<Outlet />
 					</>
 				) : (

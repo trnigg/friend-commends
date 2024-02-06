@@ -1,10 +1,6 @@
-// NOTE auth is handles on landing page and app.js, passing as prop here
-// This handles the login form and the login mutation
-
 import { useState, useEffect } from 'react';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 import { MUTATION_LOGIN } from '../utils/mutations';
-// import auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 
 function Login({ onAuthenticated }) {
@@ -17,7 +13,6 @@ function Login({ onAuthenticated }) {
 			console.log(error);
 		}
 		if (data) {
-			// onAuthenticated is a prop passed from LandingPage rather than AuthService
 			onAuthenticated(data.login.token);
 		}
 	}, [error, data, onAuthenticated]);
@@ -33,9 +28,26 @@ function Login({ onAuthenticated }) {
 		}
 	};
 
+	// Error translator
+	// Use error.message from Apollo to display a user-friendly error
+	// If error message is re. user auth, display a friendly message
+	// Any other error message from appollo will be displayed as is for debugging
+	function getUserFriendlyError(error) {
+		switch (error.message) {
+			case 'Could not authenticate user.':
+				return 'Invalid email or password. Please try again.';
+			default:
+				return error.message; // Return the original error message from Apollo
+		}
+	}
+
 	return (
 		<div>
 			<h1> Login</h1>
+			{/* Display error message conditional if error, using "error-translator"*/}
+			{error && (
+				<Message error header="Oops!" content={getUserFriendlyError(error)} />
+			)}
 			<Form onSubmit={tryLogin}>
 				<Form.Field>
 					<label htmlFor="email">Email</label>

@@ -53,7 +53,7 @@ const userTypeDefs = `
     friends(id: ID!): [User]
     pendingFriendRequests(id: ID!): [User]
     sentFriendRequests(id: ID!): [User]
-    friendRecommendations: [User]
+    friendRecommendations(id: ID!): [User]
   }
 
   type Mutation {

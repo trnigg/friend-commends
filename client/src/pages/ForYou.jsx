@@ -5,11 +5,18 @@ import { Header, Image } from 'semantic-ui-react';
 import { QUERY_USER } from '../utils/queries';
 import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
+import { QUERY_FRIENREQ  } from '../utils/queries';
+
 
 function ForYou() {
 	// const [userDetails, setUserDetails] = useState({userName: "white"})
 	let userDetails = {};
+	let friendsDetails = {};
 	const idNum = auth.getProfile();
+	console.log(idNum.data._id)
+	const { loading: loading2, error: error2, data: data2 } = useQuery(QUERY_FRIENREQ, {
+		variables: {userId: "65bdf4089d1efc62380f2f52"}
+	})
 	const { loading, error, data } = useQuery(QUERY_USER, {
 		variables: { userId: idNum.data._id },
 	});
@@ -22,6 +29,9 @@ function ForYou() {
 		console.log(userDetails);
 	} else {
 		console.log('No Luck');
+	}
+	if(data2){
+		console.log(data2)
 	}
 
 	if (userDetails) {

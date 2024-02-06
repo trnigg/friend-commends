@@ -81,8 +81,11 @@ const userResolvers = {
 
     friendRecommendations: async (parent, args, context) => {
       if (context.user) {
+        console.log(args)
           return (
-            User.find({friends: '65bdf4089d1efc62380f2f52'})
+            // User.find({friends: '65bdf4089d1efc62380f2f52'})
+            User.find({friends: id})
+
               // populate but exclude password and __v (version)
               // first parameter is the field to populate, second is what to select ('-' prefix means exclude)
               // we may want to be more selective about what we populate in future

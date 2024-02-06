@@ -5,6 +5,7 @@ import { useMediaQuery } from 'react-responsive'; // allows us to use media quer
 
 // Pass in handleLogout and  as a prop from App.jsx
 function Navbar({ handleLogout, user }) {
+	console.log(user);
 	const [sidebarVisible, setSidebarVisible] = useState(false);
 
 	const handleSidebarHide = () => setSidebarVisible(false);
@@ -18,9 +19,7 @@ function Navbar({ handleLogout, user }) {
 		<div>
 			{isMobile ? (
 				<>
-					<Header as="h1" as={Link} to="/">
-						Friend-commend
-					</Header>
+					<Header as="h1">Friend-commend</Header>
 					<Menu.Item position="right">
 						<Icon name="sidebar" onClick={handleSidebarShow} />
 					</Menu.Item>
@@ -36,9 +35,9 @@ function Navbar({ handleLogout, user }) {
 							<Icon name="user circle" />
 							<div>
 								<strong>
-									{user && user.firstName} {user && user.lastName}
+									{user.firstName} {user.lastName}
 								</strong>
-								<p>{user && user.username}</p>
+								<p>{user.userName}</p>
 							</div>
 						</Menu.Item>
 						<Menu.Item as={Link} to="/" onClick={handleSidebarHide}>
@@ -63,13 +62,11 @@ function Navbar({ handleLogout, user }) {
 				</>
 			) : (
 				<Menu as="nav">
-					<Header as="h1" as={Link} to="/">
-						Friend-Commend
-					</Header>
+					<Header as="h1">Friend-Commend</Header>
 					<Menu.Item as={Link} to="/user">
 						<Icon name="user circle" />
 						<strong>
-							{user && user.firstName} {user && user.lastName}
+							{user.firstName} {user.lastName}
 						</strong>
 					</Menu.Item>
 					<Menu.Item as={Link} to="/">

@@ -18,16 +18,15 @@ function LandingPage({ setIsLoggedIn }) {
 	const navigate = useNavigate(); // navigate to another page after successful login
 	const [isLogin, setIsLogin] = useState(true); // State variable to keep track of login/signup state
 
-	const handleAuth = async (event) => {
-		event.preventDefault();
+	const handleAuth = async (token) => {
 		// Perform login or signup here using AuthService
 		// If operation is successful, update isLoggedIn and redirect to another page
 		// If isLogin is true, call login method from Auth
 		// If isLogin is false, call  signup method from Auth
 		// The result is stored in the loggedIn variable
 		const loggedIn = isLogin
-			? await AuthService.login()
-			: await AuthService.signup();
+			? await AuthService.login(token)
+			: await AuthService.signup(token);
 
 		// If the user is successfully logged in or signed up (i.e., loggedIn is true)
 		if (loggedIn) {
@@ -55,14 +54,9 @@ function LandingPage({ setIsLoggedIn }) {
 			<p>This is a description of our app.</p>
 			<Segment>
 				{isLogin ? (
-					<Login
-						onAuthenticated={(token) => {
-							AuthService.login(token);
-							setIsLoggedIn(true);
-						}}
-					/>
+					<Login onAuthenticated={handleAuth} />
 				) : (
-					<Signup handleAuth={handleAuth} />
+					<Signup onAuthenticated={handleAuth} />
 				)}
 			</Segment>
 			<Button onClick={toggleLoginSignup}>

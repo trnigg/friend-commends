@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import {
@@ -10,7 +11,9 @@ import {
 // For authentication
 import { setContext } from '@apollo/client/link/context';
 
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar.jsx';
+import AuthService from './utils/auth.js'; // Import your AuthService
+import LandingPage from './pages/LandingPage.jsx'; // Import your LandingPage component
 
 // Constructs main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -35,11 +38,38 @@ const client = new ApolloClient({
 });
 
 function App() {
+	const [isLoggedIn, setIsLoggedIn] = useState(AuthService.loggedIn()); // Set initial state based on AuthService
+
+	useEffect(() => {
+		// Update isLoggedIn when AuthService changes
+		const checkLoginStatus = () => {
+			setIsLoggedIn(AuthService.loggedIn());
+		};
+
+		window.addEventListener('storage', checkLoginStatus);
+
+		return () => {
+			window.removeEventListener('storage', checkLoginStatus);
+		};
+	}, []);
+
+	// Props to pass to navbar which will contain the logout button
+	const handleLogout = () => {
+		AuthService.logout();
+		setIsLoggedIn(false);
+	};
+
 	return (
 		<ApolloProvider client={client}>
-			<div className='contentDiv'>
-			<Navbar />
-			<Outlet />
+			<div className="contentDiv">
+				{isLoggedIn ? (
+					<>
+						<Navbar handleLogout={handleLogout} />
+						<Outlet />
+					</>
+				) : (
+					<LandingPage setIsLoggedIn={setIsLoggedIn} /> // Render LandingPage if not logged in
+				)}
 			</div>
 		</ApolloProvider>
 	);

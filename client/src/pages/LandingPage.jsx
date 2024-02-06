@@ -2,11 +2,13 @@
 // TODO: Use more semantic HTML elements where possible
 // TODO: Update logo and remove inline styles, update alt text
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/auth';
 import Login from '../components/login'; // Import your Login component
 import Signup from '../components/signUp'; // Import your Signup component
+
+import { Button, Container, Header, Image, Segment } from 'semantic-ui-react';
 
 // TODO: Replace logo with our logo. Preferably a .svg file or png with transparent background
 import Logo from '../assets/images/logo.jpg';
@@ -33,24 +35,27 @@ function LandingPage({ setIsLoggedIn }) {
 	};
 
 	return (
-		<div className="landing-page">
-			<div className="text-content">
-				<h1>Welcome to Our App</h1>
-				<img
-					src={Logo}
-					alt="Logo"
-					className="logo"
-					style={{ width: '300px', height: 'auto' }}
-				/>{' '}
-				{/* Add your logo here */}
-				<p>This is a description of our app.</p>
-			</div>
-			{isLogin ? (
-				<Login onSignupClick={toggleLoginSignup} handleAuth={handleAuth} />
-			) : (
-				<Signup onLoginClick={toggleLoginSignup} handleAuth={handleAuth} />
-			)}
-		</div>
+		<Container className="landing-page">
+			<Header as="h1">Welcome to Our App</Header>
+			<Image
+				src={Logo}
+				alt="Logo"
+				className="logo"
+				style={{ width: '300px', height: 'auto' }}
+			/>{' '}
+			{/* Add your logo here */}
+			<p>This is a description of our app.</p>
+			<Segment>
+				{isLogin ? (
+					<Login handleAuth={handleAuth} />
+				) : (
+					<Signup handleAuth={handleAuth} />
+				)}
+			</Segment>
+			<Button onClick={toggleLoginSignup}>
+				{isLogin ? 'Need to create an account?' : 'Already have an account?'}
+			</Button>
+		</Container>
 	);
 }
 

@@ -3,7 +3,7 @@ import { Button, Form, FormField, Message } from 'semantic-ui-react';
 import { MUTATION_ADDUSER } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
-function AddUser({ onAuthenticated }) {
+function SignUp({ onAuthenticated }) {
 	const [addUser, { error, data }] = useMutation(MUTATION_ADDUSER);
 	const [userName, setUserName] = useState('');
 	const [firstName, setFirstName] = useState('');
@@ -21,7 +21,7 @@ function AddUser({ onAuthenticated }) {
 		}
 	}, [error, data, onAuthenticated]);
 
-	const plusUser = async (e) => {
+	const handleFormSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			await addUser({
@@ -43,8 +43,7 @@ function AddUser({ onAuthenticated }) {
 
 	return (
 		<div>
-			<br />
-			<h2>Input new user details</h2>
+			<h2>Sign up</h2>
 			{error && (
 				<Message
 					error
@@ -52,7 +51,7 @@ function AddUser({ onAuthenticated }) {
 					content={getFriendlyErrorMessage(error)}
 				/>
 			)}
-			<Form onSubmit={plusUser}>
+			<Form onSubmit={handleFormSubmit}>
 				<FormField>
 					<label htmlFor="userName">Username</label>
 					<Form.Input
@@ -122,4 +121,4 @@ function getFriendlyErrorMessage(error) {
 	}
 }
 
-export default AddUser;
+export default SignUp;

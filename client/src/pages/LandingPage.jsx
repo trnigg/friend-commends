@@ -9,7 +9,7 @@ import Login from '../components/login'; // Import your Login component
 import Signup from '../components/signUp'; // Import your Signup component
 
 // TODO: Replace logo with our logo. Preferably a .svg file or png with transparent background
-import Logo from '../../public/images/logo.jpg';
+import Logo from '../assets/images/logo.jpg';
 
 function LandingPage({ setIsLoggedIn }) {
 	const navigate = useNavigate();

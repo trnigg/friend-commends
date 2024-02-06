@@ -39,11 +39,16 @@ const client = new ApolloClient({
 
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(AuthService.loggedIn()); // Set initial state based on AuthService
-
+	const [user, setUser] = useState({}); // to pass basic user information to navbar
 	useEffect(() => {
 		// Update isLoggedIn when AuthService changes
 		const checkLoginStatus = () => {
 			setIsLoggedIn(AuthService.loggedIn());
+			if (AuthService.loggedIn()) {
+				// If logged in, get user profile and set user state to pass to navbar
+				const profile = AuthService.getProfile();
+				setUser(profile);
+			}
 		};
 
 		window.addEventListener('storage', checkLoginStatus);

@@ -6,7 +6,9 @@ import { QUERY_USER } from '../utils/queries';
 import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
 import { QUERY_FRIENREQ  } from '../utils/queries';
+
 import { useEffect, useState } from 'react';
+
 
 
 function ForYou() {
@@ -28,8 +30,10 @@ function ForYou() {
 	let userDetails = {};
 	let friendsDetails = {};
 	const idNum = auth.getProfile();
+
 	const { loading: loading2, error: error2, data: data2 } = useQuery(QUERY_FRIENREQ, {
 		variables: { userId: idNum.data._id },
+
 	})
 	const { loading, error, data } = useQuery(QUERY_USER, {
 		variables: { userId: idNum.data._id },
@@ -39,6 +43,7 @@ function ForYou() {
 	}
 	if (data&&data2)  {
 		userDetails = data;
+
 		friendsDetails = data2.friendRecommendations;
 		const friendArray = [];
 		friendsDetails.forEach((entry)=>{
@@ -46,6 +51,7 @@ function ForYou() {
 		})
 		const workingArray = friendArray.flat();
 		const movieRecommend = workingArray
+
 			.filter((entry) => entry.__typename === 'Movie')
 			.slice(-3);
 		const tvRecommend = workingArray

@@ -18,7 +18,7 @@ const recommendationTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     createdAt:String
   }
 
@@ -30,7 +30,7 @@ const recommendationTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     createdAt:String
   }
 
@@ -41,7 +41,7 @@ const recommendationTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     createdAt:String
   }
 
@@ -52,7 +52,7 @@ const recommendationTypeDefs = `
     overview:String
     poster_path:String
     first_air_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     createdAt:String
   }
    type Query {

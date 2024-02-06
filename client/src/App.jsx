@@ -40,6 +40,8 @@ const client = new ApolloClient({
 function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState(AuthService.loggedIn()); // Set initial state based on AuthService
 	const [user, setUser] = useState({}); // to pass basic user information to navbar
+
+	// Check if user is logged in when component mounts and when localStorage changes
 	useEffect(() => {
 		// Update isLoggedIn when AuthService changes
 		const checkLoginStatus = () => {
@@ -47,12 +49,18 @@ function App() {
 			if (AuthService.loggedIn()) {
 				// If logged in, get user profile and set user state to pass to navbar
 				const profile = AuthService.getProfile();
-				setUser(profile);
+				setUser(profile.data); // jwt decoding is returning an object with a data property
 			}
 		};
 
+		// call checkLoginStatus when component mounts to get profile of logged in user
+		checkLoginStatus();
+
+		// add event listener to checkLoginStatus when localStorage changes
 		window.addEventListener('storage', checkLoginStatus);
 
+		// cleanup function to remove event listener
+		//https://stackoverflow.com/questions/55360736/how-do-i-window-removeeventlistener-using-react-useeffect
 		return () => {
 			window.removeEventListener('storage', checkLoginStatus);
 		};
@@ -69,7 +77,7 @@ function App() {
 			<div className="contentDiv">
 				{isLoggedIn ? (
 					<>
-						<Navbar handleLogout={handleLogout} />
+						<Navbar handleLogout={handleLogout} user={user} />
 						<Outlet />
 					</>
 				) : (

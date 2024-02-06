@@ -1,10 +1,13 @@
+// NOTE auth is handles on landing page and app.js, passing as prop here
+// This handles the login form and the login mutation
+
 import { useState, useEffect } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { MUTATION_LOGIN } from '../utils/mutations';
-import auth from '../utils/auth';
+// import auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 
-function Login() {
+function Login({ onAuthenticated }) {
 	const [login, { error, data }] = useMutation(MUTATION_LOGIN);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -14,9 +17,10 @@ function Login() {
 			console.log(error);
 		}
 		if (data) {
-			auth.login(data.login.token);
+			// onAuthenticated is a prop passed from LandingPage rather than AuthService
+			onAuthenticated(data.login.token);
 		}
-	}, [error, data]);
+	}, [error, data, onAuthenticated]);
 
 	const tryLogin = async (e) => {
 		e.preventDefault();

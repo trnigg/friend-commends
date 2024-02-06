@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { Menu, Sidebar, Icon, Header } from 'semantic-ui-react';
 import { useMediaQuery } from 'react-responsive'; // allows us to use media queries in our components
 
-function Navbar() {
+// Pass in handleLogout as a prop from App.jsx
+function Navbar({ handleLogout }) {
 	const [sidebarVisible, setSidebarVisible] = useState(false);
 
 	const handleSidebarHide = () => setSidebarVisible(false);
@@ -32,27 +33,24 @@ function Navbar() {
 						width="thin"
 					>
 						<Menu.Item as={Link} to="/" onClick={handleSidebarHide}>
-							Home
+							For You
 						</Menu.Item>
-						<Menu.Item
-							as={Link}
-							to="/recommendations"
-							onClick={handleSidebarHide}
-						>
-							Recommendations
+						<Menu.Item as={Link} to="/user" onClick={handleSidebarHide}>
+							User
 						</Menu.Item>
-						<Menu.Item as={Link} to="/indiv_shows" onClick={handleSidebarHide}>
-							Individual Shows
+						<Menu.Item as={Link} to="/movies" onClick={handleSidebarHide}>
+							Movies
 						</Menu.Item>
-						<Menu.Item as={Link} to="/overview" onClick={handleSidebarHide}>
-							Overview
+						<Menu.Item as={Link} to="/tv_shows" onClick={handleSidebarHide}>
+							TV Shows
+						</Menu.Item>
+						<Menu.Item as={Link} to="/books" onClick={handleSidebarHide}>
+							Books
 						</Menu.Item>
 						<Menu.Item as={Link} to="/friends" onClick={handleSidebarHide}>
 							Friends
 						</Menu.Item>
-						<Menu.Item as={Link} to="/nav_page" onClick={handleSidebarHide}>
-							Nav Page
-						</Menu.Item>
+						<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 					</Sidebar>
 				</>
 			) : (
@@ -61,23 +59,24 @@ function Navbar() {
 						Your Site Title
 					</Header>
 					<Menu.Item as={Link} to="/">
-						Home
+						For You
 					</Menu.Item>
-					<Menu.Item as={Link} to="/recommendations">
-						Recommendations
+					<Menu.Item as={Link} to="/user">
+						User
 					</Menu.Item>
-					<Menu.Item as={Link} to="/indiv_shows">
-						Individual Shows
+					<Menu.Item as={Link} to="/movies">
+						Movies
 					</Menu.Item>
-					<Menu.Item as={Link} to="/overview">
-						Overview
+					<Menu.Item as={Link} to="/tv_shows">
+						TV Shows
+					</Menu.Item>
+					<Menu.Item as={Link} to="/books">
+						Books
 					</Menu.Item>
 					<Menu.Item as={Link} to="/friends">
 						Friends
 					</Menu.Item>
-					<Menu.Item as={Link} to="/nav_page">
-						Nav Page
-					</Menu.Item>
+					<Menu.Item onClick={handleLogout}>Logout</Menu.Item>
 				</Menu>
 			)}
 		</div>

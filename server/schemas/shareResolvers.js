@@ -174,10 +174,14 @@ module.exports = shareResolvers;
 // share Movie
 // {
 //   "input": {
+//     "original_title": "Avatar",
+//     "overview": "In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",
+//     "AU_platforms": ["Disney Plus"],
+//     "poster_path": "/kyeqWdyUXW608qlYkRqosgbbJyK.jpg",
 //     "type": "Movie",
-//     "tmdbID": "101",
-//     "sharedTo": "65bf7043f36852ba922c2589",
-//     "original_title": "Movie101"
+//     "tmdbID": "19995",
+//     "shareMessage": "Classic as always",
+//     "sharedTo": "65bf6743c23eca151f71f3fa"
 //   }
 // }
 

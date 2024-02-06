@@ -22,7 +22,7 @@ const shareTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     sharedFrom:User!
     sharedTo:User!
     shareMessage:String
@@ -37,7 +37,7 @@ const shareTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     sharedFrom:User!
     sharedTo:User!
     shareMessage:String
@@ -51,7 +51,7 @@ const shareTypeDefs = `
     overview:String
     poster_path:String
     release_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     shareMessage:String
     sharedAt:String
     sharedTo:String!
@@ -64,7 +64,7 @@ const shareTypeDefs = `
     overview:String
     poster_path:String
     first_air_date:String
-    AU_platforms:String
+    AU_platforms:[String]
     shareMessage:String
     sharedAt:String
     sharedTo:String!

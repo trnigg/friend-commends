@@ -38,7 +38,11 @@ const watchResolvers = {
       if (context.user) {
         //console.log("args:", args.input);
         //console.log("context.user._id:", context.user._id);
-        const watch = await Watch.create(args.input);
+        const watch = await Watch.findOneAndUpdate(
+          { tmdbID: args.input.tmdbID },
+          { ...args.input },
+          { upsert: true }
+        );
         //console.log("watch", watch);
 
         return await User.findOneAndUpdate(
@@ -53,7 +57,11 @@ const watchResolvers = {
       if (context.user) {
         //console.log("args:", args.input);
         //console.log("context.user._id:", context.user._id);
-        const watch = await Watch.create(args.input);
+        const watch = await Watch.findOneAndUpdate(
+          { tmdbID: args.input.tmdbID },
+          { ...args.input },
+          { upsert: true }
+        );
         //console.log("watch", watch);
 
         return await User.findOneAndUpdate(

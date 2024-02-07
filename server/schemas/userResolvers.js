@@ -25,14 +25,14 @@ const userResolvers = {
             .populate({
               path:"shareSent",
               model:"Share",
-              populate: { path: "sharedTo", model: "User" },
-              populate: { path: "sharedFrom", model: "User" },
+              populate: [{ path: "sharedTo", model: "User" },
+                          { path: "sharedFrom", model: "User" },]
             })
             .populate({
               path:"shareReceived",
               model:"Share",
-              populate: { path: "sharedTo", model: "User" },
-              populate: { path: "sharedFrom", model: "User" },
+              populate: [{ path: "sharedTo", model: "User" },
+                        { path: "sharedFrom", model: "User" },]
             });
         
             //console.log("users: ",users);
@@ -54,13 +54,15 @@ const userResolvers = {
             .populate("watchList")
             .populate({
               path:"shareSent",
-              populate: { path: "sharedTo", model: "User" },
-              populate: { path: "sharedFrom", model: "User" },
+              model:"Share",
+              populate: [{ path: "sharedTo", model: "User" },
+                          { path: "sharedFrom", model: "User" },]
             })
             .populate({
               path:"shareReceived",
-              populate: { path: "sharedTo", model: "User" },
-              populate: { path: "sharedFrom", model: "User" },
+              model:"Share",
+              populate: [{ path: "sharedTo", model: "User" },
+                        { path: "sharedFrom", model: "User" },]
             });
         
         return user;

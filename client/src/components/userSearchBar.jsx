@@ -75,25 +75,12 @@ function UserSearchBar() {
 	// TODO: Fix the following funtionality - currently buttons in search don't work because results unfocus when clicked
 	const [acceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 
-	const handleAcceptRequest = async (fromUserId, event) => {
-		try {
-			event.stopPropagation();
-			await acceptFriendRequest({
-				variables: { fromUserId, toUserId: userId },
-			});
-			// handle success (e.g., refetch queries, show a success message)
-		} catch (error) {
-			// handle error (e.g., show an error message)
-		}
+	const handleAcceptRequest = (fromUserId, event) => {
+		console.log('Accept request button clicked');
 	};
 
-	const handleSendRequest = async (friendId) => {
-		try {
-			await sendRequest({ variables: { friendId } });
-			// handle success (e.g., refetch queries, show a success message)
-		} catch (error) {
-			// handle error (e.g., show an error message)
-		}
+	const handleSendRequest = (friendId) => {
+		console.log('Send request button clicked');
 	};
 
 	// TODO: Move CSS to a separate file and remove inline styles

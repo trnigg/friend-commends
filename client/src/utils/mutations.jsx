@@ -126,3 +126,20 @@ export const REJECT_FRIEND_REQUEST = gql`
 		}
 	}
 `;
+
+export const SEND_FRIEND_REQUEST = gql`
+	mutation SendFriendRequest($fromUserId: ID!, $toUserId: ID!) {
+		sendFriendRequest(fromUserId: $fromUserId, toUserId: $toUserId) {
+			id
+			userName
+			firstName
+			lastName
+			sentFriendRequests {
+				id
+				userName
+				firstName
+				lastName
+			}
+		}
+	}
+`;

@@ -5,7 +5,7 @@
 // Similarly, pagination will be needed to handle large numbers of users
 
 // https://react.semantic-ui.com/modules/search/#variations-fluid
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react'; // useRef is used to control the state of the search results - allows us to persist values between renders. https://www.w3schools.com/react/react_useref.asp
 import { useLazyQuery, useMutation } from '@apollo/client';
 import _ from 'lodash'; // lodash allows for debouncing (delaying) of search requests and escaping special characters in regex
 import { Search, Button, Icon } from 'semantic-ui-react';
@@ -22,6 +22,23 @@ function UserSearchBar() {
 	const [searchResults, setSearchResults] = useState([]);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
+
+	const [open, setOpen] = useState(false); // control the state of search results
+	const searchRef = useRef(null); // Add this line
+
+	// Handle clicking outside of search results to close them
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (searchRef.current && !searchRef.current.contains(event.target)) {
+				setOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (searchData?.users) {
@@ -40,6 +57,7 @@ function UserSearchBar() {
 
 	const handleSearchChange = (e, { value }) => {
 		setSearchQuery(value);
+		setOpen(true); // Add this line
 		if (value.length < 1) {
 			setSearchResults([]);
 			setIsLoading(false);
@@ -47,6 +65,11 @@ function UserSearchBar() {
 			setIsLoading(true);
 			search({ variables: { query: value } });
 		}
+	};
+
+	const handleResultSelect = () => {
+		// Add this function
+		setOpen(true);
 	};
 
 	// TODO: Fix the following funtionality - currently buttons in search don't work because results unfocus when clicked
@@ -159,14 +182,17 @@ function UserSearchBar() {
 	// https://react.semantic-ui.com/modules/search/
 
 	return (
-		<Search
-			fluid
-			loading={isLoading}
-			onSearchChange={handleSearchChange}
-			results={searchResults}
-			value={searchQuery}
-			resultRenderer={resultRenderer}
-		/>
+		<div ref={searchRef}>
+			<Search
+				fluid
+				loading={isLoading}
+				onSearchChange={handleSearchChange}
+				results={searchResults}
+				value={searchQuery}
+				open={open}
+				resultRenderer={resultRenderer}
+			/>
+		</div>
 	);
 }
 

@@ -4,13 +4,12 @@ import {
   Message,
   Icon,
   Image,
-  Item,
   Label,
 } from "semantic-ui-react";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
-import WatchItem from "./selfListItems";
+import WatchItem from "./watchListItem";
 
 export default function WatchList() {
   const { loading, error, data } = useQuery(QUERY_MYWATCHLIST);

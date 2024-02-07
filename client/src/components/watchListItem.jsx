@@ -14,7 +14,7 @@ import {
   Label,
 } from "semantic-ui-react";
 
-export default function watchItem(props) {
+export default function WatchItem(props) {
   //console.log("props:", props);
   const { overview, AU_platforms: platforms ,type} = props;
   let posterURL = props?.poster_path
@@ -22,9 +22,6 @@ export default function watchItem(props) {
     : `https://react.semantic-ui.com/images/wireframe/image.png`;
   let title = props.original_title || props.original_name;
   const itemType = type==="TV"? "TV show":type;
-  const sender = props.sharedFrom? (`${props.sharedFrom.firstName} ${props.sharedFrom.lastName[0]}`) :null;
-  const message = props.sharedMesssage? props.sharedMessage :null;
-
 
   return (
     <Item>
@@ -33,18 +30,11 @@ export default function watchItem(props) {
       <ItemContent>
         <ItemHeader as="a">{title}</ItemHeader>
         <ItemMeta>
-          {sender?(
-            <>
-            <span className="type">{sender} shared this {itemType} with you</span>
-            <span className="senderMsg">{message}</span>
-            </>
-          ):(
             <span className="type"> {itemType} </span>
-          )}
         </ItemMeta>
         <ItemDescription>{overview}</ItemDescription>
         <ItemExtra>
-          {platforms.map((platform) => (
+          {platforms?.map((platform) => (
             <Label key={platform}>{platform}</Label>
           ))}
           <Button primary floated="right">

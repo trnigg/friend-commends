@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const { Watch } = require("../models");
+const { ObjectId } = require("mongodb");
 
 const { AuthenticationError } = require("../utils/auth");
 
@@ -26,8 +27,8 @@ const watchResolvers = {
       if (context.user) {
         //console.log("context.user:",context.user);
         return User.findById(context.user._id)
-        .select("watchList")
-        .populate("watchList");
+          .select("watchList")
+          .populate("watchList");
       }
       throw AuthenticationError;
     },
@@ -36,18 +37,19 @@ const watchResolvers = {
     //add Movie to users watch list
     addMovieToWatch: async (parent, args, context) => {
       if (context.user) {
-        //console.log("args:", args.input);
-        //console.log("context.user._id:", context.user._id);
+        console.log("args:", args.input);
+        console.log("context.user._id:", context.user._id);
         const watch = await Watch.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
-          { upsert: true }
+          { upsert: true,
+            new: true },
         );
-        //console.log("watch", watch);
+        console.log("watch", watch);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { watchList: watch } },
+          { $addToSet: { watchList: watch._id } },
           { new: true }
         ).populate("watchList");
       }
@@ -60,13 +62,14 @@ const watchResolvers = {
         const watch = await Watch.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
-          { upsert: true }
+          { upsert: true,
+            new: true }
         );
         //console.log("watch", watch);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { watchList: watch } },
+          { $addToSet: { watchList: watch._id } },
           { new: true }
         ).populate("watchList");
       }
@@ -99,7 +102,6 @@ const watchResolvers = {
 
 module.exports = watchResolvers;
 
-
 // GraphQL sample test input variables:
 
 // {
@@ -113,4 +115,3 @@ module.exports = watchResolvers;
 //     "AU_platforms": ["Disney Plus"]
 //   }
 // }
-

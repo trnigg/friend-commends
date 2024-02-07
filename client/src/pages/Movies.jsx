@@ -27,8 +27,18 @@ function Movies() {
 		const workingArray = friendArray.flat();
 		const movieRecommend = workingArray
 			.filter((entry) => entry.__typename === 'Movie');
-		console.log(movieRecommend)
-		setDate([...movieRecommend])
+		// console.log(movieRecommend)
+		// setDate([...movieRecommend])
+		const dateClone = movieRecommend;
+		const newDateClone = [...new Set(dateClone)];
+		const newDataCloneArray = [];
+			newDateClone.forEach((y) => {
+				const numbER = dateClone.filter(x => x==y).length
+				newDataCloneArray.push({...y, count: numbER})
+				console.log(newDataCloneArray)
+			});
+			setDate([...newDataCloneArray]);
+
 		
 
 	}
@@ -41,14 +51,18 @@ function Movies() {
 
 	const recommended =() => {
 		const dateClone = date;
-		const newDateClone = [...new Set(dateClone)];
-		const duplicateDateClone = [...newDateClone];
-			newDateClone.forEach((y) => {
-				const numbER = dateClone.filter(x => x==y).length
-				const age = "XPT";
-				duplicateDateClone[y][age] = "TTHH";
-				console.log(duplicateDateClone)
-			});
+		const recentArray = dateClone.sort((a,b) => b.count - a.count);
+		setDate([...recentArray]);
+		// const dateClone = movieRecommend;
+		// const newDateClone = [...new Set(dateClone)];
+		// const newDataCloneArray = [];
+		// 	newDateClone.forEach((y) => {
+		// 		const numbER = dateClone.filter(x => x==y).length
+		// 		newDataCloneArray.push({...y, count: numbER})
+		// 		console.log(newDataCloneArray)
+		// 	});
+		// 	setDate([...newDataCloneArray]);
+		console.log("Aqua")
 		
 	}
 

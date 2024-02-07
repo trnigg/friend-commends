@@ -74,7 +74,18 @@ function SignUp({ onAuthenticated }) {
 		}
 
 		// If any field is empty, stop form submission
-		if (!userName || !firstName || !lastName || !email || !password || !dob)
+		// COuld also be handled with global form validation state
+		// e.g const [formError, setFormError] = useState(false);
+
+		if (
+			!userName ||
+			!firstName ||
+			!lastName ||
+			!email ||
+			!password ||
+			!dob ||
+			password !== confirmPassword
+		)
 			return;
 
 		try {
@@ -113,7 +124,7 @@ function SignUp({ onAuthenticated }) {
 					label="Username"
 					placeholder="Username"
 					value={userName}
-					onChange={(e) => setUserName(e.target.value)}
+					onInput={(e) => setUserName(e.target.value)}
 					error={
 						userNameError
 							? { content: 'Please enter a username', pointing: 'below' }
@@ -127,7 +138,7 @@ function SignUp({ onAuthenticated }) {
 						label="First Name"
 						placeholder="First Name"
 						value={firstName}
-						onChange={(e) => setFirstName(e.target.value)}
+						onInput={(e) => setFirstName(e.target.value)}
 						error={
 							firstNameError
 								? { content: 'Please enter a first name', pointing: 'below' }
@@ -140,7 +151,7 @@ function SignUp({ onAuthenticated }) {
 						label="Last Name"
 						placeholder="Last Name"
 						value={lastName}
-						onChange={(e) => setLastName(e.target.value)}
+						onInput={(e) => setLastName(e.target.value)}
 						error={
 							lastNameError
 								? { content: 'Please enter a last name', pointing: 'below' }
@@ -155,7 +166,7 @@ function SignUp({ onAuthenticated }) {
 					label="Email"
 					placeholder="Email"
 					value={email}
-					onChange={(e) => setEmail(e.target.value)}
+					onInput={(e) => setEmail(e.target.value)}
 					error={
 						emailError
 							? { content: 'Please enter an email', pointing: 'below' }
@@ -170,7 +181,7 @@ function SignUp({ onAuthenticated }) {
 						label="New Password"
 						placeholder="New Password"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onInput={(e) => setPassword(e.target.value)}
 						error={
 							passwordError
 								? { content: passwordErrorMessage, pointing: 'below' }
@@ -184,7 +195,7 @@ function SignUp({ onAuthenticated }) {
 						label="Confirm Password"
 						placeholder="Confirm Password"
 						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
+						onInput={(e) => setConfirmPassword(e.target.value)}
 						error={
 							confirmPasswordError
 								? { content: confirmPasswordErrorMessage, pointing: 'below' }
@@ -199,7 +210,7 @@ function SignUp({ onAuthenticated }) {
 					label="Date of Birth"
 					placeholder="Date of Birth"
 					value={dob}
-					onChange={(e) => setDob(e.target.value)}
+					onInput={(e) => setDob(e.target.value)}
 					error={
 						dobError
 							? { content: 'Please enter a date of birth', pointing: 'below' }

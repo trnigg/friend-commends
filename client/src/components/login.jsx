@@ -55,7 +55,7 @@ function Login({ onAuthenticated }) {
 						type="text"
 						id="email"
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onInput={(e) => setEmail(e.target.value)}
 					/>
 				</Form.Field>
 				<Form.Field>
@@ -64,7 +64,7 @@ function Login({ onAuthenticated }) {
 						type="password"
 						id="password"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onInput={(e) => setPassword(e.target.value)}
 					/>
 				</Form.Field>
 				<Button type="submit">Login</Button>

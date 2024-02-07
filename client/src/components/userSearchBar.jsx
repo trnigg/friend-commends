@@ -10,7 +10,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 import _ from 'lodash'; // lodash allows for debouncing (delaying) of search requests and escaping special characters in regex
 import { Search, Button, Icon } from 'semantic-ui-react';
 import { QUERY_ALL } from '../utils/queries';
-import { ACCEPT_FRIEND_REQUEST } from '../utils/mutations';
+import { ACCEPT_FRIEND_REQUEST, SEND_FRIEND_REQUEST } from '../utils/mutations';
 
 import AuthService from '../utils/auth';
 
@@ -71,16 +71,19 @@ function UserSearchBar() {
 		// Add this function
 		setOpen(true);
 	};
-
-	// TODO: Fix the following funtionality - currently buttons in search don't work because results unfocus when clicked
+	// Get the mutation functions
 	const [acceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
+	const [sendFriendRequest] = useMutation(SEND_FRIEND_REQUEST);
 
-	const handleAcceptRequest = (fromUserId, event) => {
-		console.log('Accept request button clicked');
+	// Define the handlers
+	const handleAcceptRequest = (fromUserId) => {
+		acceptFriendRequest({ variables: { fromUserId, toUserId: userId } });
 	};
 
 	const handleSendRequest = (friendId) => {
-		console.log('Send request button clicked');
+		sendFriendRequest({
+			variables: { fromUserId: userId, toUserId: friendId },
+		});
 	};
 
 	// TODO: Move CSS to a separate file and remove inline styles

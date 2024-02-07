@@ -29,7 +29,7 @@ const recommendationTypeDefs = `
     tmdbID:String!
     overview:String
     poster_path:String
-    release_date:String
+    first_air_date:String
     AU_platforms:[String]
     createdAt:String
   }
@@ -57,6 +57,7 @@ const recommendationTypeDefs = `
   }
    type Query {
    recommendations: [Recommendation]
+   myRecommendations: User
    }
 
   type Mutation {

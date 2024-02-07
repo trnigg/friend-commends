@@ -85,25 +85,36 @@ export const QUERY_FRIEND_STATUS = gql`
 export const QUERY_FRIENREQ = gql`
 query friendRecommendations($userId: ID!) {
 	friendRecommendations(id: $userId) {
-    id
-    userName
+        userName
     firstName
     lastName
     email
-    friends {
-      id
-      userName
-      firstName
-      lastName
-    }
     recommendations {
       ... on Movie {
         id
+        type
         original_title
+        tmdbID
+        overview
+        poster_path
+        release_date
+        AU_platforms
+        createdAt
+        shareMessage
+        sharedAt
       }
       ... on TV {
         id
+        type
         original_name
+        tmdbID
+        overview
+        poster_path
+        release_date
+        AU_platforms
+        createdAt
+        shareMessage
+        sharedAt
       }
     }
   }

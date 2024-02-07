@@ -6,8 +6,10 @@ import { QUERY_USER } from '../utils/queries';
 import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
 import { QUERY_FRIENREQ  } from '../utils/queries';
+import { Link } from 'react-router-dom'
 
 import { useEffect, useState } from 'react';
+
 
 
 
@@ -30,7 +32,6 @@ function ForYou() {
 	let userDetails = {};
 	let friendsDetails = {};
 	const idNum = auth.getProfile();
-
 	const { loading: loading2, error: error2, data: data2 } = useQuery(QUERY_FRIENREQ, {
 		variables: { userId: idNum.data._id },
 
@@ -87,7 +88,7 @@ function ForYou() {
 							})}
 						</>
 					</div>
-					<Button >See more movie recommendations</Button>
+					<Button as='a' href='/Movies'>See more movie recommendations</Button>
 
 					<Header as="h2">TV Shows</Header>
 					<div className="tvBox">

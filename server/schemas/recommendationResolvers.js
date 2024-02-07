@@ -42,7 +42,12 @@ const recommendationResolvers = {
       if (context.user) {
         //console.log("args:", args.input);
         //console.log("context.user._id:", context.user._id);
-        const recommendation = await Recommendation.create(args.input);
+        //const recommendation = await Recommendation.create(args.input);
+        const recommendation = await Recommendation.findOneAndUpdate(
+          { tmdbID: args.input.tmdbID },
+          { ...args.input },
+          { upsert: true }
+        );
         //console.log("recommendation", recommendation);
 
         return await User.findOneAndUpdate(
@@ -57,7 +62,12 @@ const recommendationResolvers = {
       if (context.user) {
         //console.log("args:", args.input);
         //console.log("context.user._id:", context.user._id);
-        const recommendation = await Recommendation.create(args.input);
+        //const recommendation = await Recommendation.create(args.input);
+        const recommendation = await Recommendation.findOneAndUpdate(
+          { tmdbID: args.input.tmdbID },
+          { ...args.input },
+          { upsert: true }
+        );
         //console.log("recommendation", recommendation);
 
         return await User.findOneAndUpdate(

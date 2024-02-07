@@ -129,3 +129,9 @@ process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/[mern-boilerplate]'
 # STILL FOR ME TO ADD/CONFIGURE:
 
 - env and dotenv dev dependency
+
+
+
+
+Reference and attribute list
+https://speckyboy.com/free-cute-user-avatar-icon-set/

@@ -29,12 +29,14 @@ const recommendationResolvers = {
       }
       throw AuthenticationError;
     },
-    // movies: async (parent, args, context) => {
-    //   if (context.user) {
-    //     return Recommendation.find({ type: "Movie" });
-    //   }
-    //   throw AuthenticationError;
-    // },
+    myRecommendations: async (parent, args, context) => {
+      if (context.user) {
+        return User.findById(context.user._id)
+        .select("recommendations")
+        .populate("recommendations");
+      }
+      throw AuthenticationError;
+    },
   },
   Mutation: {
     //add Movie to users recommendation list
@@ -46,7 +48,8 @@ const recommendationResolvers = {
         const recommendation = await Recommendation.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
-          { upsert: true }
+          { upsert: true,
+            new: true },
         );
         //console.log("recommendation", recommendation);
 
@@ -66,7 +69,8 @@ const recommendationResolvers = {
         const recommendation = await Recommendation.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
-          { upsert: true }
+          { upsert: true,
+            new: true },
         );
         //console.log("recommendation", recommendation);
 

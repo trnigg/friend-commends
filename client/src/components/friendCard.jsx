@@ -19,36 +19,33 @@
 //NOTE: Can copy to implement user search and replace <a> tag with button to send friend request - "Add as a friend to see their recommendations"
 
 import {
-	CardMeta,
-	CardHeader,
-	CardDescription,
-	CardContent,
-	Card,
+	Item,
+	ItemImage,
+	ItemHeader,
+	ItemContent,
 	Icon,
-	Image,
+	ItemMeta,
+	ItemExtra,
 } from 'semantic-ui-react';
 
+// https://react.semantic-ui.com/views/item/#variations-link
 const FriendCard = ({ friend }) => (
-	<Card>
-		<Image
+	<Item>
+		<ItemImage
+			size="tiny"
 			src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-			wrapped
-			ui={false}
 		/>
-		<CardContent>
-			<CardHeader>{`${friend.firstName} ${friend.lastName}`}</CardHeader>
-			<CardMeta>
+		<ItemContent>
+			<ItemHeader>{`${friend.firstName} ${friend.lastName}`}</ItemHeader>
+			<ItemMeta>
 				<span className="username">{friend.userName}</span>
-			</CardMeta>
-			<CardDescription>{friend.bio || 'No bio available.'}</CardDescription>
-		</CardContent>
-		<CardContent extra>
-			<a>
+			</ItemMeta>
+			<ItemExtra>
 				<Icon name="thumbs up" />
 				<strong>0</strong> recommendations
-			</a>
-		</CardContent>
-	</Card>
+			</ItemExtra>
+		</ItemContent>
+	</Item>
 );
 
 export default FriendCard;

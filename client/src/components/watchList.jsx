@@ -13,7 +13,7 @@ import WatchItem from "./watchListItem";
 
 export default function WatchList() {
   const { loading, error, data } = useQuery(QUERY_MYWATCHLIST);
-
+    
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 

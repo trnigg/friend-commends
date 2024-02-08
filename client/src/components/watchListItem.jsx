@@ -13,6 +13,7 @@ import {
   Item,
   Label,
 } from "semantic-ui-react";
+import ShareModal from "./shareModal";
 
 export default function WatchItem(props) {
   //console.log("props:", props);
@@ -37,10 +38,7 @@ export default function WatchItem(props) {
           {platforms?.map((platform) => (
             <Label key={platform}>{platform}</Label>
           ))}
-          <Button primary floated="right">
-            Share
-            <Icon name="right chevron" />
-          </Button>
+          <ShareModal key={props.id} {...props}/>
         </ItemExtra>
       </ItemContent>
     </Item>

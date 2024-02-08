@@ -12,3 +12,11 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+
+
+/* TO BE DELETED
+Temporarily inserted this because Semantics was 
+using white color text on white background for Input fields */
+input{
+	color:#242424
+}

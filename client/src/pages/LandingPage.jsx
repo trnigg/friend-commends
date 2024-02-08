@@ -47,7 +47,7 @@ function LandingPage({ setIsLoggedIn }) {
 			/>{' '}
 			{/* Add your logo here */}
 			<p>This is a description of our app.</p>
-			<Segment>
+			<Segment raised>
 				{isLogin ? (
 					<Login onAuthenticated={handleAuth} />
 				) : (

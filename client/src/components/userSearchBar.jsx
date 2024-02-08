@@ -73,6 +73,7 @@ function UserSearchBar() {
 		if (value.length < 1) {
 			setSearchResults([]);
 			setIsLoading(false);
+			setOpen(false); // hid search results when back-spaced to be empty
 		} else {
 			setIsLoading(true);
 			search({ variables: { query: value } });

@@ -5,9 +5,8 @@ import { Header } from 'semantic-ui-react';
 import { QUERY_USER } from '../utils/queries';
 import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
-import { QUERY_FRIENREQ  } from '../utils/queries';
 import { Link } from 'react-router-dom'
-
+import { QUERY_FRIENREQ } from '../utils/queries';
 import { useEffect, useState } from 'react';
 
 
@@ -27,11 +26,12 @@ function ForYou() {
 	//   console.log('You are ' + type + ' years old!')
 	// })
 
-
+	console.log("Hello")
 
 	let userDetails = {};
 	let friendsDetails = {};
 	const idNum = auth.getProfile();
+	console.log(idNum.data._id)
 	const { loading: loading2, error: error2, data: data2 } = useQuery(QUERY_FRIENREQ, {
 		variables: { userId: idNum.data._id },
 
@@ -44,7 +44,7 @@ function ForYou() {
 	}
 	if (data&&data2)  {
 		userDetails = data;
-
+		console.log("Yellow")
 		friendsDetails = data2.friendRecommendations;
 		const friendArray = [];
 		friendsDetails.forEach((entry)=>{
@@ -65,18 +65,15 @@ function ForYou() {
 
 		return (
 			<div>
-				<Header as="h1">Welcome to your profile page</Header>
+				<Header as="h1">Welcome {userDetails.user.userName} to your profile page</Header>
 				<div>
-					<div height="400px">
-						<span>{userDetails.user.userName}</span>
-					</div>
 
 					<h2>
 						You have {userDetails.user.pendingFriendRequests.length} friend
 						requests
 					</h2>
 
-					<Header as="h2">Movies</Header>
+					<Header as="h2">Friends Movie Recommendations</Header>
 					<div className="movieBox">
 						<>
 							{movieRecommend.map(function (data) {
@@ -90,7 +87,7 @@ function ForYou() {
 					</div>
 					<Button as='a' href='/Movies'>See more movie recommendations</Button>
 
-					<Header as="h2">TV Shows</Header>
+					<Header as="h2">Friends TV Show Recommendations</Header>
 					<div className="tvBox">
 						<>
 							{tvRecommend.map(function (data) {

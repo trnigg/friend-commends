@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import CardExampleCard from "../components/CardPics";
+import MovieCard from "../components/movieCards";
 import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
@@ -89,7 +90,9 @@ function Movies() {
 							{date.map(function (data) {
 								return (
 									<div key={data.original_title}>
-										<CardExampleCard movietitle={data.original_title} />
+										<MovieCard 
+										movietitle={data.original_title}
+										friendRecommend={data.count} />
 									</div>
 								);
 							})}

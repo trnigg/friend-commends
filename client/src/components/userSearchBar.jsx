@@ -20,6 +20,8 @@ function UserSearchBar() {
 	const { data: { _id: userId } = {} } = AuthService.getProfile();
 	const [search, { data: searchData }] = useLazyQuery(QUERY_ALL);
 	const [searchResults, setSearchResults] = useState([]);
+	const [originalResults, setOriginalResults] = useState([]);
+
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -42,7 +44,6 @@ function UserSearchBar() {
 
 	useEffect(() => {
 		if (searchData?.users) {
-			console.log(searchData.users);
 			const re = new RegExp(_.escapeRegExp(searchQuery), 'i');
 			const isMatch = (result) => {
 				if (result.id === userId) {
@@ -50,7 +51,14 @@ function UserSearchBar() {
 				}
 				return re.test(result.firstName + ' ' + result.lastName);
 			};
-			setSearchResults(_.filter(searchData.users, isMatch));
+			const filteredResults = _.filter(searchData.users, isMatch);
+			setSearchResults(
+				filteredResults.map((result, index) => ({
+					title: result.firstName + ' ' + result.lastName,
+					id: index,
+				}))
+			);
+			setOriginalResults(filteredResults);
 			setIsLoading(false);
 		}
 	}, [searchData, searchQuery, userId]);
@@ -67,38 +75,37 @@ function UserSearchBar() {
 		}
 	};
 
-	const handleResultSelect = () => {
-		// Add this function
-		setOpen(true);
-	};
 	// Get the mutation functions
 	const [acceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 	const [sendFriendRequest] = useMutation(SEND_FRIEND_REQUEST);
 
 	// Define the handlers
-	const handleAcceptRequest = (fromUserId) => {
-		acceptFriendRequest({ variables: { fromUserId, toUserId: userId } });
+	const handleAcceptRequest = (index) => {
+		const { id: resultUserId } = originalResults[index];
+		acceptFriendRequest({
+			variables: { fromUserId: resultUserId, toUserId: userId },
+		});
 	};
 
-	const handleSendRequest = (friendId) => {
+	const handleSendRequest = (index) => {
+		const { id: resultUserId } = originalResults[index];
 		sendFriendRequest({
-			variables: { fromUserId: userId, toUserId: friendId },
+			variables: { fromUserId: userId, toUserId: resultUserId },
 		});
 	};
 
 	// TODO: Move CSS to a separate file and remove inline styles
 	// Configure how to render search results
-	const resultRenderer = ({
-		id: friendId,
-		firstName,
-		lastName,
-		userName,
-		sentFriendRequests,
-		pendingFriendRequests,
-		friends,
-		// The following are used to determine the status of the friend request and display the appropriate button/message,
-		// by checking if the user's id appears in the friends, sentFriendRequests, or pendingFriendRequests arrays of the user being searched
-	}) => {
+	const resultRenderer = ({ id }) => {
+		const {
+			id: resultUserId,
+			firstName,
+			lastName,
+			userName,
+			sentFriendRequests,
+			pendingFriendRequests,
+			friends,
+		} = originalResults[id];
 		let friendStatus;
 		if (friends.some((friend) => friend.id === userId)) {
 			friendStatus = 'FRIENDS';
@@ -150,16 +157,12 @@ function UserSearchBar() {
 						Request Sent
 					</Button>
 				) : friendStatus === 'REQUEST_RECEIVED' ? (
-					<Button
-						basic
-						color="green"
-						onClick={() => handleAcceptRequest(friendId)}
-					>
+					<Button basic color="green" onClick={() => handleAcceptRequest(id)}>
 						<Icon name="user plus" />
 						Accept their Request
 					</Button>
 				) : (
-					<Button onClick={() => handleSendRequest(friendId)}>
+					<Button onClick={() => handleSendRequest(id)}>
 						<Icon name="user plus" />
 						Send Friend Request
 					</Button>

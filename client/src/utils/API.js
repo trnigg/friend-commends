@@ -53,8 +53,13 @@ export const searchMovieSource = (id) => {
 
 	return fetch(url, options)
 		.then((res) => res.json())
-		.then((json) => console.log(json.results?.AU))
-		.catch((err) => console.error('error:' + err));
+    .then((json) => {
+			console.log(json);
+			return json;
+		})
+
+		// .then((json) => console.log(json.results?.AU))
+		// .catch((err) => console.error('error:' + err));
 };
 
 //search TV shows from TMDB by keyword

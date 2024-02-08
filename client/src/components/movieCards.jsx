@@ -6,9 +6,16 @@ import {
   Card,
   Icon,
   Image,
+  Popup,
+  Rating,
+  PopupHeader,
+  PopupContent,
 } from 'semantic-ui-react'
+import MovieFriendList from './movieFriendList'
 
 const MovieCard = (props) => (
+<Popup
+    trigger={
   <Card>
     <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
     <CardContent>
@@ -16,7 +23,7 @@ const MovieCard = (props) => (
       <CardMeta>
         <span className='date'>Joined in 2015</span>
       </CardMeta>
-      <CardDescription>
+      <CardDescription>       
         Matthew is a musician living in Nashville.
       </CardDescription>
     </CardContent>
@@ -27,6 +34,19 @@ const MovieCard = (props) => (
       </a>
     </CardContent>
   </Card>
+    }
+    >
+    <PopupHeader>This movie is</PopupHeader>
+    <PopupContent>
+        recommended by 
+        {props.friendArray.map((request) => (
+        <MovieFriendList 
+            key={request}
+            title={request}/>
+        ))}
+    </PopupContent>
+  </Popup>
+
 )
 
 export default MovieCard

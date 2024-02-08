@@ -63,8 +63,9 @@ function Friends() {
 							<HeaderSubheader>
 								{/* Pluralise if more not 1 friend */}
 								You have{' '}
-								<strong>{data.user.pendingFriendRequests.length}</strong> friend
-								request{data.user.pendingFriendRequests.length !== 1 ? 's' : ''}{' '}
+								<strong>{data.user.pendingFriendRequests.length}</strong>{' '}
+								friend-request
+								{data.user.pendingFriendRequests.length !== 1 ? 's' : ''}{' '}
 								awaiting your response.
 							</HeaderSubheader>
 						</HeaderContent>

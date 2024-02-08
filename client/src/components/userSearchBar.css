@@ -1,7 +1,7 @@
-.results > div:not(.button) {
+.user-search-bar .results > div:not(.button) {
 	pointer-events: none;
 }
 
-.results .button {
+.user-search-bar .results .button {
 	pointer-events: auto;
 }

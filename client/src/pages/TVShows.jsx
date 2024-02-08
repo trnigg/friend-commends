@@ -4,6 +4,7 @@
 
 // TODO: Currently, there is some in-line styling in the resultRenderer function. This should be moved to a CSS file.
 // Note, this also requires refining; images are not diplaysed consistently.
+// TODO: Also remove inline styles from the TVShows card
 
 // Poster path: http://image.tmdb.org/t/p/
 // https://www.themoviedb.org/talk/568e3711c3a36858fc002384
@@ -21,6 +22,12 @@ import {
 	Segment,
 	Image,
 	List,
+	Card,
+	CardContent,
+	Accordion,
+	Button,
+	Label,
+	CardMeta,
 } from 'semantic-ui-react';
 
 const initialState = {
@@ -51,6 +58,10 @@ function TVShows() {
 	const [selectedTVShow, setSelectedTVShow] = useState(null);
 	const [tvShowSource, setTVShowSource] = useState(null);
 
+	// This will be used to store the number of recommendations
+	// TODO also store the user who recommended it
+	const [recommendations, setRecommendations] = useState(0);
+
 	const timeoutRef = useRef();
 	const handleSearchChange = useCallback((e, data) => {
 		clearTimeout(timeoutRef.current);
@@ -68,7 +79,8 @@ function TVShows() {
 				const results = response.results.map((tvShow) => ({
 					title: tvShow.name,
 					description: tvShow.overview,
-					image: tvShow.poster_path,
+					posterImage: tvShow.poster_path,
+					backdropImage: tvShow.backdrop_path,
 					id: tvShow.id,
 				}));
 				dispatch({
@@ -89,17 +101,19 @@ function TVShows() {
 
 	const handleSelectTVShow = async (e, data) => {
 		dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title });
-		const tvShow = await searchTVByID(data.result.id);
-		setSelectedTVShow(tvShow);
+		// If we want more additional data:
+		// const tvShow = await searchTVByID(data.result.id);
+		// setSelectedTVShow(tvShow);
+		setSelectedTVShow(data.result);
 		const source = await searchTVSource(data.result.id);
 		setTVShowSource(source);
 	};
 
-	function resultRenderer({ image, title, description }) {
+	function resultRenderer({ posterImage, title, description }) {
 		return (
 			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				<Image
-					src={`http://image.tmdb.org/t/p/w185/${image}`}
+					src={`http://image.tmdb.org/t/p/w185/${posterImage}`}
 					alt={title}
 					style={{
 						marginRight: '10px',
@@ -123,6 +137,18 @@ function TVShows() {
 		);
 	}
 
+	// panels for the accordion
+	// requires ternary to check if the selectedTVShow is null;
+	// otherwise it will throw an error before a TV show is selected
+	const panels = [
+		{
+			key: 'description',
+			title: 'Description',
+			content: selectedTVShow ? selectedTVShow.description : '',
+		},
+		{ key: 'platforms', title: 'Platforms', content: tvShowSource || '' },
+	];
+
 	return (
 		<Container>
 			<h1>This is the TVShows page</h1>
@@ -140,17 +166,53 @@ function TVShows() {
 					value={value}
 					resultRenderer={resultRenderer}
 				/>
+				{selectedTVShow && (
+					<Card>
+						<CardContent>
+							<Card.Header>{selectedTVShow.title}</Card.Header>
+						</CardContent>
+						<Image
+							src={`http://image.tmdb.org/t/p/w342/${selectedTVShow.backdropImage}`}
+							wrapped
+							ui={false}
+							rounded // This is not working
+							style={{
+								marginLeft: '15px',
+								marginRight: '15px',
+								marginBottom: '15px',
+								borderRadius: '5px',
+							}}
+						/>
+						<CardMeta
+							style={{
+								display: 'flex',
+								alignItems: 'center',
+								marginLeft: '15px',
+								marginRight: '15px',
+								marginBottom: '15px',
+							}}
+						>
+							<Icon
+								name="thumbs up outline"
+								size="big"
+								style={{ marginRight: '10px' }}
+							/>
+							<div>Recommended by name1, name 2 and 4 other friends.</div>
+						</CardMeta>
+						<CardContent extra>
+							<Accordion defaultActiveIndex={0} panels={panels} />
+						</CardContent>
+						<CardContent
+							extra
+							style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
+						>
+							<Button circular icon="thumbs up" size="big" />
+							<Button circular icon="share" size="big" />
+							<Button circular icon="add" size="big" />
+						</CardContent>
+					</Card>
+				)}
 			</Segment>
-			{selectedTVShow && (
-				<div>
-					{/* Display selectedTVShow details */}
-					<h2>{selectedTVShow.name}</h2>
-					<p>{selectedTVShow.overview}</p>
-					{/* Display tvShowSource details */}
-					{tvShowSource && <p>Available on: {tvShowSource}</p>}
-					{/* Add buttons for adding to watchlist, recommended list, or sharing */}
-				</div>
-			)}
 		</Container>
 	);
 }

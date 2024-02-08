@@ -1,4 +1,6 @@
 import {
+	ButtonOr,
+	ButtonGroup,
 	CardMeta,
 	CardHeader,
 	CardDescription,
@@ -21,16 +23,17 @@ function FriendRequestCard({ request, onAccept, onReject }) {
 				</CardDescription>
 			</CardContent>
 			<CardContent extra>
-				<div className="ui two buttons">
-					<Button basic color="green" onClick={onAccept}>
+				<ButtonGroup>
+					<Button basic color="green" onClick={() => onAccept(request.id)}>
 						<Icon name="user plus" />
 						Accept
 					</Button>
-					<Button basic color="red" onClick={onReject}>
+					<ButtonOr />
+					<Button basic color="red" onClick={() => onReject(request.id)}>
 						<Icon name="user times" />
 						Decline
 					</Button>
-				</div>
+				</ButtonGroup>
 			</CardContent>
 		</Card>
 	);

@@ -19,6 +19,7 @@ function Movies() {
 	}
 	if(data2&&!date){
 		console.log(data2)
+		setUserData(data2);
 		const friendsDetails = data2.friendRecommendations;
 		const friendArray = [];
 		friendsDetails.forEach((entry)=>{
@@ -27,8 +28,6 @@ function Movies() {
 		const workingArray = friendArray.flat();
 		const movieRecommend = workingArray
 			.filter((entry) => entry.__typename === 'Movie');
-		// console.log(movieRecommend)
-		// setDate([...movieRecommend])
 		const dateClone = movieRecommend;
 		const newDateClone = [...new Set(dateClone)];
 		const newDataCloneArray = [];
@@ -38,9 +37,6 @@ function Movies() {
 				console.log(newDataCloneArray)
 			});
 			setDate([...newDataCloneArray]);
-
-		
-
 	}
 
 	const recent = () => {
@@ -53,17 +49,22 @@ function Movies() {
 		const dateClone = date;
 		const recentArray = dateClone.sort((a,b) => b.count - a.count);
 		setDate([...recentArray]);
-		// const dateClone = movieRecommend;
-		// const newDateClone = [...new Set(dateClone)];
-		// const newDataCloneArray = [];
-		// 	newDateClone.forEach((y) => {
-		// 		const numbER = dateClone.filter(x => x==y).length
-		// 		newDataCloneArray.push({...y, count: numbER})
-		// 		console.log(newDataCloneArray)
-		// 	});
-		// 	setDate([...newDataCloneArray]);
-		console.log("Aqua")
-		
+	}
+
+	const friendOmmend =(id) => {
+		console.log(id)
+		const newUsers = userData.friendRecommendations;
+		const loopArray = [];
+		newUsers.forEach((friend)=>{
+			friend.recommendations.forEach((recommendation)=>{
+				if(recommendation.tmdbID === id){
+					loopArray.push(friend.userName)
+				}
+			})
+		})
+			
+
+		return loopArray
 	}
 
 	const sortBy =()=>{
@@ -91,7 +92,8 @@ function Movies() {
 									<div key={data.original_title}>
 										<MovieCard 
 										movietitle={data.original_title}
-										friendRecommend={data.count} />
+										friendRecommend={data.count}
+										friendArray={friendOmmend(data.tmdbID)} />
 									</div>
 								);
 							})}

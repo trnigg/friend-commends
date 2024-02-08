@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const MUTATION_ADDMOVIETOWATCHLIST = gql`
-mutation AddMovieToWatch($addMovieToWatchInput: MovieInput!) {
+  mutation AddMovieToWatch($addMovieToWatchInput: MovieInput!) {
     addMovieToWatch(input: $addMovieToWatchInput) {
       watchList {
         id
@@ -24,10 +24,11 @@ mutation AddMovieToWatch($addMovieToWatchInput: MovieInput!) {
         }
       }
     }
-  }`;
+  }
+`;
 
 export const MUTATION_ADDTVTOWATCHLIST = gql`
-mutation AddTVToWatch($addTvToWatchInput2: TVInput!) {
+  mutation AddTVToWatch($addTvToWatchInput2: TVInput!) {
     addTVToWatch(input: $addTvToWatchInput2) {
       watchList {
         id
@@ -50,4 +51,27 @@ mutation AddTVToWatch($addTvToWatchInput2: TVInput!) {
         }
       }
     }
-  }`;
+  }
+`;
+
+export const MUTATION_SHAREMOVIE = gql`
+  mutation ShareMovie($shareMovieInput: shareMovieInput!) {
+    shareMovie(input: $shareMovieInput) {
+      id
+      type
+      sharedAt
+      shareMessage
+    }
+  }
+`;
+
+export const MUTATION_SHARETV = gql`
+  mutation ShareTV($shareTvInput2: shareTVInput!) {
+    shareTV(input: $shareTvInput2) {
+      id
+      type
+      shareMessage
+      sharedAt
+    }
+  }
+`;

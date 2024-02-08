@@ -17,14 +17,17 @@ import AuthService from '../utils/auth';
 import './userSearchBar.css';
 
 function UserSearchBar() {
+	// Get the user ID from the profile
 	const { data: { _id: userId } = {} } = AuthService.getProfile();
-	const [search, { data: searchData }] = useLazyQuery(QUERY_ALL);
-	const [searchResults, setSearchResults] = useState([]);
-	const [originalResults, setOriginalResults] = useState([]);
 
+	// Define state variables and query/mutation hooks
+	// https://stackoverflow.com/questions/62632360/apollo-client-lazy-refetch
+	// useLazyQuery is used to fetch data on demand, rather than at the start of the component rendering
+	const [search, { data: searchData, refetch }] = useLazyQuery(QUERY_ALL);
+	const [searchResults, setSearchResults] = useState([]);
+	const [originalResults, setOriginalResults] = useState([]); // workaround for not being able to get id from searchResults
 	const [searchQuery, setSearchQuery] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-
 	const [open, setOpen] = useState(false); // control the state of search results
 	const searchRef = useRef(null); // Add this line
 
@@ -42,6 +45,7 @@ function UserSearchBar() {
 		};
 	}, []);
 
+	// Handle changes in search data
 	useEffect(() => {
 		if (searchData?.users) {
 			const re = new RegExp(_.escapeRegExp(searchQuery), 'i');
@@ -79,19 +83,21 @@ function UserSearchBar() {
 	const [acceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 	const [sendFriendRequest] = useMutation(SEND_FRIEND_REQUEST);
 
-	// Define the handlers
-	const handleAcceptRequest = (index) => {
+	// Mutations from the search results, refetch the data after the mutation to update the UI
+	const handleAcceptRequest = async (index) => {
 		const { id: resultUserId } = originalResults[index];
-		acceptFriendRequest({
+		await acceptFriendRequest({
 			variables: { fromUserId: resultUserId, toUserId: userId },
 		});
+		refetch();
 	};
 
-	const handleSendRequest = (index) => {
+	const handleSendRequest = async (index) => {
 		const { id: resultUserId } = originalResults[index];
-		sendFriendRequest({
+		await sendFriendRequest({
 			variables: { fromUserId: userId, toUserId: resultUserId },
 		});
+		refetch();
 	};
 
 	// TODO: Move CSS to a separate file and remove inline styles
@@ -106,6 +112,8 @@ function UserSearchBar() {
 			pendingFriendRequests,
 			friends,
 		} = originalResults[id];
+		// Check if the user is already friends, has sent a request, or has received a request
+		// done by checking if the user ID is in the friends, sentFriendRequests, or pendingFriendRequests arrays of the search result
 		let friendStatus;
 		if (friends.some((friend) => friend.id === userId)) {
 			friendStatus = 'FRIENDS';
@@ -117,6 +125,8 @@ function UserSearchBar() {
 			friendStatus = 'NOT_FRIENDS';
 		}
 
+		// how to render the search result
+		// TODO: remove inline styles
 		return (
 			<div
 				style={{

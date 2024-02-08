@@ -18,7 +18,6 @@ function Movies() {
 		return <div>Please Wait......</div>
 	}
 	if(data2&&!date){
-		console.log(data2)
 		setUserData(data2);
 		const friendsDetails = data2.friendRecommendations;
 		const friendArray = [];
@@ -34,7 +33,6 @@ function Movies() {
 			newDateClone.forEach((y) => {
 				const numbER = dateClone.filter(x => x==y).length
 				newDataCloneArray.push({...y, count: numbER})
-				console.log(newDataCloneArray)
 			});
 			setDate([...newDataCloneArray]);
 	}
@@ -52,7 +50,6 @@ function Movies() {
 	}
 
 	const friendOmmend =(id) => {
-		console.log(id)
 		const newUsers = userData.friendRecommendations;
 		const loopArray = [];
 		newUsers.forEach((friend)=>{
@@ -75,7 +72,6 @@ function Movies() {
 
 	}
 	if(date){
-		console.log(date)
 	return (
 		<div>
 			<h1>This is the Movies page</h1>

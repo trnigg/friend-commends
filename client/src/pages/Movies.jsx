@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import CardExampleCard from "../components/CardPics";
 import MovieCard from "../components/movieCards";
 import { QUERY_FRIENREQ } from "../utils/queries";

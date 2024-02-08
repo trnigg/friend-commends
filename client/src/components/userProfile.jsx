@@ -23,7 +23,7 @@ const UserCard = (props) => {
 
   return (
     <Card color='teal' >
-      <Image src="avatars/24-girl.svg" wrapped ui={false} />
+      <Image src="avatars/default_avatar.svg" wrapped ui={false} />
       <CardContent>
         <CardHeader>{`${firstName} ${lastName}`}</CardHeader>
         <CardMeta>

@@ -5,7 +5,7 @@ import SendRequest from '../components/sendRequest';
 import AcceptRequest from '../components/acceptRequest';
   
 
-function Indiv_Shows(){
+function DeleteUser(){
     const [ deleteUser, {error, data}] = useMutation(MUTATION_DELETEUSER);
 
 
@@ -41,4 +41,4 @@ function Indiv_Shows(){
     )
 }
 
-export default Indiv_Shows;
+export default DeleteUser;

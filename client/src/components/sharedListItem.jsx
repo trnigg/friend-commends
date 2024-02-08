@@ -13,6 +13,7 @@ import {
   Item,
   Label,
 } from "semantic-ui-react";
+import ShareModal from "./shareModal";
 import { useMutation } from "@apollo/client";
 import {
   MUTATION_ADDMOVIETOWATCHLIST,
@@ -44,11 +45,16 @@ export default function SharedItem(props) {
 
   const [addMovieToWatch, { error: movieErr }] = useMutation(MUTATION_ADDMOVIETOWATCHLIST,{
     refetchQueries: [
-      QUERY_MYWATCHLIST, // DocumentNode object parsed with gql
+      QUERY_MYWATCHLIST, // Query to be refecthed
       'MyWatchList' // Query name
     ],
   });
-  const [addTVToWatch, { error: tvErr }] = useMutation(MUTATION_ADDTVTOWATCHLIST);
+  const [addTVToWatch, { error: tvErr }] = useMutation(MUTATION_ADDTVTOWATCHLIST,{
+    refetchQueries: [
+      QUERY_MYWATCHLIST, // Query to be refecthed
+      'MyWatchList' // Query name
+    ],
+  });
 
   const handleWatchOnClick = async () => {
     //console.log("props.share",props.share)
@@ -91,7 +97,7 @@ export default function SharedItem(props) {
 
       try {
         const { tvData } = await addTVToWatch({
-          variables: { a: {newWatchItem}  },
+          variables: { addTvToWatchInput2: {...newWatchItem}  },
         });
         console.log("tvData:",tvData)
       } catch (err) {
@@ -126,17 +132,19 @@ export default function SharedItem(props) {
           {platforms.map((platform) => (
             <Label key={platform}>{platform}</Label>
           ))}
-          <Button primary floated="right">
+          {/* <Button primary floated="right">
             Share
             <Icon name="right chevron" />
-          </Button>
+          </Button> */}
+          <ShareModal key={props.id} {...props.share}/>
           <div>
             <Button
               primary
               disabled={watchList.includes(tmdbID)}
               onClick={() => handleWatchOnClick()}
             >
-              Add to watch list
+              {watchList.includes(tmdbID)?'Added!'
+                          : 'Add to your watch list!'}
             </Button>
           </div>
         </ItemExtra>

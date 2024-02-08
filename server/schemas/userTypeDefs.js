@@ -50,7 +50,7 @@ const userTypeDefs = `
   type Query {
     users: [User]
     user(id: ID!): User
-    friends(id: ID!): [User]
+    friends: User
     pendingFriendRequests(id: ID!): [User]
     sentFriendRequests(id: ID!): [User]
     friendRecommendations(id: ID!): [User]

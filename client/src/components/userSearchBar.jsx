@@ -36,6 +36,7 @@ function UserSearchBar() {
 		const handleClickOutside = (event) => {
 			if (searchRef.current && !searchRef.current.contains(event.target)) {
 				setOpen(false);
+				setSearchQuery(''); // Reset the search query
 			}
 		};
 
@@ -186,7 +187,7 @@ function UserSearchBar() {
 	// https://react.semantic-ui.com/modules/search/
 
 	return (
-		<div ref={searchRef}>
+		<div className="user-search-bar" ref={searchRef}>
 			<Search
 				fluid
 				loading={isLoading}

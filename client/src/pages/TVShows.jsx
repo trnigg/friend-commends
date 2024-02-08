@@ -4,7 +4,9 @@
 
 // TODO: Currently, there is some in-line styling in the resultRenderer function. This should be moved to a CSS file.
 // Note, this also requires refining; images are not diplaysed consistently.
-// TODO: Also remove inline styles from the TVShows card
+// TODO: Also remove inline styles from the TVShows card and Accordion components
+
+// In the future, adding transition to the TVShows card and Accordion components would be nice for user experience
 
 // Poster path: http://image.tmdb.org/t/p/
 // https://www.themoviedb.org/talk/568e3711c3a36858fc002384
@@ -101,12 +103,22 @@ function TVShows() {
 
 	const handleSelectTVShow = async (e, data) => {
 		dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title });
-		// If we want more additional data:
-		// const tvShow = await searchTVByID(data.result.id);
-		// setSelectedTVShow(tvShow);
 		setSelectedTVShow(data.result);
+
 		const source = await searchTVSource(data.result.id);
-		setTVShowSource(source);
+		// By default, we will use the Australian region
+		// In the future, we can add a user setting to change this and add it to the user's schema
+		const userRegion = 'AU';
+
+		if (source.results[userRegion]) {
+			// Sort the providers by display priority, a default field from the API
+			// lower numbers are higher priority
+			const providers = source.results[userRegion].flatrate;
+			providers.sort((a, b) => a.display_priority - b.display_priority);
+			setTVShowSource(providers);
+		} else {
+			setTVShowSource([]);
+		}
 	};
 
 	function resultRenderer({ posterImage, title, description }) {
@@ -146,7 +158,26 @@ function TVShows() {
 			title: 'Description',
 			content: selectedTVShow ? selectedTVShow.description : '',
 		},
-		{ key: 'platforms', title: 'Platforms', content: tvShowSource || '' },
+		{
+			key: 'stream',
+			title: 'Stream',
+			content: {
+				content:
+					tvShowSource &&
+					tvShowSource.map((provider) => (
+						<Label
+							key={provider.provider_id}
+							image
+							style={{ marginBottom: '4px' }}
+						>
+							<img
+								src={`http://image.tmdb.org/t/p/w92/${provider.logo_path}`}
+							/>
+							{provider.provider_name}
+						</Label>
+					)),
+			},
+		},
 	];
 
 	return (

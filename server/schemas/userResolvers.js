@@ -70,13 +70,13 @@ const userResolvers = {
       throw AuthenticationError;
     },
     // Query to find list of users friends
-    friends: async (parent, { id }, context) => {
+    friends: async (parent, args, context) => {
       if (context.user) {
-        const user = await User.findById(id).populate(
+        const user = await User.findById(context.user._id).populate(
           "friends",
           "-password -__v"
         );
-        return user.friends;
+        return user;
       }
       throw AuthenticationError;
     },

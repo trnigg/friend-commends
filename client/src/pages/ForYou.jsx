@@ -5,9 +5,8 @@ import { Header } from 'semantic-ui-react';
 import { QUERY_USER } from '../utils/queries';
 import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
-import { Link } from 'react-router-dom'
 import { QUERY_FRIENREQ } from '../utils/queries';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 
 
 

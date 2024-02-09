@@ -58,7 +58,7 @@ const userTypeDefs = `
 
   type Mutation {
     addUser(input: UserInput!): Auth
-    updateUser(id: ID!, user: UserUpdateInput!): User
+    updateUser(input: UserUpdateInput!): User
     deleteUser(id: ID!): User
     login(input: LoginInput!): Auth
     sendFriendRequest(fromUserId: ID!, toUserId: ID!): User

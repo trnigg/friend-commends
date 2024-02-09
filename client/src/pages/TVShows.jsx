@@ -13,9 +13,10 @@
 // NOTE: These are the known poster_path sizes: "w92", "w154", "w185", "w342", "w500", "w780", or "original"
 // so combined, for mobile eg http://image.tmdb.org/t/p/w185/ + poster_path
 
-import { useReducer, useRef, useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Search } from 'semantic-ui-react';
 import { searchTVsByQuery, searchTVByID, searchTVSource } from '../utils/API';
+import ContentSearch from '../components/contentSearch';
 import {
 	Header,
 	HeaderContent,
@@ -32,31 +33,7 @@ import {
 	CardMeta,
 } from 'semantic-ui-react';
 
-const initialState = {
-	loading: false,
-	results: [],
-	value: '',
-};
-
-function reducer(state, action) {
-	switch (action.type) {
-		case 'CLEAN_QUERY':
-			return initialState;
-		case 'START_SEARCH':
-			return { ...state, loading: true, value: action.query };
-		case 'FINISH_SEARCH':
-			return { ...state, loading: false, results: action.results };
-		case 'UPDATE_SELECTION':
-			return { ...state, value: action.selection };
-
-		default:
-			throw new Error();
-	}
-}
-
 function TVShows() {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const { loading, results, value } = state;
 	const [selectedTVShow, setSelectedTVShow] = useState(null);
 	const [tvShowSource, setTVShowSource] = useState(null);
 
@@ -72,62 +49,15 @@ function TVShows() {
 	// condition/state to display a message if no streaming is available in user's region
 	const [noStreamingAvailable, setNoStreamingAvailable] = useState(false);
 
-	const timeoutRef = useRef();
-
-	const handleSearchChange = useCallback((e, data) => {
-		clearTimeout(timeoutRef.current);
-		dispatch({ type: 'START_SEARCH', query: data.value });
-
-		timeoutRef.current = setTimeout(async () => {
-			if (data.value.length === 0) {
-				dispatch({ type: 'CLEAN_QUERY' });
-				return;
-			}
-
-			try {
-				const response = await searchTVsByQuery(data.value);
-				console.log(response);
-				const results = response.results.slice(0, 5).map((tvShow) => ({
-					title: tvShow.name,
-					description: tvShow.overview,
-					posterImage: tvShow.poster_path,
-					backdropImage: tvShow.backdrop_path,
-					id: tvShow.id,
-				}));
-
-				// If there are more results, adds final result that prompts the user to keep typing
-				if (response.results.length > 5) {
-					results.push({
-						title: 'Keep typing to see more results...',
-						description: '',
-						posterImage: '',
-						backdropImage: '',
-						id: '',
-					});
-				}
-				dispatch({
-					type: 'FINISH_SEARCH',
-					results,
-				});
-			} catch (error) {
-				console.error('Failed to search TVs by query', error);
-			}
-		}, 300);
-	}, []);
-
-	// for button to clear search (this will also remove the card)
-	const handleClearSearch = () => {
-		// clears search bar
-		dispatch({ type: 'CLEAN_QUERY' });
-		// this will remove card
-		setSelectedTVShow(null);
+	const handleSearch = async (query) => {
+		try {
+			const data = await searchTVsByQuery(query);
+			console.log('data', data); // Log the parsed data
+			return data; // return the parsed data
+		} catch (error) {
+			console.error('Failed to search TVs by query', error);
+		}
 	};
-
-	useEffect(() => {
-		return () => {
-			clearTimeout(timeoutRef.current);
-		};
-	}, []);
 
 	const handleSelectTVShow = async (e, data) => {
 		// If the selected result is the "Keep typing..." message, do nothing
@@ -159,36 +89,6 @@ function TVShows() {
 			setNoStreamingAvailable(true); // Set the noStreamingAvailable state to true
 		}
 	};
-
-	function resultRenderer({ posterImage, title, description }) {
-		return (
-			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-				{posterImage && (
-					<Image
-						src={`http://image.tmdb.org/t/p/w185/${posterImage}`}
-						alt={title}
-						style={{
-							marginRight: '10px',
-							height: '100%',
-							objectFit: 'cover',
-						}}
-					/>
-				)}
-				<List>
-					<List.Item>
-						<List.Content>
-							<List.Header>{title}</List.Header>
-							<List.Description>
-								{description.length > 200
-									? description.slice(0, 200) + '...'
-									: description}
-							</List.Description>
-						</List.Content>
-					</List.Item>
-				</List>
-			</div>
-		);
-	}
 
 	// panels for the accordion
 	// requires ternary to check if the selectedTVShow is null;
@@ -231,31 +131,7 @@ function TVShows() {
 					<Icon name="tv" />
 					<HeaderContent>Search for a show</HeaderContent>
 				</Header>
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'space-between',
-						alignItems: 'center',
-					}}
-				>
-					<Search
-						fluid
-						loading={loading}
-						onResultSelect={handleSelectTVShow}
-						onSearchChange={handleSearchChange}
-						results={results}
-						value={value}
-						resultRenderer={resultRenderer}
-						style={{ flex: 1 }}
-					/>
-					<Button
-						circular
-						basic
-						color="red"
-						icon="close"
-						onClick={handleClearSearch}
-					/>
-				</div>
+				<ContentSearch handleSearch={handleSearch} />
 				{selectedTVShow && (
 					<Card>
 						<CardContent>

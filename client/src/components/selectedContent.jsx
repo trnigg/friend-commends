@@ -11,7 +11,7 @@ import {
 
 function SelectedContent({
 	selectedContent,
-	source,
+	contentSource,
 	noStreamingAvailable,
 	activeIndex,
 	setActiveIndex,
@@ -32,8 +32,8 @@ function SelectedContent({
 			content: {
 				content: noStreamingAvailable
 					? 'This content is not available in your region.'
-					: source &&
-					  source.map((provider) => (
+					: contentSource &&
+					  contentSource.map((provider) => (
 							<Label
 								key={provider.provider_id}
 								image

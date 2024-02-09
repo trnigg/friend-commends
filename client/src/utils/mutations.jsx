@@ -143,3 +143,11 @@ export const SEND_FRIEND_REQUEST = gql`
 		}
 	}
 `;
+
+export const ADD_TV_RECOMMENDATION = gql`
+	mutation addTVRecommend($input: TVInput!) {
+		addTVRecommend(input: $input) {
+		userName
+		}
+	}
+`;

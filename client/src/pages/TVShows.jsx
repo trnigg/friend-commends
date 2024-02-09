@@ -38,7 +38,7 @@ const initialState = {
 	value: '',
 };
 
-function exampleReducer(state, action) {
+function reducer(state, action) {
 	switch (action.type) {
 		case 'CLEAN_QUERY':
 			return initialState;
@@ -55,7 +55,7 @@ function exampleReducer(state, action) {
 }
 
 function TVShows() {
-	const [state, dispatch] = useReducer(exampleReducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState);
 	const { loading, results, value } = state;
 	const [selectedTVShow, setSelectedTVShow] = useState(null);
 	const [tvShowSource, setTVShowSource] = useState(null);
@@ -64,7 +64,13 @@ function TVShows() {
 	// TODO also store the user who recommended it
 	const [recommendations, setRecommendations] = useState(0);
 
+	// used in the accordion to keep track of the active index and reset on new search
+	// activeIndex is the index of the active panel
+	// -1 means no panels are open
+	const [activeIndex, setActiveIndex] = useState(-1);
+
 	const timeoutRef = useRef();
+
 	const handleSearchChange = useCallback((e, data) => {
 		clearTimeout(timeoutRef.current);
 		dispatch({ type: 'START_SEARCH', query: data.value });
@@ -95,6 +101,14 @@ function TVShows() {
 		}, 300);
 	}, []);
 
+	// for button to clear search (this will also remove the card)
+	const handleClearSearch = () => {
+		// clears search bar
+		dispatch({ type: 'CLEAN_QUERY' });
+		// this will remove card
+		setSelectedTVShow(null);
+	};
+
 	useEffect(() => {
 		return () => {
 			clearTimeout(timeoutRef.current);
@@ -102,6 +116,8 @@ function TVShows() {
 	}, []);
 
 	const handleSelectTVShow = async (e, data) => {
+		// reset the active index to close the accordion panels
+		setActiveIndex(-1);
 		dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title });
 		setSelectedTVShow(data.result);
 
@@ -197,6 +213,7 @@ function TVShows() {
 					value={value}
 					resultRenderer={resultRenderer}
 				/>
+				<Button circular icon="close" onClick={handleClearSearch} />
 				{selectedTVShow && (
 					<Card>
 						<CardContent>
@@ -228,10 +245,21 @@ function TVShows() {
 								size="big"
 								style={{ marginRight: '10px' }}
 							/>
-							<div>Recommended by name1, name 2 and 4 other friends.</div>
+							<div>
+								{' '}
+								Recommended by <strong>name1</strong>, <strong>name2</strong>{' '}
+								and <strong>4 other friends</strong>.
+							</div>
 						</CardMeta>
 						<CardContent extra>
-							<Accordion defaultActiveIndex={0} panels={panels} />
+							<Accordion
+								activeIndex={activeIndex}
+								onTitleClick={(e, { index }) =>
+									setActiveIndex(index === activeIndex ? -1 : index)
+								}
+								defaultActiveIndex={-1}
+								panels={panels}
+							/>
 						</CardContent>
 						<CardContent
 							extra

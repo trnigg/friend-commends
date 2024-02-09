@@ -3,12 +3,7 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(),'');
-    return{
-    define: {
-      'process.env.API_BEARER_TOKEN': JSON.stringify('eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZjJiN2ZmOTBmNTAyYmNjNThlYTdhNDFkY2I1NmY0ZiIsInN1YiI6IjY1YmI2NzY4NzY0NmZkMDE2M2JkNjNmZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.nX_rJ4wKwRyqwUdyHNSxC2QSwq2GTG3Qm30KW5g3Gmk')
-    },
+export default defineConfig({
   plugins: [
     react(),
     VitePWA({
@@ -46,4 +41,4 @@ export default defineConfig(({ mode }) => {
       },
     },
   },
-}});
+});

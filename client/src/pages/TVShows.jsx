@@ -151,15 +151,17 @@ function TVShows() {
 	function resultRenderer({ posterImage, title, description }) {
 		return (
 			<div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-				<Image
-					src={`http://image.tmdb.org/t/p/w185/${posterImage}`}
-					alt={title}
-					style={{
-						marginRight: '10px',
-						height: '100%',
-						objectFit: 'cover',
-					}}
-				/>
+				{posterImage && (
+					<Image
+						src={`http://image.tmdb.org/t/p/w185/${posterImage}`}
+						alt={title}
+						style={{
+							marginRight: '10px',
+							height: '100%',
+							objectFit: 'cover',
+						}}
+					/>
+				)}
 				<List>
 					<List.Item>
 						<List.Content>
@@ -245,18 +247,20 @@ function TVShows() {
 						<CardContent>
 							<Card.Header>{selectedTVShow.title}</Card.Header>
 						</CardContent>
-						<Image
-							src={`http://image.tmdb.org/t/p/w342/${selectedTVShow.backdropImage}`}
-							wrapped
-							ui={false}
-							rounded // This is not working
-							style={{
-								marginLeft: '15px',
-								marginRight: '15px',
-								marginBottom: '15px',
-								borderRadius: '5px',
-							}}
-						/>
+						{selectedTVShow.backdropImage && (
+							<Image
+								src={`http://image.tmdb.org/t/p/w342/${selectedTVShow.backdropImage}`}
+								wrapped
+								ui={false}
+								rounded // This is not working
+								style={{
+									marginLeft: '15px',
+									marginRight: '15px',
+									marginBottom: '15px',
+									borderRadius: '5px',
+								}}
+							/>
+						)}
 						<CardMeta
 							style={{
 								display: 'flex',

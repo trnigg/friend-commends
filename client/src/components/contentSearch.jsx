@@ -1,30 +1,7 @@
-import { useReducer, useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { Search, Button, Image, List } from 'semantic-ui-react';
 
-const initialState = {
-	loading: false,
-	results: [],
-	value: '',
-};
-
-function reducer(state, action) {
-	switch (action.type) {
-		case 'CLEAN_QUERY':
-			return initialState;
-		case 'START_SEARCH':
-			return { ...state, loading: true, value: action.query };
-		case 'FINISH_SEARCH':
-			return { ...state, loading: false, results: action.results };
-		case 'UPDATE_SELECTION':
-			return { ...state, value: action.selection };
-
-		default:
-			throw new Error();
-	}
-}
-
-const ContentSearch = ({ onResultSelect, handleSearch }) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+const ContentSearch = ({ state, dispatch, onResultSelect, handleSearch }) => {
 	const { loading, results, value } = state;
 
 	const timeoutRef = useRef();
@@ -123,7 +100,7 @@ const ContentSearch = ({ onResultSelect, handleSearch }) => {
 			<Search
 				fluid
 				loading={loading}
-				onResultSelect={onResultSelect}
+				onResultSelect={(e, data) => onResultSelect(e, data.result)}
 				onSearchChange={handleSearchChange}
 				results={results}
 				value={value}

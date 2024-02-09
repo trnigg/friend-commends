@@ -134,6 +134,7 @@ function TVShows() {
 	}, []);
 
 	const handleSelectTVShow = async (e, data) => {
+		console.log(data)
 		// If the selected result is the "Keep typing..." message, do nothing
 		if (data.result.title === 'Keep typing to see more results...') {
 			return;
@@ -174,7 +175,8 @@ function TVShows() {
 					type: "TV",
 					tmdbID: newNumber,
 					overview: selectedTVShow.description,
-					original_name: selectedTVShow.title
+					original_name: selectedTVShow.title,
+					poster_path: selectedTVShow.posterImage
 					}					
 				}
 			})

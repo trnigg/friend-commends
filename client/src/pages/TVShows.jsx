@@ -58,8 +58,8 @@ function reducer(state, action) {
 
 function TVShows() {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const [selectedTVShow, setSelectedTVShow] = useState(null);
-	const [tvShowSource, setTVShowSource] = useState(null);
+	const [selectedContent, setSelectedContent] = useState(null);
+	const [contentSource, setContentSource] = useState(null);
 
 	// This will be used to store the number of recommendations
 	// TODO also store the user who recommended it
@@ -82,7 +82,7 @@ function TVShows() {
 		}
 	};
 
-	const handleSelectTVShow = async (e, data) => {
+	const handleSelectContent = async (e, data) => {
 		console.log(data); // Log the data
 
 		// If the selected result is the "Keep typing..." message, do nothing
@@ -92,7 +92,7 @@ function TVShows() {
 
 		setActiveIndex(-1);
 		dispatch({ type: 'UPDATE_SELECTION', selection: data.title });
-		setSelectedTVShow(data);
+		setSelectedContent(data);
 
 		const source = await searchTVSource(data.id);
 		const userRegion = 'AU';
@@ -120,11 +120,12 @@ function TVShows() {
 					state={state}
 					dispatch={dispatch}
 					handleSearch={handleSearch}
-					onResultSelect={handleSelectTVShow}
+					onResultSelect={handleSelectContent}
+					setSelectedContent={setSelectedContent}
 				/>
 				<SelectedContent
-					selectedContent={selectedTVShow}
-					source={tvShowSource}
+					selectedContent={selectedContent}
+					contentSource={contentSource}
 					noStreamingAvailable={noStreamingAvailable}
 					activeIndex={activeIndex}
 					setActiveIndex={setActiveIndex}

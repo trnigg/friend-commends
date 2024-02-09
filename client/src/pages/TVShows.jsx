@@ -69,6 +69,9 @@ function TVShows() {
 	// -1 means no panels are open
 	const [activeIndex, setActiveIndex] = useState(-1);
 
+	// condition/state to display a message if no streaming is available in user's region
+	const [noStreamingAvailable, setNoStreamingAvailable] = useState(false);
+
 	const timeoutRef = useRef();
 
 	const handleSearchChange = useCallback((e, data) => {
@@ -127,6 +130,10 @@ function TVShows() {
 	}, []);
 
 	const handleSelectTVShow = async (e, data) => {
+		// If the selected result is the "Keep typing..." message, do nothing
+		if (data.result.title === 'Keep typing to see more results...') {
+			return;
+		}
 		// reset the active index to close the accordion panels
 		setActiveIndex(-1);
 		dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title });
@@ -137,14 +144,19 @@ function TVShows() {
 		// In the future, we can add a user setting to change this and add it to the user's schema
 		const userRegion = 'AU';
 
+		// If there are results for the user's region, set the TVShowSource state
+		// Otherwise, set the noStreamingAvailable state to true
+		// this will display a message to the user
 		if (source.results[userRegion]) {
 			// Sort the providers by display priority, a default field from the API
 			// lower numbers are higher priority
 			const providers = source.results[userRegion].flatrate;
 			providers.sort((a, b) => a.display_priority - b.display_priority);
 			setTVShowSource(providers);
+			setNoStreamingAvailable(false); // Reset the noStreamingAvailable state
 		} else {
 			setTVShowSource([]);
+			setNoStreamingAvailable(true); // Set the noStreamingAvailable state to true
 		}
 	};
 
@@ -181,6 +193,7 @@ function TVShows() {
 	// panels for the accordion
 	// requires ternary to check if the selectedTVShow is null;
 	// otherwise it will throw an error before a TV show is selected
+	// renders the description and streaming providers, if available, else displays a message
 	const panels = [
 		{
 			key: 'description',
@@ -191,20 +204,21 @@ function TVShows() {
 			key: 'stream',
 			title: 'Stream',
 			content: {
-				content:
-					tvShowSource &&
-					tvShowSource.map((provider) => (
-						<Label
-							key={provider.provider_id}
-							image
-							style={{ marginBottom: '4px' }}
-						>
-							<img
-								src={`http://image.tmdb.org/t/p/w92/${provider.logo_path}`}
-							/>
-							{provider.provider_name}
-						</Label>
-					)),
+				content: noStreamingAvailable
+					? 'This content is not available in your region.'
+					: tvShowSource &&
+					  tvShowSource.map((provider) => (
+							<Label
+								key={provider.provider_id}
+								image
+								style={{ marginBottom: '4px' }}
+							>
+								<img
+									src={`http://image.tmdb.org/t/p/w92/${provider.logo_path}`}
+								/>
+								{provider.provider_name}
+							</Label>
+					  )),
 			},
 		},
 	];

@@ -1,7 +1,13 @@
 import { useRef, useCallback, useEffect } from 'react';
 import { Search, Button, Image, List } from 'semantic-ui-react';
 
-const ContentSearch = ({ state, dispatch, onResultSelect, handleSearch }) => {
+const ContentSearch = ({
+	state,
+	dispatch,
+	onResultSelect,
+	handleSearch,
+	setSelectedContent,
+}) => {
 	const { loading, results, value } = state;
 
 	const timeoutRef = useRef();
@@ -51,6 +57,7 @@ const ContentSearch = ({ state, dispatch, onResultSelect, handleSearch }) => {
 
 	const handleClearSearch = () => {
 		dispatch({ type: 'CLEAN_QUERY' });
+		setSelectedContent(null); // Add this line
 	};
 
 	useEffect(() => {

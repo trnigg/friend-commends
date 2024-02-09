@@ -19,7 +19,7 @@ export default function WatchList() {
 
   //console.log("data", data.myWatchList.watchList);
 
-  const watchList = data.myWatchList.watchList || [];
+  const watchList = data?.myWatchList?.watchList || [];
 
   return (
     <>

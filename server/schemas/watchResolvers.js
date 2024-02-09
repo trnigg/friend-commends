@@ -78,7 +78,7 @@ const watchResolvers = {
       if (context.user) {
         console.log("id:", id);
         console.log("context.user._id:", context.user._id);
-        const watch = await Watch.findOneAndDelete({ _id: id });
+        const watch = await Watch.findByIdAndDelete(id);
         console.log("watch", watch);
 
         return await User.findOneAndUpdate(

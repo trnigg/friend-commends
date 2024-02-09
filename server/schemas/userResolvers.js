@@ -149,9 +149,11 @@ const userResolvers = {
     },
     // Mutation to update a user - consider if we want to implement this
     // If so, require password to confirm changes?
-    updateUser: async (parent, { id, input }, context) => {
+    updateUser: async (parent, { input }, context) => {
       if (context.user) {
-        return User.findByIdAndUpdate(id, input, { new: true });
+        console.log("input: ",input)
+        console.log("context.user._id: ",context.user._id)
+        return User.findByIdAndUpdate(context.user._id, input, { new: true });
       }
       throw AuthenticationError;
     },

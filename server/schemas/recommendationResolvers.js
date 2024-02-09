@@ -85,7 +85,7 @@ const recommendationResolvers = {
         if (context.user) {
           console.log("id:", id);
           console.log("context.user._id:", context.user._id);
-          const recommendation = await Recommendation.findOneAndDelete({ _id: id });
+          const recommendation = await Recommendation.findByIdAndDelete(id);
           console.log("recommendation", recommendation);
   
           return await User.findOneAndUpdate(

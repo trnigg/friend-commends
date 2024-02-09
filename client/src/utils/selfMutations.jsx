@@ -75,3 +75,70 @@ export const MUTATION_SHARETV = gql`
     }
   }
 `;
+
+export const MUTATION_EDITPROFILE = gql`
+mutation UpdateUser($updateUserInput2: UserUpdateInput!) {
+  updateUser(input: $updateUserInput2) {
+    id
+    firstName
+    lastName
+    email
+    password
+    dateOfBirth
+  }
+}
+`;
+
+
+export const MUTATION_REMOVEWATCHITEM = gql`
+mutation RemoveFromWatchList($removeFromWatchListId: ID!) {
+  removeFromWatchList(id: $removeFromWatchListId) {
+    id
+    userName
+    watchList {
+      ... on Movie {
+        original_title
+        overview
+      }
+      id
+      ... on TV {
+        id
+        original_name
+      }
+    }
+  }
+}
+`;
+
+export const MUTATION_REMOVESHAREITEM = gql`
+mutation DeleteReceivedShare($shareId: ID!) {
+  deleteReceivedShare(shareId: $shareId) {
+    id
+    userName
+    shareReceived {
+      id
+      shareMessage
+      type
+    }
+  }
+}
+`;
+
+export const MUTATION_REMOVERECOMENDITEM = gql`
+mutation RemoveRecommend($removeRecommendId: ID!) {
+  removeRecommend(id: $removeRecommendId) {
+    id
+    userName
+    recommendations {
+      id
+      type
+      ... on Movie {
+        original_title
+      }
+      ... on TV {
+        original_name
+      }
+    }
+  }
+}
+`;

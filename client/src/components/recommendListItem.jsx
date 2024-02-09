@@ -16,13 +16,13 @@ import {
 import ShareModal from "./shareModal";
 import { useMutation } from "@apollo/client";
 import {
-  MUTATION_REMOVEWATCHITEM,
+    MUTATION_REMOVERECOMENDITEM,
 } from "../utils/selfMutations";
-import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
+import { QUERY_MYRECOMMENDATIONS } from "../utils/selfQueries";
 import Auth from "../utils/auth";
 
-export default function WatchItem(props) {
-  //console.log("props:", props);
+export default function RecommendItem(props) {
+  console.log("props:", props);
   const { id, overview, AU_platforms: platforms, type } = props;
   let posterURL = props?.poster_path
     ? `https://image.tmdb.org/t/p/w154/${props.poster_path}`
@@ -30,10 +30,10 @@ export default function WatchItem(props) {
   let title = props.original_title || props.original_name;
   const itemType = type === "TV" ? "TV show" : type;
 
-  const [removeWatchItem, { error: movieErr }] = useMutation(MUTATION_REMOVEWATCHITEM,{
+  const [removeRecommendItem, { error: movieErr }] = useMutation(MUTATION_REMOVERECOMENDITEM,{
     refetchQueries: [
-      QUERY_MYWATCHLIST, // Query to be refecthed
-      'MyWatchList' // Query name
+        QUERY_MYRECOMMENDATIONS, // Query to be refecthed
+      'MyRecommendations' // Query name
     ],
   });
   const handleRemoveOnClick = async () => {
@@ -45,8 +45,8 @@ export default function WatchItem(props) {
     }
 
       try {
-        await removeWatchItem({
-          variables: { removeFromWatchListId:id },
+        await removeRecommendItem({
+          variables: { removeRecommendId:id },
         });
       } catch (err) {
         console.error(err);

@@ -49,13 +49,13 @@ export const searchMovieSource = (id) => {
 
 	return fetch(url, options)
 		.then((res) => res.json())
-    .then((json) => {
+		.then((json) => {
 			console.log(json);
 			return json;
-		})
+		});
 
-		// .then((json) => console.log(json.results?.AU))
-		// .catch((err) => console.error('error:' + err));
+	// .then((json) => console.log(json.results?.AU))
+	// .catch((err) => console.error('error:' + err));
 };
 
 //search TV shows from TMDB by keyword
@@ -111,8 +111,14 @@ export const searchTVSource = (id) => {
 
 	return fetch(url, options)
 		.then((res) => res.json())
-		.then((json) => console.log(json.results?.AU))
-		.catch((err) => console.error('error:' + err));
+		.then((json) => {
+			console.log(json);
+			return json;
+		})
+		.catch((err) => {
+			console.error('error:' + err);
+			throw new Error(err); // Throw an error instead of returning an empty object
+		});
 };
 
 //Function call examples:

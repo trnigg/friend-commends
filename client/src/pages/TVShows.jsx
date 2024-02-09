@@ -31,6 +31,8 @@ import {
 	Label,
 	CardMeta,
 } from 'semantic-ui-react';
+import { ADD_TV_RECOMMENDATION } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 
 const initialState = {
 	loading: false,
@@ -55,6 +57,8 @@ function reducer(state, action) {
 }
 
 function TVShows() {
+	const [ addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
+
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const { loading, results, value } = state;
 	const [selectedTVShow, setSelectedTVShow] = useState(null);
@@ -130,6 +134,7 @@ function TVShows() {
 	}, []);
 
 	const handleSelectTVShow = async (e, data) => {
+		console.log(data)
 		// If the selected result is the "Keep typing..." message, do nothing
 		if (data.result.title === 'Keep typing to see more results...') {
 			return;
@@ -159,6 +164,28 @@ function TVShows() {
 			setNoStreamingAvailable(true); // Set the noStreamingAvailable state to true
 		}
 	};
+
+	const addRecommendation = async() => {
+		const newNumber = selectedTVShow.id.toString()
+		console.log(newNumber)
+		try{
+			await addShow({
+				variables: {
+				input: {
+					type: "TV",
+					tmdbID: newNumber,
+					overview: selectedTVShow.description,
+					original_name: selectedTVShow.title,
+					poster_path: selectedTVShow.posterImage
+					}					
+				}
+			})
+
+		}catch(err){
+			console.log(err)
+		}
+	}
+	
 
 	function resultRenderer({ posterImage, title, description }) {
 		return (
@@ -309,7 +336,7 @@ function TVShows() {
 							extra
 							style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
 						>
-							<Button circular icon="thumbs up" size="big" />
+							<Button circular icon="thumbs up" size="big" onClick={addRecommendation}/>
 							<Button circular icon="share" size="big" />
 							<Button circular icon="add" size="big" />
 						</CardContent>

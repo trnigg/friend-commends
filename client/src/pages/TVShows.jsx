@@ -84,13 +84,24 @@ function TVShows() {
 			try {
 				const response = await searchTVsByQuery(data.value);
 				console.log(response);
-				const results = response.results.map((tvShow) => ({
+				const results = response.results.slice(0, 5).map((tvShow) => ({
 					title: tvShow.name,
 					description: tvShow.overview,
 					posterImage: tvShow.poster_path,
 					backdropImage: tvShow.backdrop_path,
 					id: tvShow.id,
 				}));
+
+				// If there are more results, adds final result that prompts the user to keep typing
+				if (response.results.length > 5) {
+					results.push({
+						title: 'Keep typing to see more results...',
+						description: '',
+						posterImage: '',
+						backdropImage: '',
+						id: '',
+					});
+				}
 				dispatch({
 					type: 'FINISH_SEARCH',
 					results,
@@ -204,16 +215,31 @@ function TVShows() {
 					<Icon name="tv" />
 					<HeaderContent>Search for a show</HeaderContent>
 				</Header>
-				<Search
-					fluid
-					loading={loading}
-					onResultSelect={handleSelectTVShow}
-					onSearchChange={handleSearchChange}
-					results={results}
-					value={value}
-					resultRenderer={resultRenderer}
-				/>
-				<Button circular icon="close" onClick={handleClearSearch} />
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
+					<Search
+						fluid
+						loading={loading}
+						onResultSelect={handleSelectTVShow}
+						onSearchChange={handleSearchChange}
+						results={results}
+						value={value}
+						resultRenderer={resultRenderer}
+						style={{ flex: 1 }}
+					/>
+					<Button
+						circular
+						basic
+						color="red"
+						icon="close"
+						onClick={handleClearSearch}
+					/>
+				</div>
 				{selectedTVShow && (
 					<Card>
 						<CardContent>

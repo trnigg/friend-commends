@@ -48,10 +48,10 @@ function SelectedContentCard({
 		.then(console.log("Affirmative"))
 		) : 
 		urlExt === "tv_shows" ? (
-			await addWatch({
+			await addTVWatch({
 				variables: {
 					input: {
-						type: "Movie",
+						type: "TV",
 						tmdbID: newNumber,
 						overview: selectedContent.description,
 						original_name: selectedContent.title,

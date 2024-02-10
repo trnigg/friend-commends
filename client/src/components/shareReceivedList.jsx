@@ -21,7 +21,7 @@ export default function ShareReceivedList() {
   //console.log("data", data.sharedWithMe);
   //console.log("watchData", watchData.myWatchList.watchList);  
   const shareReceivedList = data.sharedWithMe || [];
-  const watchIdList = watchData.myWatchList?.watchList?.map((watch) => watch.tmdbID)
+  const watchIdList = watchData?.myWatchList?.watchList?.map((watch) => watch.tmdbID)
   //console.log("watchID", watchIdList)
   //console.log("shareReceivedList", shareReceivedList)
 

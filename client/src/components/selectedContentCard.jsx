@@ -8,11 +8,11 @@ import {
 	CardMeta,
 	Label,
 } from 'semantic-ui-react';
-import { ADD_TV_RECOMMENDATION } from '../utils/mutations';
-import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
+import { ADD_TV_RECOMMENDATION, ADD_MOVIE_RECOMMENDATION, ADD_MOVIE_WATCHLIST, ADD_TV_WATCHLIST } from '../utils/mutations';
+// import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
-import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
-import { ADD_TV_WATCHLIST } from '../utils/mutations';
+// import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
+// import { ADD_TV_WATCHLIST } from '../utils/mutations';
 import ShareModal from './shareModal';
 
 function SelectedContentCard({
@@ -35,32 +35,37 @@ function SelectedContentCard({
 		const newNumber = selectedContent.id.toString();
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
-		urlExt === 'movies'
-			? await addWatch({
-					variables: {
-						input: {
-							type: 'Movie',
-							tmdbID: newNumber,
-							overview: selectedContent.description,
-							original_title: selectedContent.title,
-							poster_path: selectedContent.posterImage,
-						},
-					},
-			  }).then(console.log('Affirmative'))
-			: urlExt === 'tv_shows'
-			? await addTVWatch({
-					variables: {
-						input: {
-							type: 'TV',
-							tmdbID: newNumber,
-							overview: selectedContent.description,
-							original_name: selectedContent.title,
-							poster_path: selectedContent.posterImage,
-						},
-					},
-			  }).then(console.log('Affirmative'))
-			: console.log('No Good');
-	};
+
+		urlExt === "movies" ? (
+		await addWatch({
+			variables: {
+				input: {
+					type: "Movie",
+					tmdbID: newNumber,
+					overview: selectedContent.description,
+					original_title: selectedContent.title,
+					poster_path: selectedContent.posterImage
+					}                   
+				}
+		})
+		// .then(console.log("Affirmative"))
+		) : 
+		urlExt === "tv_shows" ? (
+			await addTVWatch({
+				variables: {
+					input: {
+						type: "TV",
+						tmdbID: newNumber,
+						overview: selectedContent.description,
+						original_name: selectedContent.title,
+						poster_path: selectedContent.posterImage
+						}                   
+					}
+			})
+			// .then(console.log("Affirmative"))
+		) : console.log("No Good")
+	}
+
 
 	const addContent = async () => {
 		console.log(selectedContent);

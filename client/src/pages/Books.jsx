@@ -1,13 +1,7 @@
-// import { Button } from "semantic-ui-react";
-// import { searchMovieSource } from "../utils/API";
-import {
-	HeaderContent,
-	HeaderSubheader,
-	Header,
-	Icon,
-	Container,
-	Segment,
-} from 'semantic-ui-react';
+
+import MovieItems from "../components/MovieItems";
+
+
 
 function Books() {
 	// const getArray = async()=>{
@@ -23,39 +17,12 @@ function Books() {
 	// 			services.push(entryArray);
 	// 		})
 
-	// 		const secondArray = services.flat();
-	// 		secondArray.forEach((result) => {
-	// 			if(result){
-	// 				services2.push(result.provider_name)
-	// 			}
-	// 			else {
-	// 				return
-	// 			}
-	// 		})
-	// 		const streamingServices = [...new Set(services2)]
-	// 		console.log(streamingServices);
-
-	// 	}catch(err){
-	// 		console.log(err)
-	// 	}
-	// }
-
 	return (
-		<Container>
-			<Segment raised>
-				<Header as="h1">Books</Header>
-			</Segment>
+		<div>
+			<MovieItems />
+			<img src="images/page-under-construction.gif" alt="Page under construction" />
+		</div>
 
-			<Segment raised>
-				<Header as="h2" icon>
-					<Icon name="wrench" />
-					Under Construction
-					<HeaderSubheader>
-						This page is currently under construction. Please check back later.
-					</HeaderSubheader>
-				</Header>
-			</Segment>
-		</Container>
 	);
 }
 

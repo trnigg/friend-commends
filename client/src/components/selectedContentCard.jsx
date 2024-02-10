@@ -13,7 +13,7 @@ import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
 import { ADD_TV_WATCHLIST } from '../utils/mutations';
-
+import ShareModal from './shareModal';
 
 
 
@@ -102,6 +102,22 @@ function SelectedContentCard({
 
 }
 
+const shareContent =()=>{
+	<ShareModal />
+	console.log("Good Stuff")
+} 
+let modalData = {}
+console.log(selectedContent)
+if(selectedContent){
+modalData = {		original_title: selectedContent.title,
+					overview: selectedContent.description,
+					tmdbID: selectedContent.id.toString(),
+					poster_path: selectedContent.posterImage,
+					type: "Movie"}
+
+}
+
+console.log(modalData)
 	// panels for the accordion
 	// requires ternary to check if the selectedTVShow is null;
 	// otherwise it will throw an error before a TV show is selected
@@ -190,7 +206,8 @@ function SelectedContentCard({
 					style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
 				>
 					<Button circular icon="thumbs up" size="big" onClick={addContent}/>
-					<Button circular icon="share" size="big" />
+					{/* <Button circular icon="share" size="big" onClick={shareContent}/> */}
+					<ShareModal  key={selectedContent.id} {...modalData} icon="add"/>
 					<Button circular icon="add" size="big" onClick={addToWatch}/>
 				</CardContent>
 			</Card>

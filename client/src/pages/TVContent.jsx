@@ -4,6 +4,7 @@ import MovieCard from "../components/movieCards";
 import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
+import MovieItems from "../components/MovieItems";
 
 function TVCont() {
 	// let state = useLocation();
@@ -83,7 +84,7 @@ function TVCont() {
 			<p>Your recommended TV Shows are:</p>
 			<div className="recommendBox">
 			<>
-							{date.map(function (data) {
+							{/* {date.map(function (data) {
 								return (
 									<div key={data.original_name}>
 										<MovieCard
@@ -94,7 +95,20 @@ function TVCont() {
 										friendArray={friendOmmend(data.tmdbID)} />
 									</div>
 								);
+							})} */}
+							{date.map(function (data) {
+								return (
+									<div key={data.original_name}>
+										<MovieItems
+										movietitle={data.original_name}
+                                        poster_path={data.poster_path}
+                                        description={data.overview}
+										friendRecommend={data.count}
+										friendArray={friendOmmend(data.tmdbID)} />
+									</div>
+								);
 							})}
+
 						</>
 
 			</div>

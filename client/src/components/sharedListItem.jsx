@@ -155,7 +155,7 @@ export default function SharedItem(props) {
         </ItemMeta>
         <ItemDescription>{overview}</ItemDescription>
         <ItemExtra>
-          {platforms.map((platform) => (
+          {platforms?.map((platform) => (
             <Label key={platform}>{platform}</Label>
           ))}
           {/* <Button primary floated="right">

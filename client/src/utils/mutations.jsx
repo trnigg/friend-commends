@@ -151,3 +151,12 @@ export const ADD_TV_RECOMMENDATION = gql`
 		}
 	}
 `;
+
+
+export const ADD_MOVIE_RECOMMENDATION = gql`
+	mutation AddMovieRecommend($input: MovieInput!) {
+	addMovieRecommend(input: $input) {
+	  userName
+	}
+  }
+`;

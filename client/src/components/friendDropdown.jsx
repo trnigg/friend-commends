@@ -3,7 +3,7 @@ import React from "react";
 import { Dropdown } from "semantic-ui-react";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { QUERY_FRIENDS } from "../utils/Queries";
+import { QUERY_FRIENDS } from "../utils/queries";
 
 const FriendSearchSelection = ({shareWith,setShareWith}) => {
   const { loading, error, data } = useQuery(QUERY_FRIENDS);

@@ -11,7 +11,8 @@ import {
 import { ADD_TV_RECOMMENDATION } from '../utils/mutations';
 import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
-
+import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
+import { ADD_TV_WATCHLIST } from '../utils/mutations';
 
 
 
@@ -25,13 +26,48 @@ function SelectedContentCard({
 }) {
 	const [ addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
 	const [ addMovie, { error: error2, data: data2}] = useMutation(ADD_MOVIE_RECOMMENDATION)
+	const [ addWatch, {error: error3, data: data3}] = useMutation(ADD_MOVIE_WATCHLIST)
+	const [ addTVWatch, {error: error4, data: data4}] = useMutation(ADD_TV_WATCHLIST)
+
+	const addToWatch = async() =>{
+		const newNumber = selectedContent.id.toString()
+		let url = window.location.href.split('/');
+		let urlExt = url[3];
+		urlExt === "movies" ? (
+		await addWatch({
+			variables: {
+				input: {
+					type: "Movie",
+					tmdbID: newNumber,
+					overview: selectedContent.description,
+					original_title: selectedContent.title,
+					poster_path: selectedContent.posterImage
+					}                   
+				}
+		})
+		.then(console.log("Affirmative"))
+		) : 
+		urlExt === "tv_shows" ? (
+			await addWatch({
+				variables: {
+					input: {
+						type: "Movie",
+						tmdbID: newNumber,
+						overview: selectedContent.description,
+						original_name: selectedContent.title,
+						poster_path: selectedContent.posterImage
+						}                   
+					}
+			})
+			.then(console.log("Affirmative"))
+		) : console.log("No Good")
+	}
 
 	const addContent = async() =>{
 		console.log(selectedContent)
 		const newNumber = selectedContent.id.toString()
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
-		console.log(url)
 		urlExt === 'tv_shows' ? (
 			await addShow({
 				variables: {
@@ -155,7 +191,7 @@ function SelectedContentCard({
 				>
 					<Button circular icon="thumbs up" size="big" onClick={addContent}/>
 					<Button circular icon="share" size="big" />
-					<Button circular icon="add" size="big" />
+					<Button circular icon="add" size="big" onClick={addToWatch}/>
 				</CardContent>
 			</Card>
 		)

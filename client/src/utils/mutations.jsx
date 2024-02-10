@@ -160,3 +160,19 @@ export const ADD_MOVIE_RECOMMENDATION = gql`
 	}
   }
 `;
+
+export const ADD_MOVIE_WATCHLIST = gql`
+mutation addMovieToWatch($input: MovieInput!) {
+	addMovieToWatch(input: $input) {
+	  userName
+	}
+  }
+`;
+
+export const ADD_TV_WATCHLIST = gql`
+	mutation addTVToWatch($input: TVInput!) {
+		addTVToWatch(input: $input) {
+		userName
+		}
+	}
+`;

@@ -18,13 +18,15 @@ import { useMutation } from "@apollo/client";
 import {
   MUTATION_ADDMOVIETOWATCHLIST,
   MUTATION_ADDTVTOWATCHLIST,
+  MUTATION_REMOVESHAREITEM,
 } from "../utils/selfMutations";
-import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
+import { QUERY_MYWATCHLIST,QUERY_SHAREDWITHME } from "../utils/selfQueries";
 import Auth from "../utils/auth";
 
 export default function SharedItem(props) {
   //console.log("props:", props);
   const {
+    id,
     overview,
     AU_platforms: platforms,
     type,
@@ -38,10 +40,11 @@ export default function SharedItem(props) {
   let title = props.share.original_title || props.share.original_name;
   let date = props.share.release_date || props.share.first_air_date;
   const itemType = type === "TV" ? "TV show" : type;
-  const sender = props.sharedFrom
-    ? `${props.sharedFrom.firstName} ${props.sharedFrom.lastName[0]}`
+  const sender = props.share.sharedFrom
+    ? `${props.share.sharedFrom.firstName} ${props.share.sharedFrom.lastName[0]}`
     : null;
-  const message = props.sharedMesssage ? props.sharedMessage : null;
+  const message = props.share.shareMessage ? props.share.shareMessage : null;
+  //console.log("message:",props.share.shareMessage)
 
   const [addMovieToWatch, { error: movieErr }] = useMutation(MUTATION_ADDMOVIETOWATCHLIST,{
     refetchQueries: [
@@ -55,6 +58,31 @@ export default function SharedItem(props) {
       'MyWatchList' // Query name
     ],
   });
+  const [removeShare, { error: removeErr }] = useMutation(MUTATION_REMOVESHAREITEM,{
+    refetchQueries: [
+      QUERY_SHAREDWITHME, // Query to be refecthed
+      'SharedWithMe' // Query name
+    ],
+  });
+
+  const handleRemoveOnClick = async () => {
+        //console.log("props.share",props.share)
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+          return false;
+        }
+    
+          try {
+            await removeShare({
+              variables: { shareId:id },
+            });
+          } catch (err) {
+            console.error(err);
+          }
+    
+  }
+
 
   const handleWatchOnClick = async () => {
     //console.log("props.share",props.share)
@@ -104,8 +132,6 @@ export default function SharedItem(props) {
         console.error(err);
       }
     }
-
-
     //console.log("new obj:", newWatchItem);
   };
 
@@ -118,13 +144,13 @@ export default function SharedItem(props) {
         <ItemMeta>
           {sender ? (
             <>
-              <span className="type">
+              <p className="type">
                 {sender} shared this {itemType} with you
-              </span>
-              <span className="senderMsg">{message}</span>
+              </p>
+              <p className="senderMsg">{`"${message}" -- ${sender}`}</p>
             </>
           ) : (
-            <span className="type"> {itemType} </span>
+            <p className="type"> {itemType} </p>
           )}
         </ItemMeta>
         <ItemDescription>{overview}</ItemDescription>
@@ -147,6 +173,11 @@ export default function SharedItem(props) {
                           : 'Add to your watch list!'}
             </Button>
           </div>
+          <div>
+          <Button primary onClick={() => handleRemoveOnClick()}>
+          Remove from list
+        </Button>
+        </div>
         </ItemExtra>
       </ItemContent>
     </Item>

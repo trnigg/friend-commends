@@ -9,15 +9,15 @@ import {
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_MYRECOMMENDATIONS } from "../utils/selfQueries";
-import Recommends from "./watchListItem";
+import RecommendItem from "./recommendListItem";
 
-export default function WatchList() {
+export default function RecommendList() {
   const { loading, error, data } = useQuery(QUERY_MYRECOMMENDATIONS);
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  console.log("data", data.myRecommendations.recommendations);
+  //console.log("data", data.myRecommendations.recommendations);
 
   const recommendations = data.myRecommendations.recommendations || [];
 
@@ -30,7 +30,7 @@ export default function WatchList() {
       ) : (
         <ItemGroup divided>
           {recommendations.map((recommend) => (
-            <Recommends key={recommend.id} {...recommend} />
+            <RecommendItem key={recommend.id} {...recommend} />
           ))}
         </ItemGroup>
       )}

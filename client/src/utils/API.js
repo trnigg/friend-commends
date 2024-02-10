@@ -1,4 +1,4 @@
-const TOKEN = import.meta.env.VITE_BEARER_TOKEN
+const TOKEN = import.meta.env.VITE_BEARER_TOKEN;
 //console.log("TOKEN:",TOKEN)
 
 //search movie from TMDB by keyword - call function searchMoviesByQuery("harry+potter");

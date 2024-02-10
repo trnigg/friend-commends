@@ -63,7 +63,7 @@ const recommendationResolvers = {
     //add TV show to users recommendation list
     addTVRecommend: async (parent, args, context) => {
       if (context.user) {
-        //console.log("args:", args.input);
+        // console.log("args:", args.input);
         //console.log("context.user._id:", context.user._id);
         //const recommendation = await Recommendation.create(args.input);
         const recommendation = await Recommendation.findOneAndUpdate(
@@ -72,7 +72,7 @@ const recommendationResolvers = {
           { upsert: true,
             new: true },
         );
-        //console.log("recommendation", recommendation);
+        // console.log("recommendation", recommendation);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -85,7 +85,7 @@ const recommendationResolvers = {
         if (context.user) {
           console.log("id:", id);
           console.log("context.user._id:", context.user._id);
-          const recommendation = await Recommendation.findOneAndDelete({ _id: id });
+          const recommendation = await Recommendation.findByIdAndDelete(id);
           console.log("recommendation", recommendation);
   
           return await User.findOneAndUpdate(

@@ -45,7 +45,9 @@ function Friends() {
 
 	return (
 		<Container>
-			<Header as="h1">Friends</Header>
+			<Segment raised>
+				<Header as="h1">Friends</Header>{' '}
+			</Segment>
 			<Segment raised>
 				<Header as="h2">
 					<Icon name="user plus" />
@@ -54,22 +56,23 @@ function Friends() {
 				<UserSearchBar />
 			</Segment>
 			{/* Use React conditional rendering to only render if 1 or more active requests. */}
-			{data.user.pendingFriendRequests.length > 0 && (
-				<Segment raised>
-					<Header as="h2">
-						<Icon name="user outline" />
-						<HeaderContent>
-							Friend Requests
-							<HeaderSubheader>
-								{/* Pluralise if more not 1 friend */}
-								You have{' '}
-								<strong>{data.user.pendingFriendRequests.length}</strong>{' '}
-								friend-request
-								{data.user.pendingFriendRequests.length !== 1 ? 's' : ''}{' '}
-								awaiting your response.
-							</HeaderSubheader>
-						</HeaderContent>
-					</Header>
+			<Segment raised>
+				<Header as="h2">
+					<Icon name="user outline" />
+					<HeaderContent>
+						Friend Requests
+						<HeaderSubheader>
+							{/* Pluralise if more not 1 friend */}
+							You have <strong>
+								{data.user.pendingFriendRequests.length}
+							</strong>{' '}
+							friend-request
+							{data.user.pendingFriendRequests.length !== 1 ? 's' : ''} awaiting
+							your response.
+						</HeaderSubheader>
+					</HeaderContent>
+				</Header>
+				{data.user.pendingFriendRequests.length > 0 ? (
 					<CardGroup>
 						{data.user.pendingFriendRequests.map((request) => (
 							<FriendRequestCard
@@ -80,8 +83,10 @@ function Friends() {
 							/>
 						))}
 					</CardGroup>
-				</Segment>
-			)}
+				) : (
+					<Message>You have no new friend requests.</Message>
+				)}
+			</Segment>{' '}
 			<Segment raised>
 				<Header as="h2">
 					<Icon name="users" />

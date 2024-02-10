@@ -15,8 +15,6 @@ import { useMutation } from '@apollo/client';
 // import { ADD_TV_WATCHLIST } from '../utils/mutations';
 import ShareModal from './shareModal';
 
-
-
 function SelectedContentCard({
 	selectedContent,
 	contentSource,
@@ -24,15 +22,20 @@ function SelectedContentCard({
 	activeIndex,
 	setActiveIndex,
 }) {
-	const [ addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
-	const [ addMovie, { error: error2, data: data2}] = useMutation(ADD_MOVIE_RECOMMENDATION)
-	const [ addWatch, {error: error3, data: data3}] = useMutation(ADD_MOVIE_WATCHLIST)
-	const [ addTVWatch, {error: error4, data: data4}] = useMutation(ADD_TV_WATCHLIST)
+	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
+	const [addMovie, { error: error2, data: data2 }] = useMutation(
+		ADD_MOVIE_RECOMMENDATION
+	);
+	const [addWatch, { error: error3, data: data3 }] =
+		useMutation(ADD_MOVIE_WATCHLIST);
+	const [addTVWatch, { error: error4, data: data4 }] =
+		useMutation(ADD_TV_WATCHLIST);
 
-	const addToWatch = async() =>{
-		const newNumber = selectedContent.id.toString()
+	const addToWatch = async () => {
+		const newNumber = selectedContent.id.toString();
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
+
 		urlExt === "movies" ? (
 		await addWatch({
 			variables: {
@@ -63,61 +66,57 @@ function SelectedContentCard({
 		) : console.log("No Good")
 	}
 
-	const addContent = async() =>{
-		console.log(selectedContent)
-		const newNumber = selectedContent.id.toString()
+
+	const addContent = async () => {
+		console.log(selectedContent);
+		const newNumber = selectedContent.id.toString();
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
-		urlExt === 'tv_shows' ? (
-			await addShow({
-				variables: {
-				input: {
-					type: "TV",
-					tmdbID: newNumber,
-					overview: selectedContent.description,
-					original_name: selectedContent.title,
-					poster_path: selectedContent.posterImage
-					}                   
-				}
-			})
-			.then(console.log("added"))
-		) : 
-		urlExt === 'movies' ? (
-			await addMovie({
-				variables: {
-				input: {
-					type: "Movie",
-					tmdbID: newNumber,
-					overview: selectedContent.description,
-					original_title: selectedContent.title,
-					poster_path: selectedContent.posterImage
-					}                   
-				}
-			})
-			.then(console.log("added"))
-		) : (
-			console.log("Bad")
-		)
-		console.log("Hello");
+		urlExt === 'tv_shows'
+			? await addShow({
+					variables: {
+						input: {
+							type: 'TV',
+							tmdbID: newNumber,
+							overview: selectedContent.description,
+							original_name: selectedContent.title,
+							poster_path: selectedContent.posterImage,
+						},
+					},
+			  }).then(console.log('added'))
+			: urlExt === 'movies'
+			? await addMovie({
+					variables: {
+						input: {
+							type: 'Movie',
+							tmdbID: newNumber,
+							overview: selectedContent.description,
+							original_title: selectedContent.title,
+							poster_path: selectedContent.posterImage,
+						},
+					},
+			  }).then(console.log('added'))
+			: console.log('Bad');
+		console.log('Hello');
+	};
 
-}
+	const shareContent = () => {
+		<ShareModal />;
+		console.log('Good Stuff');
+	};
+	let modalData = {};
+	console.log(selectedContent);
+	if (selectedContent) {
+		modalData = {
+			original_title: selectedContent.title,
+			overview: selectedContent.description,
+			tmdbID: selectedContent.id.toString(),
+			poster_path: selectedContent.posterImage,
+			type: 'Movie',
+		};
+	}
 
-const shareContent =()=>{
-	<ShareModal />
-	console.log("Good Stuff")
-} 
-let modalData = {}
-console.log(selectedContent)
-if(selectedContent){
-modalData = {		original_title: selectedContent.title,
-					overview: selectedContent.description,
-					tmdbID: selectedContent.id.toString(),
-					poster_path: selectedContent.posterImage,
-					type: "Movie"}
-
-}
-
-console.log(modalData)
+	console.log(modalData);
 	// panels for the accordion
 	// requires ternary to check if the selectedTVShow is null;
 	// otherwise it will throw an error before a TV show is selected
@@ -205,10 +204,24 @@ console.log(modalData)
 					extra
 					style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
 				>
-					<Button circular icon="thumbs up" size="big" onClick={addContent}/>
+					<Button
+						circular
+						basic
+						primary
+						icon="thumbs up"
+						size="big"
+						onClick={addContent}
+					/>
 					{/* <Button circular icon="share" size="big" onClick={shareContent}/> */}
-					<ShareModal  key={selectedContent.id} {...modalData} icon="add"/>
-					<Button circular icon="add" size="big" onClick={addToWatch}/>
+					<ShareModal key={selectedContent.id} {...modalData} icon="add" />
+					<Button
+						circular
+						basic
+						primary
+						icon="eye"
+						size="big"
+						onClick={addToWatch}
+					/>
 				</CardContent>
 			</Card>
 		)

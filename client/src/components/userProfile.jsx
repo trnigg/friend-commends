@@ -8,6 +8,7 @@ import {
   Image,
   Button
 } from "semantic-ui-react";
+import UpdateProfileModal from "./updateProfile"
 
 const UserCard = (props) => {
   const {
@@ -18,8 +19,10 @@ const UserCard = (props) => {
     email,
     recommendations,
   } = props.data;
-  //console.log("userName", userName);
+  //console.log("props.data", props.data);
    const numberOfRecs = recommendations.length||0;
+
+   const birthday = new Date(parseInt(dateOfBirth, 10)).toLocaleDateString("en-AU");
 
   return (
     <Card color='teal' >
@@ -30,10 +33,10 @@ const UserCard = (props) => {
           <span className="username">{userName}</span>
         </CardMeta>
         <CardDescription>
-          <p>{dateOfBirth ? `DOB: ${dateOfBirth}` : "DOB: Not Available"}</p>
+          <p>{dateOfBirth ? `DOB: ${birthday}` : "DOB: Not Available"}</p>
           <p>{`Email address: ${email}`}</p>
         </CardDescription>
-        <Button>Update your profile</Button>
+        <UpdateProfileModal {...props.data}/>
       </CardContent>
       <CardContent extra>
         <a>

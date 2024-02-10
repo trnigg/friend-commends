@@ -27,7 +27,7 @@ const ContentSearch = ({
 					const response = await handleSearch(data.value);
 					console.log(response); // Add this line
 					const results = response.results.slice(0, 5).map((item) => ({
-						title: item.name,
+						title: item.original_name || item.original_title, // Use item.original_title if item.original_name (title for movies, name for tv shows)
 						description: item.overview,
 						posterImage: item.poster_path,
 						backdropImage: item.backdrop_path,

@@ -15,7 +15,10 @@ export const searchMoviesByQuery = (query) => {
 
 	return fetch(url, options)
 		.then((res) => res.json())
-		.then((json) => console.log(json))
+		.then((json) => {
+			console.log(json);
+			return json; // return the JSON data
+		})
 		.catch((err) => console.error('error:' + err));
 };
 
@@ -51,11 +54,8 @@ export const searchMovieSource = (id) => {
 		.then((res) => res.json())
 		.then((json) => {
 			console.log(json);
-			return json;
+			return json; //return the JSON data
 		});
-
-	// .then((json) => console.log(json.results?.AU))
-	// .catch((err) => console.error('error:' + err));
 };
 
 //search TV shows from TMDB by keyword

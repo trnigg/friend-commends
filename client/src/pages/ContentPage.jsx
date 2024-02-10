@@ -72,7 +72,7 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 
 	return (
 		<Container>
-			<h1>This is the {contentType} page</h1>
+			<h1>{contentType}s</h1>
 			<Segment raised>
 				<Header as="h2">
 					<Icon name={contentType === 'tv' ? 'tv' : 'film'} />

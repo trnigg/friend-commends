@@ -15,7 +15,13 @@ export default function WatchList() {
   // const [watchlist, setWatchlist] = useState({})
   const { loading, error, data } = useQuery(QUERY_MYWATCHLIST);
     
-  if (loading) return "Loading...";
+  if(loading){
+    return (
+        <div>
+            Please Wait.....
+        </div>
+    )
+  }
   if (error) return `Error! ${error.message}`;
 
   // console.log("data", data4.myWatchList.watchList);

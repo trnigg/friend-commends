@@ -22,7 +22,7 @@ import { QUERY_MYRECOMMENDATIONS } from "../utils/selfQueries";
 import Auth from "../utils/auth";
 
 export default function RecommendItem(props) {
-  console.log("props:", props);
+  //console.log("props:", props);
   const { id, overview, AU_platforms: platforms, type } = props;
   let posterURL = props?.poster_path
     ? `https://image.tmdb.org/t/p/w154/${props.poster_path}`

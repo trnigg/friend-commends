@@ -35,6 +35,7 @@ function SelectedContentCard({
 		const newNumber = selectedContent.id.toString();
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
+		let AU_platforms = contentSource.map((provider) => provider.provider_name);
 		urlExt === 'movies'
 			? await addWatch({
 					variables: {
@@ -44,6 +45,7 @@ function SelectedContentCard({
 							overview: selectedContent.description,
 							original_title: selectedContent.title,
 							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
 						},
 					},
 			  }).then(console.log('Affirmative'))
@@ -56,6 +58,7 @@ function SelectedContentCard({
 							overview: selectedContent.description,
 							original_name: selectedContent.title,
 							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
 						},
 					},
 			  }).then(console.log('Affirmative'))
@@ -67,6 +70,8 @@ function SelectedContentCard({
 		const newNumber = selectedContent.id.toString();
 		let url = window.location.href.split('/');
 		let urlExt = url[3];
+		let AU_platforms = contentSource.map((provider) => provider.provider_name);
+		console.log(AU_platforms);
 		urlExt === 'tv_shows'
 			? await addShow({
 					variables: {
@@ -76,6 +81,7 @@ function SelectedContentCard({
 							overview: selectedContent.description,
 							original_name: selectedContent.title,
 							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
 						},
 					},
 			  }).then(console.log('added'))
@@ -88,6 +94,7 @@ function SelectedContentCard({
 							overview: selectedContent.description,
 							original_title: selectedContent.title,
 							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
 						},
 					},
 			  }).then(console.log('added'))

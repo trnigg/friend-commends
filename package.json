@@ -4,12 +4,13 @@
 	"description": "",
 	"main": "server/server.js",
 	"scripts": {
-		"start": "node server --ignore client",
+		"start": "node server/server.js --ignore client",
 		"develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
 		"install": "cd server && npm i && cd ../client && npm i",
 		"seed": "cd server && npm run seed",
 		"build": "cd client && npm run build",
-		"preview":"concurrently \"cd server && npm run start\" \"cd client && npm run preview\""
+		"preview":"concurrently \"cd server && npm run start\" \"cd client && npm run preview\"",
+		"render-build": "npm install && npm run build && npm run seed"
 	},
 	"keywords": [],
 	"author": "",

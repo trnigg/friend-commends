@@ -34,7 +34,7 @@ const userTypeDefs = `
   }
 
   input UserUpdateInput {
-    username: String
+    userName: String
     firstName: String
     lastName: String
     email: String
@@ -51,6 +51,7 @@ const userTypeDefs = `
     users: [User]
     user(id: ID!): User
     friends: User
+    myDetails: User
     pendingFriendRequests(id: ID!): [User]
     sentFriendRequests(id: ID!): [User]
     friendRecommendations(id: ID!): [User]

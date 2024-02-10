@@ -86,3 +86,16 @@ export const QUERY_MYRECOMMENDATIONS = gql`
     }
   }
 `;
+
+export const QUERY_MYDETAILS = gql`
+  query MyDetails {
+    myDetails {
+      id
+      userName
+      firstName
+      lastName
+      dateOfBirth
+      email
+    }
+  }
+`;

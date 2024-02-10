@@ -34,7 +34,7 @@ export default function WatchList() {
 
   const watchList = data?.myWatchList?.watchList || [];
 
-  console.log(watchList)
+  //console.log(watchList)
 
   return (
     <>

@@ -53,7 +53,7 @@ function SelectedContentCard({
 		selectedContent && (
 			<Card>
 				<CardContent>
-					<Card.Header>{selectedContent.title}</Card.Header>
+					<Card.Header> {selectedContent.title}</Card.Header>
 				</CardContent>
 				{selectedContent.backdropImage && (
 					<Image

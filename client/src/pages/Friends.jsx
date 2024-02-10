@@ -45,7 +45,9 @@ function Friends() {
 
 	return (
 		<Container>
-			<Header as="h1">Friends</Header>
+			<Segment raised>
+				<Header as="h1">Friends</Header>{' '}
+			</Segment>
 			<Segment raised>
 				<Header as="h2">
 					<Icon name="user plus" />

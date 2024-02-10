@@ -78,7 +78,11 @@ function ForYou() {
 							{movieRecommend.map(function (data) {
 								return (
 									<div key={data.original_title}>
-										<CardExampleCard movietitle={data.original_title} />
+										<CardExampleCard 
+										movietitle={data.original_title} 
+										poster_path={data.poster_path}
+                                        description={data.overview}
+										/>
 									</div>
 								);
 							})}
@@ -92,7 +96,11 @@ function ForYou() {
 							{tvRecommend.map(function (data) {
 								return (
 									<div key={data.original_name}>
-										<CardExampleCard movietitle={data.original_name} />
+										<CardExampleCard 
+										movietitle={data.original_name}
+                                        poster_path={data.poster_path}
+                                        description={data.overview}
+										/>
 									</div>
 								);
 							})}
@@ -107,8 +115,9 @@ function ForYou() {
 								return (
 									<div key={data.original_name}>
 										<CardExampleCard
-											key={data.original_name}
-											movietitle={data.original_name}
+										movietitle={data.original_name}
+                                        poster_path={data.poster_path}
+                                        description={data.overview}
 										/>
 									</div>
 								);

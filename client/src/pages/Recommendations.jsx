@@ -1,12 +1,12 @@
-import SingUser from "../components/singleUser";
+// import SingUser from "../components/singleUser";
 
-function Recommendations(){
-    return(
-        <div>
-            <h1>Recommendations</h1>
-            <SingUser />
-        </div>
-    )
-}
+// function Recommendations(){
+//     return(
+//         <div>
+//             <h1>Recommendations</h1>
+//             <SingUser />
+//         </div>
+//     )
+// }
 
-export default Recommendations;
+// export default Recommendations;

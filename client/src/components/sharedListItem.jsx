@@ -24,7 +24,7 @@ import { QUERY_MYWATCHLIST,QUERY_SHAREDWITHME } from "../utils/selfQueries";
 import Auth from "../utils/auth";
 
 export default function SharedItem(props) {
-  //console.log("props:", props);
+  console.log("props:", props);
   const {
     id,
     overview,

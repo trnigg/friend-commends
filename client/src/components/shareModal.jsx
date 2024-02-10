@@ -19,7 +19,7 @@ import FriendSearchSelection from "./friendDropdown";
 import { MUTATION_SHAREMOVIE, MUTATION_SHARETV } from "../utils/selfMutations";
 
 function ShareModal({...props}) {
-   //console.log("props:",props)
+  //  console.log("props:",props)
    const {
         tmdbID,
         type,
@@ -61,6 +61,7 @@ function ShareModal({...props}) {
             release_date: date,
             shareMessage: message,
           };
+          console.log(shareMovieObject);
           await shareMovie({
             variables: { shareMovieInput: { ...shareMovieObject } },
           });
@@ -101,9 +102,9 @@ function ShareModal({...props}) {
       onOpen={() => setOpen(true)}
       open={open}
       trigger={
-        <Button primary floated="right">
-          Share
-          <Icon name="right chevron" />
+        <Button floated="right">
+          Share__  
+          <Icon name="share" />
         </Button>
       }
     >

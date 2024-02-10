@@ -1,5 +1,6 @@
 // NOTE We may want to update AuthenticationError to be more specific/remove if redundant.
 //const dateScalar =require ('./scalar');
+const { ObjectId } = require("mongodb");
 
 // IMPORT MODELS HERE
 const { User } = require("../models");
@@ -137,6 +138,9 @@ const userResolvers = {
       }
       throw AuthenticationError;
     },
+    myDetails: async (parent,args, context) => {
+      return await User.findById(context.user._id)
+    }
   },
   Mutation: {
     // Mutation to add a new user
@@ -151,9 +155,10 @@ const userResolvers = {
     // If so, require password to confirm changes?
     updateUser: async (parent, { input }, context) => {
       if (context.user) {
-        console.log("input: ",input)
+        console.log("input.password: ",input.password)
         console.log("context.user._id: ",context.user._id)
-        return User.findByIdAndUpdate(context.user._id, input, { new: true });
+
+        return await User.findOneAndUpdate({_id: context.user._id}, input, { new: true });
       }
       throw AuthenticationError;
     },

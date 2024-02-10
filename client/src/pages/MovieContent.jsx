@@ -87,6 +87,8 @@ function MovieCont() {
 									<div key={data.original_title}>
 										<MovieCard
 										movietitle={data.original_title}
+                                        poster_path={data.poster_path}
+                                        description={data.overview}
 										friendRecommend={data.count}
 										friendArray={friendOmmend(data.tmdbID)} />
 									</div>

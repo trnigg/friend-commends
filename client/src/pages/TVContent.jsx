@@ -71,6 +71,7 @@ function TVCont() {
 
 	}
 	if(date){
+    console.log(date)
 	return (
 		<div>
 			<h1>This is the TV page</h1>
@@ -84,9 +85,11 @@ function TVCont() {
 			<>
 							{date.map(function (data) {
 								return (
-									<div key={data.original_title}>
+									<div key={data.original_name}>
 										<MovieCard
 										movietitle={data.original_name}
+                                        poster_path={data.poster_path}
+                                        description={data.overview}
 										friendRecommend={data.count}
 										friendArray={friendOmmend(data.tmdbID)} />
 									</div>

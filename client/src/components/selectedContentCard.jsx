@@ -9,6 +9,7 @@ import {
 	Label,
 } from 'semantic-ui-react';
 import { ADD_TV_RECOMMENDATION } from '../utils/mutations';
+import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 
@@ -23,6 +24,7 @@ function SelectedContentCard({
 	setActiveIndex,
 }) {
 	const [ addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
+	const [ addMovie, { error: error2, data: data2}] = useMutation(ADD_MOVIE_RECOMMENDATION)
 
 	const addContent = async() =>{
 		console.log(selectedContent)

@@ -10,6 +10,7 @@ const FriendSearchSelection = ({shareWith,setShareWith}) => {
   //const [shareWith, setShareWith] = useState();
   
   //console.log("data.friends.friends:",data.friends.friends)
+  console.log(data)
 
   const myFriends = data?.friends?.friends || [];
   //console.log("myFriends:", myFriends);

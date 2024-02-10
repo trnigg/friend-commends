@@ -43,7 +43,7 @@ export default function SharedItem(props) {
   const sender = props.share.sharedFrom
     ? `${props.share.sharedFrom.firstName} ${props.share.sharedFrom.lastName[0]}`
     : null;
-  const message = props.share.shareMessage ? props.share.shareMessage : null;
+  const message = props.share.shareMessage ? props.share.shareMessage : "";
   //console.log("message:",props.share.shareMessage)
 
   const [addMovieToWatch, { error: movieErr }] = useMutation(MUTATION_ADDMOVIETOWATCHLIST,{

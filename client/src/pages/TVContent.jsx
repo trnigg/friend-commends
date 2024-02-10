@@ -5,6 +5,7 @@ import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import MovieItems from "../components/MovieItems";
+import { ItemGroup } from "semantic-ui-react";
 
 function TVCont() {
 	// let state = useLocation();
@@ -98,14 +99,15 @@ function TVCont() {
 							})} */}
 							{date.map(function (data) {
 								return (
-									<div key={data.original_name}>
+									<ItemGroup divided	key={data.original_name}>
 										<MovieItems
+										key={data.original_name}
 										movietitle={data.original_name}
                                         poster_path={data.poster_path}
                                         description={data.overview}
 										friendRecommend={data.count}
 										friendArray={friendOmmend(data.tmdbID)} />
-									</div>
+									</ItemGroup>
 								);
 							})}
 

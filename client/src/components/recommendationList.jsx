@@ -14,12 +14,18 @@ import RecommendItem from "./recommendListItem";
 export default function RecommendList() {
   const { loading, error, data } = useQuery(QUERY_MYRECOMMENDATIONS);
 
-  if (loading) return "Loading...";
+  if(loading){
+    return (
+        <div>
+            Please Wait.....
+        </div>
+    )
+  }
   if (error) return `Error! ${error.message}`;
 
   //console.log("data", data.myRecommendations.recommendations);
 
-  const recommendations = data.myRecommendations.recommendations || [];
+  const recommendations = data?.myRecommendations?.recommendations || [];
 
   return (
     <>

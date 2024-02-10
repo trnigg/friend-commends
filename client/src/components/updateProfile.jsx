@@ -52,7 +52,9 @@ function UpdateProfileModal({ ...props }) {
   const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] =
     useState("");
 
-  const [updateUser, { error: movieErr }] = useMutation(MUTATION_EDITPROFILE);
+  const [updateUser, { error: movieErr }] = useMutation(MUTATION_EDITPROFILE,{
+    refetchQueries: [{ query: QUERY_USER },{ query: QUERY_MYDETAILS }],
+  });
 
   let updateUserVariable = useRef({});
   const handleInputChange = async (e) => {

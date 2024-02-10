@@ -15,7 +15,13 @@ import ShareReceived from "./sharedListItem";
 export default function ShareReceivedList() {
   const { loading, error, data } = useQuery(QUERY_SHAREDWITHME);
   const { data: watchData } = useQuery(QUERY_MYWATCHLIST);
-  if (loading) return "Loading...";
+  if(loading){
+    return (
+        <div>
+            Please Wait.....
+        </div>
+    )
+  }
   if (error) return `Error! ${error.message}`;
 
   //console.log("data", data.sharedWithMe);

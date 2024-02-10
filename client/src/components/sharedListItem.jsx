@@ -165,7 +165,7 @@ export default function SharedItem(props) {
           <ShareModal key={props.id} {...props.share}/>
           <div>
             <Button
-              primary
+              basic positive
               disabled={watchList.includes(tmdbID)}
               onClick={() => handleWatchOnClick()}
             >
@@ -174,7 +174,7 @@ export default function SharedItem(props) {
             </Button>
           </div>
           <div>
-          <Button primary onClick={() => handleRemoveOnClick()}>
+          <Button basic negative onClick={() => handleRemoveOnClick()}>
           Remove from list
         </Button>
         </div>

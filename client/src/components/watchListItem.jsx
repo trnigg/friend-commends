@@ -68,12 +68,12 @@ export default function WatchItem(props) {
 					{platforms?.map((platform) => (
 						<Label key={platform}>{platform}</Label>
 					))}
-					<ShareModal key={props.id} {...props} />
-					<div>
+					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<Button basic negative onClick={() => handleRemoveOnClick()}>
 							<Icon name="trash" />
 							Remove from list
 						</Button>
+						<ShareModal key={props.id} {...props} />
 					</div>
 				</ItemExtra>
 			</ItemContent>

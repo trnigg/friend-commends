@@ -1,46 +1,83 @@
+import React from "react";
 import {
   ItemMeta,
   ItemImage,
   ItemHeader,
   ItemGroup,
+  ItemExtra,
   ItemDescription,
   ItemContent,
-  Image,
+  Message,
+  Icon,
+  Button,
   Item,
-} from 'semantic-ui-react'
+  Label,
+} from "semantic-ui-react";
+import ShareModal from "./shareModal";
+import { useMutation } from "@apollo/client";
+import {
+  MUTATION_REMOVEWATCHITEM,
+} from "../utils/selfMutations";
+import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
+import Auth from "../utils/auth";
 
-const paragraph = <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+export default function WatchItem(props) {
+  console.log("props:", props);
+  const { id, overview, AU_platforms: platforms, type } = props;
+  let posterURL = props?.poster_path
+    ? `https://image.tmdb.org/t/p/w154/${props.poster_path}`
+    : `https://react.semantic-ui.com/images/wireframe/image.png`;
+  let title = props.original_title || props.original_name||props.movietitle;
+  const itemType = type === "TV" ? "TV show" : type;
 
-// movietitle={data.original_name}
-// poster_path={data.poster_path}
-// description={data.overview}
-// friendRecommend={data.count}
-// friendArray={friendOmmend(data.tmdbID)} />
+  const [removeWatchItem, { error: movieErr }] = useMutation(MUTATION_REMOVEWATCHITEM,{
+    refetchQueries: [
+      QUERY_MYWATCHLIST, // Query to be refecthed
+      'MyWatchList' // Query name
+    ],
+  });
+  const handleRemoveOnClick = async () => {
+    //console.log("props.share",props.share)
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-export default function MovieItems(props){
+    if (!token) {
+      return false;
+    }
 
-let posterURL = props?.poster_path
-? `https://image.tmdb.org/t/p/w154/${props.poster_path}`
-: `https://react.semantic-ui.com/images/wireframe/image.png`;
-  
-console.log(props)
+      try {
+        await removeWatchItem({
+          variables: { removeFromWatchListId:id },
+        });
+      } catch (err) {
+        console.error(err);
+      }
 
-return(
-  <ItemGroup>
+
+  };
+
+  return (
     <Item>
       <ItemImage src={posterURL} />
 
       <ItemContent>
-        <ItemHeader>{props.movietitle}</ItemHeader>
+        <ItemHeader as="a">{title}</ItemHeader>
         <ItemMeta>
-          <span className='price'>recommended by {props.friendRecommend} friend/s</span>
-          {/* <span className='stay'>1 Month</span> */}
+          <span className="type"> {itemType} </span>
         </ItemMeta>
         <ItemDescription>{props.description}</ItemDescription>
+        <ItemExtra>
+          {platforms?.map((platform) => (
+            <Label key={platform}>{platform}</Label>
+          ))}
+          <ShareModal key={props.id} {...props} />
+          <div>
+          <Button primary onClick={() => handleRemoveOnClick()}>
+          Remove from list
+        </Button>
+        </div>
+        </ItemExtra>
+
       </ItemContent>
     </Item>
-  </ItemGroup>
-)
+  );
 }
-
-// export default ItemExampleLink

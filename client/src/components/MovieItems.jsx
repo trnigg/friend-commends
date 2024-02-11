@@ -12,6 +12,7 @@ import {
   Button,
   Item,
   Label,
+  Popup,
 } from "semantic-ui-react";
 import ShareModal from "./shareModal";
 import { useMutation } from "@apollo/client";
@@ -55,6 +56,22 @@ export default function WatchItem(props) {
 
   };
 
+  const friendArray = (props) =>{
+    console.log(props)
+    return(
+      <div>
+        <div>Recommended by </div>
+        <div>
+          {props.map(function (friend) {
+            return(
+              <div key={friend}>{friend}</div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <Item>
       <ItemImage src={posterURL} />
@@ -62,7 +79,15 @@ export default function WatchItem(props) {
       <ItemContent>
         <ItemHeader as="a">{title}</ItemHeader>
         <ItemMeta>
-          <span className="type"> {itemType} </span>
+          <Popup
+              content={friendArray(props.friendArray)}
+              on='click'
+              pinned
+              trigger={
+              // <Button content='Button' />
+                <a className="popupLink">Recommended by  {props.friendRecommend} friend/s</a>
+            }
+            />
         </ItemMeta>
         <ItemDescription>{props.description}</ItemDescription>
         <ItemExtra>

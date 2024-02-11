@@ -9,7 +9,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       //devOptions: { enabled: true },
-      includeAssets: ["favicon.ico"],
+      //includeAssets: ["favicon.ico"],
+      includeAssets: ["**/*"],
       manifest: {
         name: "Friend-commends",
         short_name: "Friend-commends",
@@ -28,6 +29,55 @@ export default defineConfig({
           },
         ],
       },
+      workbox: {
+        globPatterns: ["**/*"],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.themoviedb\.org\/.*/i,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "tmdb-source-cache",
+              cacheableResponse:{statuses:[0,200]}
+            },
+          },
+          {
+            urlPattern: /^https:\/\/image\.tmdb\.org\/.*/i,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "tmdb-image-cache",
+              cacheableResponse:{statuses:[0,200]}
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "fonts-cache",
+              cacheableResponse:{statuses:[0,200]}
+            },
+          },
+          {
+            urlPattern: /.*\/graphql/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "graphql-cache",
+              cacheableResponse:{statuses:[0,200]}
+            },
+          },
+          {
+            // Match any request that ends with .png, .jpg, .jpeg or .svg.
+            urlPattern: /\.(?:png|jpg|jpeg|svg|ico)$/,
+    
+            // Apply a cache-first strategy.
+            handler: 'CacheFirst',
+    
+            options: {
+              // Use a custom cache name.
+              cacheName: 'images',
+            },
+          }
+        ],
+      },
     }),
   ],
   server: {
@@ -41,4 +91,5 @@ export default defineConfig({
       },
     },
   },
+  
 });

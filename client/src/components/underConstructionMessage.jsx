@@ -13,7 +13,7 @@ function UnderConstructionMessage() {
 			<Icon name="wrench" />
 			Under Construction
 			<HeaderSubheader>
-				This page is currently under construction. Please check back later.
+				This feature is currently under construction. Please check back later.
 			</HeaderSubheader>
 		</Header>
 	);

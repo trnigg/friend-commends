@@ -217,14 +217,13 @@ function RecommendedContentCard({
 				>
 					<Icon
 						name="thumbs up outline"
-						size="big"
+						size="large"
 						style={{ marginRight: '10px' }}
 					/>
-					<div>
+					<span>
 						{' '}
-						Recommended by <strong>name1</strong>, <strong>name2</strong> and{' '}
-						<strong>4 other friends</strong>.
-					</div>
+						Recommended by <strong>4 friends</strong>.
+					</span>
 				</CardMeta>
 				<CardContent extra>
 					<Accordion

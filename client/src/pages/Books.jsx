@@ -7,7 +7,7 @@ function Books() {
 
 	return (
 		<div>
-			<MovieItems />
+			{/* <MovieItems /> */}
 			<img src="images/page-under-construction.gif" alt="Page under construction" />
 		</div>
 

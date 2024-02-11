@@ -1,6 +1,5 @@
 import ContentPage from './ContentPage'; // Adjust the path based on your project structure
 import { searchMoviesByQuery, searchMovieSource } from '../utils/API'; // Adjust the path based on your project structure
-import PageCont from './pageContent';
 
 function Movies() {
 	return (
@@ -10,7 +9,6 @@ function Movies() {
 			searchSource={searchMovieSource}
 			contentType="Movie"
 		/>
-		<PageCont />
 		</>
 	);
 }

@@ -106,10 +106,14 @@ function PageCont() {
 										<MovieItems
 										key={data?.original_title||data.original_name}
 										movietitle={data?.original_title||data.original_name}
-                                        poster_path={data.poster_path}
+                                        original_title={data?.original_title||data.original_name}
+										poster_path={data.poster_path}
                                         description={data.overview}
+										overview={data.overview}
 										friendRecommend={data.count}
 										platforms={data.AU_platforms}
+										type={format}
+										tmdbID={data.tmdbID}
 										friendArray={friendOmmend(data.tmdbID)} />
 									</ItemGroup>
 								);

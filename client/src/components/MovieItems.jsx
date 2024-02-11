@@ -70,6 +70,7 @@ export default function WatchItem(props) {
     )
   }
 
+  console.log(props)
   return (
     <Item>
       <ItemImage src={posterURL} />
@@ -93,11 +94,6 @@ export default function WatchItem(props) {
             <Label key={platform}>{platform}</Label>
           ))}
           <ShareModal key={props.id} {...props} />
-          <div>
-          {/* <Button primary onClick={() => handleRemoveOnClick()}>
-          Remove from list
-        </Button> */}
-        </div>
         </ItemExtra>
 
       </ItemContent>

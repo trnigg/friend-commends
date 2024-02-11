@@ -23,7 +23,7 @@ export default function RecommendItem(props) {
 	//console.log("props:", props);
 	const { id, overview, AU_platforms: platforms, type } = props;
 	let posterURL = props?.poster_path
-		? `https://image.tmdb.org/t/p/w154/${props.poster_path}`
+		? `https://image.tmdb.org/t/p/w154${props.poster_path}`
 		: `https://react.semantic-ui.com/images/wireframe/image.png`;
 	let title = props.original_title || props.original_name;
 	const itemType = type === 'TV' ? 'TV show' : type;

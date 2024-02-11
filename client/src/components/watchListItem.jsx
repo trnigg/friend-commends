@@ -23,7 +23,7 @@ export default function WatchItem(props) {
 	console.log("props:", props);
 	const { id, overview, tmdbID, AU_platforms: platforms, type, poster_path } = props.watch;
 	const posterURL = poster_path
-		? `https://image.tmdb.org/t/p/w154/${poster_path}`
+		? `https://image.tmdb.org/t/p/w154${poster_path}`
 		: `https://react.semantic-ui.com/images/wireframe/image.png`;
 	const title = props.watch?.original_title || props.watch?.original_name;
 	const itemType = type === 'TV' ? 'TV show' : type;
@@ -31,12 +31,7 @@ export default function WatchItem(props) {
 	const recommendList = props?.recommend ||[];
 	const [removeWatchItem, { error: removeErr }] = useMutation(
 		MUTATION_REMOVEWATCHITEM,
-		{
-			refetchQueries: [
-				QUERY_MYWATCHLIST, // Query to be refecthed
-				'MyWatchList', // Query name
-			],
-		}
+		{refetchQueries: [{query: QUERY_MYWATCHLIST}]}
 	);
 
 	const [addRecommendMovie, { error: movieErr }] = useMutation(

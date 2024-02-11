@@ -79,7 +79,7 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 
 			<Segment raised>
 				<Header as="h2">
-					<Icon name={contentType === 'tv' ? 'tv' : 'film'} />
+					<Icon name={contentType === 'TV show' ? 'tv' : 'film'} />
 					<HeaderContent>Search for a {contentType}</HeaderContent>
 				</Header>
 				<ContentSearch

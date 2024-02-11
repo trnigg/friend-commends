@@ -36,7 +36,7 @@ export default function SharedItem(props) {
 	} = props.share;
 	const watchList = props?.watch ||[];
 	let posterURL = poster_path
-		? `https://image.tmdb.org/t/p/w154/${poster_path}`
+		? `https://image.tmdb.org/t/p/w154${poster_path}`
 		: `https://react.semantic-ui.com/images/wireframe/image.png`;
 	let title = props.share.original_title || props.share.original_name;
 	let date = props.share.release_date || props.share.first_air_date;
@@ -48,32 +48,13 @@ export default function SharedItem(props) {
 	//console.log("message:",props.share.shareMessage)
 
 	const [addMovieToWatch, { error: movieErr }] = useMutation(
-		MUTATION_ADDMOVIETOWATCHLIST,
-		{
-			refetchQueries: [
-				QUERY_MYWATCHLIST, // Query to be refecthed
-				'MyWatchList', // Query name
-			],
-		}
-	);
+		MUTATION_ADDMOVIETOWATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
+
 	const [addTVToWatch, { error: tvErr }] = useMutation(
-		MUTATION_ADDTVTOWATCHLIST,
-		{
-			refetchQueries: [
-				QUERY_MYWATCHLIST, // Query to be refecthed
-				'MyWatchList', // Query name
-			],
-		}
-	);
+		MUTATION_ADDTVTOWATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
+
 	const [removeShare, { error: removeErr }] = useMutation(
-		MUTATION_REMOVESHAREITEM,
-		{
-			refetchQueries: [
-				QUERY_SHAREDWITHME, // Query to be refecthed
-				'SharedWithMe', // Query name
-			],
-		}
-	);
+		MUTATION_REMOVESHAREITEM,{refetchQueries: [{query: QUERY_SHAREDWITHME}]});
 
 	const handleRemoveOnClick = async () => {
 		//console.log("props.share",props.share)

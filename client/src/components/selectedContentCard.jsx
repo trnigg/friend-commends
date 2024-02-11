@@ -21,7 +21,7 @@ import {
 	ADD_MOVIE_WATCHLIST,
 	ADD_TV_WATCHLIST,
 } from '../utils/mutations';
-// import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
+import { QUERY_MYRECOMMENDATIONS, QUERY_MYWATCHLIST } from '../utils/selfQueries';
 import { useMutation } from '@apollo/client';
 // import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
 // import { ADD_TV_WATCHLIST } from '../utils/mutations';
@@ -43,14 +43,13 @@ function SelectedContentCard({
 		setIsAddToWatchClicked(false);
 	}, [selectedContent]);
 
-	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
+	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION,{refetchQueries: [{query: QUERY_MYRECOMMENDATIONS}]});
 	const [addMovie, { error: error2, data: data2 }] = useMutation(
-		ADD_MOVIE_RECOMMENDATION
-	);
+		ADD_MOVIE_RECOMMENDATION,{refetchQueries: [{query: QUERY_MYRECOMMENDATIONS}]});
 	const [addWatch, { error: error3, data: data3 }] =
-		useMutation(ADD_MOVIE_WATCHLIST);
+		useMutation(ADD_MOVIE_WATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
 	const [addTVWatch, { error: error4, data: data4 }] =
-		useMutation(ADD_TV_WATCHLIST);
+		useMutation(ADD_TV_WATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
 
 	const addToWatch = async () => {
 		const newNumber = selectedContent.id.toString();

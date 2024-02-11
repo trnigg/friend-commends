@@ -7,6 +7,12 @@ import {
 	ApolloProvider,
 	createHttpLink,
 } from '@apollo/client';
+import { persistCache } from 'apollo3-cache-persist';
+const cache = new InMemoryCache();
+persistCache({
+	cache,
+	storage: window.localStorage,
+  });
 
 // For authentication
 import { setContext } from '@apollo/client/link/context';
@@ -34,7 +40,7 @@ const authLink = setContext((_, { headers }) => {
 const client = new ApolloClient({
 	// executes `authLink` middleware prior every request to GraphQL API
 	link: authLink.concat(httpLink),
-	cache: new InMemoryCache(),
+	cache: cache,
 });
 
 function App() {

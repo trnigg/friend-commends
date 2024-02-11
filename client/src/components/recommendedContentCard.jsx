@@ -34,6 +34,7 @@ function RecommendedContentCard({
 	cardId,
 	handleClick,
 	activeIndex,
+	type, // type of content; used to determine which mutation to use
 }) {
 	const [isAddContentClicked, setIsAddContentClicked] = useState(false); // state for determing if the add content button has been clicked
 	const [isAddToWatchClicked, setIsAddToWatchClicked] = useState(false); // state for determing if the add to watch button has been clicked
@@ -53,12 +54,52 @@ function RecommendedContentCard({
 	const [addTVWatch, { error: error4, data: data4 }] =
 		useMutation(ADD_TV_WATCHLIST);
 
+	const addContent = async () => {
+		const newNumber = selectedContent.id.toString();
+		let contentType = selectedContent.type;
+		let AU_platforms = contentSource.map((provider) => provider.provider_name);
+
+		type === 'TV'
+			? await addShow({
+					variables: {
+						input: {
+							type: 'TV',
+							tmdbID: newNumber,
+							overview: selectedContent.description,
+							original_name: selectedContent.title,
+							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
+						},
+					},
+			  }).then(() => {
+					console.log('added');
+					setIsAddContentClicked(true); // update the state here
+			  })
+			: type === 'Movie'
+			? await addMovie({
+					variables: {
+						input: {
+							type: 'Movie',
+							tmdbID: newNumber,
+							overview: selectedContent.description,
+							original_title: selectedContent.title,
+							poster_path: selectedContent.posterImage,
+							AU_platforms: AU_platforms,
+						},
+					},
+			  }).then(() => {
+					console.log('added');
+					setIsAddContentClicked(true); // update the state here
+			  })
+			: console.log('Bad');
+	};
+
 	const addToWatch = async () => {
 		const newNumber = selectedContent.id.toString();
-		let url = window.location.href.split('/');
-		let urlExt = url[3];
+		let contentType = selectedContent.type;
 		let AU_platforms = contentSource.map((provider) => provider.provider_name);
-		urlExt === 'movies'
+
+		type === 'Movie'
 			? await addWatch({
 					variables: {
 						input: {
@@ -74,7 +115,7 @@ function RecommendedContentCard({
 					console.log('added');
 					setIsAddToWatchClicked(true); // update the state here
 			  })
-			: urlExt === 'tv_shows'
+			: type === 'TV'
 			? await addTVWatch({
 					variables: {
 						input: {
@@ -93,53 +134,6 @@ function RecommendedContentCard({
 			: console.log('No Good');
 	};
 
-	const addContent = async () => {
-		console.log(selectedContent);
-		const newNumber = selectedContent.id.toString();
-		let url = window.location.href.split('/');
-		let urlExt = url[3];
-		let AU_platforms = contentSource.map((provider) => provider.provider_name);
-		console.log(AU_platforms);
-		urlExt === 'tv_shows'
-			? await addShow({
-					variables: {
-						input: {
-							type: 'TV',
-							tmdbID: newNumber,
-							overview: selectedContent.description,
-							original_name: selectedContent.title,
-							poster_path: selectedContent.posterImage,
-							AU_platforms: AU_platforms,
-						},
-					},
-			  }).then(() => {
-					console.log('added');
-					setIsAddContentClicked(true); // update the state here
-			  })
-			: urlExt === 'movies'
-			? await addMovie({
-					variables: {
-						input: {
-							type: 'Movie',
-							tmdbID: newNumber,
-							overview: selectedContent.description,
-							original_title: selectedContent.title,
-							poster_path: selectedContent.posterImage,
-							AU_platforms: AU_platforms,
-						},
-					},
-			  }).then(() => {
-					console.log('added');
-					setIsAddContentClicked(true); // update the state here
-			  })
-			: console.log('Bad');
-		console.log('Hello');
-	};
-
-	const shareContent = () => {
-		<ShareModal />;
-		console.log('Good Stuff');
-	};
 	let modalData = {};
 	console.log(selectedContent);
 	if (selectedContent) {

@@ -109,6 +109,7 @@ function ForYou() {
 							return (
 								<RecommendedContentCard
 									key={data.id}
+									type="Movie"
 									selectedContent={{
 										id: data.id,
 										title: data.original_title,
@@ -141,6 +142,7 @@ function ForYou() {
 							return (
 								<RecommendedContentCard
 									key={data.id}
+									type="TV"
 									selectedContent={{
 										id: data.id,
 										title: data.original_name,

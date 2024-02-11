@@ -8,6 +8,7 @@ import {
   Image,
   Popup,
   Rating,
+  Button,
   PopupHeader,
   PopupContent,
 } from 'semantic-ui-react'

@@ -1,6 +1,7 @@
 import { useState, useReducer } from 'react';
 import ContentSearch from '../components/contentSearch';
 import SelectedContentCard from '../components/selectedContentCard';
+import PageCont from './pageContent';
 import {
 	Header,
 	HeaderContent,
@@ -101,6 +102,9 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 					<Icon name="thumbs up" />
 					<HeaderContent>Recommended for you</HeaderContent>
 				</Header>
+			</Segment>
+			<Segment>
+				<PageCont />
 			</Segment>
 		</Container>
 	);

@@ -1,9 +1,7 @@
-import React from "react";
 import {
   ItemMeta,
   ItemImage,
   ItemHeader,
-  ItemGroup,
   ItemExtra,
   ItemDescription,
   ItemContent,
@@ -72,6 +70,7 @@ export default function WatchItem(props) {
     )
   }
 
+  console.log(props)
   return (
     <Item>
       <ItemImage src={posterURL} />
@@ -91,15 +90,10 @@ export default function WatchItem(props) {
         </ItemMeta>
         <ItemDescription>{props.description}</ItemDescription>
         <ItemExtra>
-          {platforms?.map((platform) => (
+          {props.platforms?.map((platform) => (
             <Label key={platform}>{platform}</Label>
           ))}
           <ShareModal key={props.id} {...props} />
-          <div>
-          <Button primary onClick={() => handleRemoveOnClick()}>
-          Remove from list
-        </Button>
-        </div>
         </ItemExtra>
 
       </ItemContent>

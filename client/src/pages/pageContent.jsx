@@ -3,12 +3,13 @@ import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import MovieItems from "../components/MovieItems"
-import { ItemGroup } from "semantic-ui-react";
+import { ItemGroup, Select, Dropdown } from "semantic-ui-react";
 
 function PageCont() {
 	// let state = useLocation();
 	const [userData, setUserData] = useState()
 	const [date, setDate] = useState()
+	const [date2, setDate2] = useState()
     const [format, setFormat] = useState()
 
     let url = window.location.href;
@@ -45,18 +46,19 @@ function PageCont() {
 				newDataCloneArray.push({...y, count: numbER})
 			});
 			setDate([...newDataCloneArray]);
+			setDate2([...newDataCloneArray]);
 	}
 
 	const recent = () => {
-		const dateClone = date;
+		const dateClone = date2;
 		const recentArray = dateClone.sort((a,b) => b.createdAt - a.createdAt);
-		setDate([...recentArray]);
+		setDate2([...recentArray]);
 	}
 
 	const recommended =() => {
-		const dateClone = date;
+		const dateClone = date2;
 		const recentArray = dateClone.sort((a,b) => b.count - a.count);
-		setDate([...recentArray]);
+		setDate2([...recentArray]);
 	}
 
 	const friendOmmend =(id) => {
@@ -73,32 +75,71 @@ function PageCont() {
 		return loopArray
 	}
 
-	const sortBy =()=>{
-		const newChoice = selectFilter.value;
-		newChoice === "recent" ? recent():
-		newChoice === "recommended" ? recommended():
+	const sortBy =(e)=>{
+		const newChoice = e.target.innerText;
+		console.log(e)
+		newChoice === "most recent" ? recent():
+		newChoice === "most recommended" ? recommended():
 		console.log("Wrong");
 
 	}
 
-	if(date){
+	const refineFriends =(e)=>{
+		console.log(e.target.innerText)
+		const objectFilter = userData.friendRecommendations.filter((user) => user.userName === e.target.innerText)
+		console.log(objectFilter)
 
-    
+		let reviewedArray = []
+		objectFilter[0].recommendations.forEach((recommendation)=>{
+			for (let i=0; i < date.length; i++ ){
+				if(date[i].tmdbID === recommendation.tmdbID){
+					reviewedArray.push(date[i])
+				}
+			}
+		})
+		console.log(reviewedArray)
+		const filterByType = reviewedArray
+		.filter((entry) => entry.__typename === format);
+
+		setDate2([...filterByType])
+	}
+
+	if(date){
+		if(date2){
+			console.log(date);
+
+		}
+
+    const friendArray = userData.friendRecommendations.map(function(entry){
+		return (
+			{
+				key: entry.userName,
+				value: entry.userName,
+				text: entry.userName
+			}
+		)
+	})
 
     console.log(date)
+	console.log(date2)
+	console.log(userData)
 
 	return (
 		<div>
 			<h1>This is the {format} page</h1>
 			<h3>would you like to sort by</h3>
-			<select name="selectFilter" id="selectFilter" onChange={sortBy}>
+			{/* <select name="selectFilter" id="selectFilter" onChange={sortBy}>
 				<option value="recent">most recent</option>
 				<option value="recommended">most recommended</option>
-			</select>
-			<p>Your recommended movies are:</p>
+			</select> */}
+			<Dropdown name="selectFilter" id="selectFilter" placeholder='Refine results by:' options={[
+															{key:'recent', value:'recent', text:"most recent"},
+															{key:'recommended', value:'recommended', text:"most recommended"}]}
+															onChange={sortBy}/>
+			<Dropdown placeholder='Search by friends' options={friendArray} onChange={refineFriends} id="friendSearch"/>
 			<div className="recommendBox">
 			<>
-							{date.map(function (data) {
+							{date2.map(function (data) {
 								return (
 									<ItemGroup divided	key={data?.original_title||data.original_name}>
 										<MovieItems

@@ -42,8 +42,12 @@ function ForYou() {
 
 	// for the accordion, when a card is clicked, the active index is set to the index of the card
 	const handleClick = (cardId, index) => {
-		setActiveCard(cardId);
-		setActiveIndex(cardId === activeCard ? -1 : index);
+		if (cardId === activeCard && index !== activeIndex) {
+			setActiveIndex(index);
+		} else {
+			setActiveCard(cardId);
+			setActiveIndex(cardId === activeCard ? -1 : index);
+		}
 	};
 
 	let userDetails = {};

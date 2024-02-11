@@ -20,6 +20,7 @@ import { QUERY_FRIENREQ } from '../utils/queries';
 // import { useEffect, useState } from 'react';
 
 import RecommendedContentCard from '../components/recommendedContentCard';
+import UnderConstructionMessage from '../components/underConstructionMessage';
 
 function ForYou() {
 	// const [type, setType] = useState()
@@ -160,24 +161,9 @@ function ForYou() {
 				<Segment>
 					<Header as="h2">
 						<Icon name="book" />
-						<HeaderContent>
-							Books recommended for you
-							<HeaderSubheader>
-								<a href="/books">See more book recommendations...</a>
-							</HeaderSubheader>
-						</HeaderContent>
+						<HeaderContent>Books recommended for you</HeaderContent>
 					</Header>
-					{bookRecommend.map(function (data) {
-						return (
-							<div key={data.original_name}>
-								<CardExampleCard
-									movietitle={data.original_name}
-									poster_path={data.poster_path}
-									description={data.overview}
-								/>
-							</div>
-						);
-					})}
+					<UnderConstructionMessage />
 				</Segment>
 			</Container>
 		);

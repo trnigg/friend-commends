@@ -41,4 +41,65 @@ export default defineConfig({
       },
     },
   },
+  workbox: {
+    globPatterns: ['**/*.{js,css,html,png,jpg,jpeg,svg,ico}'],
+    runtimeCaching: [
+      {
+        urlPattern: /^https:\/\/api\.themoviedb\.org\/.*/i,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "tmdb-source-cache",
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
+        urlPattern: /^https:\/\/react\.semantic-ui\.com\/.*/i,
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "semantic-cache",
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
+        urlPattern: ({ url }) => {
+          return url.pathname.startsWith("/graphql");
+        },
+        handler: "StaleWhileRevalidate",
+        options: {
+          cacheName: "graphql-cache",
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
+        // Match any request that ends with .png, .jpg, .jpeg or .svg.
+        urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+
+        // Apply a cache-first strategy.
+        handler: 'CacheFirst',
+
+        options: {
+          // Use a custom cache name.
+          cacheName: 'images',
+        },
+      }
+    ],
+  },
 });

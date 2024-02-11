@@ -1,3 +1,9 @@
+// NOTE, currently using state and effect to check if the add content buttons have been clicked, then disabling them.
+// This isn't the cleanest solution as if it's previously been added, they won't be disabled on load and allow re-adding.
+// Currently DB prevents re-adding, but this should be handled in the front end.
+// Ideal solution would be querying the DB for the user's recommendations and watchlist and checking if the content is already in there.
+
+import { useState, useEffect } from 'react';
 import {
 	Card,
 	Image,
@@ -7,6 +13,7 @@ import {
 	CardContent,
 	CardMeta,
 	Label,
+	Popup,
 } from 'semantic-ui-react';
 import {
 	ADD_TV_RECOMMENDATION,
@@ -27,6 +34,15 @@ function SelectedContentCard({
 	activeIndex,
 	setActiveIndex,
 }) {
+	const [isAddContentClicked, setIsAddContentClicked] = useState(false); // state for determing if the add content button has been clicked
+	const [isAddToWatchClicked, setIsAddToWatchClicked] = useState(false); // state for determing if the add to watch button has been clicked
+
+	useEffect(() => {
+		// Reset the state of the buttons whenever the selectedContent changes
+		setIsAddContentClicked(false);
+		setIsAddToWatchClicked(false);
+	}, [selectedContent]);
+
 	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION);
 	const [addMovie, { error: error2, data: data2 }] = useMutation(
 		ADD_MOVIE_RECOMMENDATION
@@ -53,7 +69,10 @@ function SelectedContentCard({
 							AU_platforms: AU_platforms,
 						},
 					},
-			  }).then(console.log('Affirmative'))
+			  }).then(() => {
+					console.log('added');
+					setIsAddToWatchClicked(true); // update the state here
+			  })
 			: urlExt === 'tv_shows'
 			? await addTVWatch({
 					variables: {
@@ -66,7 +85,10 @@ function SelectedContentCard({
 							AU_platforms: AU_platforms,
 						},
 					},
-			  }).then(console.log('Affirmative'))
+			  }).then(() => {
+					console.log('added');
+					setIsAddToWatchClicked(true); // update the state here
+			  })
 			: console.log('No Good');
 	};
 
@@ -89,7 +111,10 @@ function SelectedContentCard({
 							AU_platforms: AU_platforms,
 						},
 					},
-			  }).then(console.log('added'))
+			  }).then(() => {
+					console.log('added');
+					setIsAddContentClicked(true); // update the state here
+			  })
 			: urlExt === 'movies'
 			? await addMovie({
 					variables: {
@@ -102,7 +127,10 @@ function SelectedContentCard({
 							AU_platforms: AU_platforms,
 						},
 					},
-			  }).then(console.log('added'))
+			  }).then(() => {
+					console.log('added');
+					setIsAddContentClicked(true); // update the state here
+			  })
 			: console.log('Bad');
 		console.log('Hello');
 	};
@@ -211,23 +239,43 @@ function SelectedContentCard({
 					extra
 					style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
 				>
-					<Button
-						circular
-						basic
-						primary
-						icon="thumbs up"
-						size="big"
-						onClick={addContent}
+					<Popup
+						content={
+							isAddContentClicked
+								? "You've already recommended this"
+								: 'Recommend this'
+						}
+						trigger={
+							<Button
+								circular
+								basic
+								primary
+								icon="thumbs up"
+								size="big"
+								onClick={addContent}
+								disabled={isAddContentClicked}
+							/>
+						}
 					/>
 					{/* <Button circular icon="share" size="big" onClick={shareContent}/> */}
 					<ShareModal key={selectedContent.id} {...modalData} icon="add" />
-					<Button
-						circular
-						basic
-						primary
-						icon="eye"
-						size="big"
-						onClick={addToWatch}
+					<Popup
+						content={
+							isAddToWatchClicked
+								? "You've already added this to watchlist"
+								: 'Add to watchlist'
+						}
+						trigger={
+							<Button
+								circular
+								basic
+								primary
+								icon="eye"
+								size="big"
+								onClick={addToWatch}
+								disabled={isAddToWatchClicked}
+							/>
+						}
 					/>
 				</CardContent>
 			</Card>

@@ -12,6 +12,7 @@ import {
 	Message,
 	Form,
 	TextArea,
+	Popup,
 } from 'semantic-ui-react';
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
@@ -33,6 +34,8 @@ function ShareModal({ ...props }) {
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [successMsg, setSuccessMsg] = useState(false);
 	const [open, setOpen] = useState(false);
+
+	const [isHovered, setIsHovered] = useState(false); // work around for the hover effect with popup
 
 	const [shareWith, setShareWith] = useState('');
 	const [message, setMessage] = useState('');
@@ -96,63 +99,70 @@ function ShareModal({ ...props }) {
 	};
 
 	return (
-		<Modal
-			closeIcon
-			onClose={() => setOpen(false)}
-			onOpen={() => setOpen(true)}
-			open={open}
-			trigger={
-				<Button basic primary floated="right">
-					<Icon name="share" />
-					Share
-				</Button>
-			}
+		<div
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
 		>
-			<ModalHeader>Share with your friend!</ModalHeader>
-			<Message
-				onDismiss={() => {
-					setErrorMsg(false);
-				}}
-				hidden={!errorMsg}
-				color="red"
-			>
-				Unable to share with your friend at the moment. Please try again later.
-			</Message>
-			<Message
-				onDismiss={() => {
-					setSuccessMsg(false);
-				}}
-				hidden={!successMsg}
-				color="green"
-			>
-				Shared successfully!
-			</Message>
-			<ModalContent image>
-				<ModalDescription>
-					<Header>Who do you wish to share with?</Header>
-					<FriendSearchSelection
-						shareWith={shareWith}
-						setShareWith={setShareWith}
-					/>
-					<Form>
-						<TextArea
-							placeholder="Send them a short message."
-							onChange={handleMessageInput}
-						/>
-					</Form>
-				</ModalDescription>
-			</ModalContent>
-			<ModalActions>
-				<Button basic onClick={() => setOpen(false)} negative>
-					<Icon name="cancel" />
-					Cancel
-				</Button>
-				<Button basic primary onClick={handleShareClick}>
-					<Icon name="share" />
-					Share
-				</Button>
-			</ModalActions>
-		</Modal>
+			<Popup
+				content="Share with a friend"
+				open={isHovered}
+				trigger={
+					<Modal
+						closeIcon
+						onClose={() => setOpen(false)}
+						onOpen={() => setOpen(true)}
+						open={open}
+						trigger={<Button basic primary circular icon="share" size="big" />}
+					>
+						<ModalHeader>Share with your friend!</ModalHeader>
+						<Message
+							onDismiss={() => {
+								setErrorMsg(false);
+							}}
+							hidden={!errorMsg}
+							color="red"
+						>
+							Unable to share with your friend at the moment. Please try again
+							later.
+						</Message>
+						<Message
+							onDismiss={() => {
+								setSuccessMsg(false);
+							}}
+							hidden={!successMsg}
+							color="green"
+						>
+							Shared successfully!
+						</Message>
+						<ModalContent image>
+							<ModalDescription>
+								<Header>Who do you wish to share with?</Header>
+								<FriendSearchSelection
+									shareWith={shareWith}
+									setShareWith={setShareWith}
+								/>
+								<Form>
+									<TextArea
+										placeholder="Send them a short message."
+										onChange={handleMessageInput}
+									/>
+								</Form>
+							</ModalDescription>
+						</ModalContent>
+						<ModalActions>
+							<Button basic onClick={() => setOpen(false)} negative>
+								<Icon name="cancel" />
+								Cancel
+							</Button>
+							<Button basic primary onClick={handleShareClick}>
+								<Icon name="share" />
+								Share
+							</Button>
+						</ModalActions>
+					</Modal>
+				}
+			/>
+		</div>
 	);
 }
 

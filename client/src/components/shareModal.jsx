@@ -6,7 +6,6 @@ import {
 	ModalActions,
 	Button,
 	Header,
-	Image,
 	Modal,
 	Icon,
 	Message,
@@ -137,10 +136,12 @@ function ShareModal({ ...props }) {
 						<ModalContent image>
 							<ModalDescription>
 								<Header>Who do you wish to share with?</Header>
+								<label>Select a friend:</label>
 								<FriendSearchSelection
 									shareWith={shareWith}
 									setShareWith={setShareWith}
 								/>
+								<label>Message:</label>
 								<Form>
 									<TextArea
 										placeholder="Send them a short message."

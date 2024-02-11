@@ -21,7 +21,7 @@ import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
 import Auth from "../utils/auth";
 
 export default function WatchItem(props) {
-  console.log("props:", props);
+  // console.log("props:", props);
   const { id, overview, AU_platforms: platforms, type } = props;
   let posterURL = props?.poster_path
     ? `https://image.tmdb.org/t/p/w154/${props.poster_path}`
@@ -55,7 +55,7 @@ export default function WatchItem(props) {
   };
 
   const friendArray = (props) =>{
-    console.log(props)
+    // console.log(props)
     return(
       <div>
         <div>Recommended by </div>
@@ -70,7 +70,7 @@ export default function WatchItem(props) {
     )
   }
 
-  console.log(props)
+  // console.log(props)
   return (
     <Item>
       <ItemImage src={posterURL} />

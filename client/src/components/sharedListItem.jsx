@@ -25,7 +25,7 @@ import { QUERY_MYWATCHLIST, QUERY_SHAREDWITHME } from '../utils/selfQueries';
 import Auth from '../utils/auth';
 
 export default function SharedItem(props) {
-	console.log('props:', props);
+	//console.log('props:', props);
 	const {
 		id,
 		overview,
@@ -34,7 +34,7 @@ export default function SharedItem(props) {
 		poster_path,
 		tmdbID,
 	} = props.share;
-	const watchList = props.watch;
+	const watchList = props?.watch ||[];
 	let posterURL = poster_path
 		? `https://image.tmdb.org/t/p/w154/${poster_path}`
 		: `https://react.semantic-ui.com/images/wireframe/image.png`;
@@ -165,10 +165,6 @@ export default function SharedItem(props) {
 					{platforms?.map((platform) => (
 						<Label key={platform}>{platform}</Label>
 					))}
-					{/* <Button primary floated="right">
-            Share
-            <Icon name="right chevron" />
-          </Button> */}
 					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<Button basic negative onClick={() => handleRemoveOnClick()}>
 							<Icon name="trash" />

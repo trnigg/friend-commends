@@ -8,13 +8,14 @@ import {
 } from "semantic-ui-react";
 
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_MYWATCHLIST } from "../utils/selfQueries";
+import { QUERY_MYWATCHLIST ,QUERY_MYRECOMMENDATIONS} from "../utils/selfQueries";
 import WatchItem from "./watchListItem";
 
 export default function WatchList() {
   // const [watchlist, setWatchlist] = useState({})
   const { loading, error, data } = useQuery(QUERY_MYWATCHLIST);
-    
+  const { data: recommendData } = useQuery(QUERY_MYRECOMMENDATIONS);
+  
   if(loading){
     return (
         <div>
@@ -24,13 +25,8 @@ export default function WatchList() {
   }
   if (error) return `Error! ${error.message}`;
 
-  // console.log("data", data4.myWatchList.watchList);
-
-// if (data4&&!watchlist){
-//   setWatchlist(data4)
-//   console.log(watchlist)
-
-// }
+  const recommendIdList = recommendData?.myRecommendations?.recommendations?.map((recommend) => recommend.tmdbID)
+  console.log("recommendList: ",recommendIdList)
 
   const watchList = data?.myWatchList?.watchList || [];
 
@@ -45,7 +41,7 @@ export default function WatchList() {
       ) : (
         <ItemGroup divided>
           {watchList.map((watch) => (
-            <WatchItem key={watch.id} {...watch} />
+            <WatchItem key={watch.id} watch={watch} recommend={recommendIdList}/>
           ))}
         </ItemGroup>
       )}

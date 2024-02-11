@@ -204,7 +204,7 @@ function SelectedContentCard({
 	}
 
 	if (friends){
-		const newNumber = selectedContent?.id.toString()||"0"
+		const newNumber = selectedContent?.id.toString()||""
 
 		let friendsArray = [];
 		friends.friendRecommendations.forEach((friend) =>{
@@ -215,14 +215,7 @@ function SelectedContentCard({
 			}
 		})
 		matchingFriends = friendsArray.length;
-		console.log(friendsArray)
-
 	}
-
-
-
-
-
 
 	return (
 		selectedContent && (

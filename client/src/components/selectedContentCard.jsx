@@ -200,19 +200,14 @@ function SelectedContentCard({
 	let matchingFriends;
 	
 	if (!friends&&selectedContent){
-
-		// console.log(selectedContent)
-		// console.log(data5)
 		setFriends(data5)
 	}
 
 	if (friends){
-		// console.log(friends)
-		const newNumber = selectedContent.id.toString()
+		const newNumber = selectedContent?.id.toString()||"0"
 
 		let friendsArray = [];
 		friends.friendRecommendations.forEach((friend) =>{
-			// console.log(friend)
 			for(let i=0; i<friend.recommendations.length; i++){
 				if(friend.recommendations[i].tmdbID===newNumber){
 					friendsArray.push(friend)
@@ -220,7 +215,7 @@ function SelectedContentCard({
 			}
 		})
 		matchingFriends = friendsArray.length;
-		// console.log(matchingFriends)
+		console.log(friendsArray)
 
 	}
 

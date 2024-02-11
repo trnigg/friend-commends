@@ -3,7 +3,7 @@ import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import MovieItems from "../components/MovieItems"
-import { ItemGroup, Select, Dropdown } from "semantic-ui-react";
+import { ItemGroup, Button, Dropdown } from "semantic-ui-react";
 
 function PageCont() {
 	// let state = useLocation();
@@ -77,7 +77,6 @@ function PageCont() {
 
 	const sortBy =(e)=>{
 		const newChoice = e.target.innerText;
-		console.log(e)
 		newChoice === "most recent" ? recent():
 		newChoice === "most recommended" ? recommended():
 		console.log("Wrong");
@@ -85,9 +84,7 @@ function PageCont() {
 	}
 
 	const refineFriends =(e)=>{
-		console.log(e.target.innerText)
 		const objectFilter = userData.friendRecommendations.filter((user) => user.userName === e.target.innerText)
-		console.log(objectFilter)
 
 		let reviewedArray = []
 		objectFilter[0].recommendations.forEach((recommendation)=>{
@@ -97,18 +94,17 @@ function PageCont() {
 				}
 			}
 		})
-		console.log(reviewedArray)
 		const filterByType = reviewedArray
 		.filter((entry) => entry.__typename === format);
 
 		setDate2([...filterByType])
 	}
 
-	if(date){
-		if(date2){
-			console.log(date);
+	const resetAll = ()=>{
+		setDate()
+	}
 
-		}
+	if(date){
 
     const friendArray = userData.friendRecommendations.map(function(entry){
 		return (
@@ -120,9 +116,6 @@ function PageCont() {
 		)
 	})
 
-    console.log(date)
-	console.log(date2)
-	console.log(userData)
 
 	return (
 		<div>
@@ -137,6 +130,7 @@ function PageCont() {
 															{key:'recommended', value:'recommended', text:"most recommended"}]}
 															onChange={sortBy}/>
 			<Dropdown placeholder='Search by friends' options={friendArray} onChange={refineFriends} id="friendSearch"/>
+			<Button onClick={resetAll}>Reset</Button>
 			<div className="recommendBox">
 			<>
 							{date2.map(function (data) {

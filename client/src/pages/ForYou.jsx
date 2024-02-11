@@ -6,7 +6,10 @@ import {
 	HeaderContent,
 	HeaderSubheader,
 	Icon,
+	CardGroup,
 } from 'semantic-ui-react';
+
+import { useState } from 'react';
 
 import auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
@@ -15,6 +18,8 @@ import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
 import { QUERY_FRIENREQ } from '../utils/queries';
 // import { useEffect, useState } from 'react';
+
+import RecommendedContentCard from '../components/recommendedContentCard';
 
 function ForYou() {
 	// const [type, setType] = useState()
@@ -30,6 +35,15 @@ function ForYou() {
 	// })
 
 	console.log('Hello');
+
+	const [activeCard, setActiveCard] = useState(null); // lifted state for the active index of the accordion
+	const [activeIndex, setActiveIndex] = useState(-1);
+
+	// for the accordion, when a card is clicked, the active index is set to the index of the card
+	const handleClick = (cardId, index) => {
+		setActiveCard(cardId);
+		setActiveIndex(cardId === activeCard ? -1 : index);
+	};
 
 	let userDetails = {};
 	let friendsDetails = {};
@@ -89,17 +103,27 @@ function ForYou() {
 							</HeaderSubheader>
 						</HeaderContent>
 					</Header>
-					{movieRecommend.map(function (data) {
-						return (
-							<div key={data.original_title}>
-								<CardExampleCard
-									movietitle={data.original_title}
-									poster_path={data.poster_path}
-									description={data.overview}
+					<CardGroup>
+						{movieRecommend.map(function (data) {
+							return (
+								<RecommendedContentCard
+									key={data.id}
+									selectedContent={{
+										id: data.id,
+										title: data.original_title,
+										description: data.overview,
+										posterImage: data.poster_path,
+										backdropImage: data.poster_path,
+									}}
+									contentSource={data.AU_platforms}
+									noStreamingAvailable={data.AU_platforms.length === 0}
+									cardId={data.id}
+									handleClick={handleClick}
+									activeIndex={data.id === activeCard ? activeIndex : -1}
 								/>
-							</div>
-						);
-					})}
+							);
+						})}
+					</CardGroup>
 				</Segment>
 				<Segment>
 					<Header as="h2">
@@ -111,17 +135,27 @@ function ForYou() {
 							</HeaderSubheader>
 						</HeaderContent>
 					</Header>
-					{tvRecommend.map(function (data) {
-						return (
-							<div key={data.original_name}>
-								<CardExampleCard
-									movietitle={data.original_name}
-									poster_path={data.poster_path}
-									description={data.overview}
+					<CardGroup>
+						{tvRecommend.map(function (data) {
+							return (
+								<RecommendedContentCard
+									key={data.id}
+									selectedContent={{
+										id: data.id,
+										title: data.original_name,
+										description: data.overview,
+										posterImage: data.poster_path,
+										backdropImage: data.poster_path,
+									}}
+									contentSource={data.AU_platforms}
+									noStreamingAvailable={data.AU_platforms.length === 0}
+									cardId={data.id}
+									handleClick={handleClick}
+									activeIndex={data.id === activeCard ? activeIndex : -1}
 								/>
-							</div>
-						);
-					})}
+							);
+						})}
+					</CardGroup>
 				</Segment>
 				<Segment>
 					<Header as="h2">

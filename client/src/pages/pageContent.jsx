@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import CardExampleCard from "../components/CardPics";
-import MovieCard from "../components/movieCards";
+import { useState } from "react";
 import { QUERY_FRIENREQ } from "../utils/queries";
 import auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
@@ -23,15 +21,15 @@ function PageCont() {
 
 
 	const idNum = auth.getProfile();
-	const { loading: loading2, error: error2, data: data2 } = useQuery(QUERY_FRIENREQ, {
+	const { loading: loading2, error, data } = useQuery(QUERY_FRIENREQ, {
 		variables: { userId: idNum.data._id },
 	})
 	if(loading2){
 		return <div>Please Wait......</div>
 	}
-	if(data2&&!date&&format){
-		setUserData(data2);
-		const friendsDetails = data2.friendRecommendations;
+	if(data&&!date&&format){
+		setUserData(data);
+		const friendsDetails = data.friendRecommendations;
 		const friendArray = [];
 		friendsDetails.forEach((entry)=>{
 			friendArray.push(entry.recommendations)

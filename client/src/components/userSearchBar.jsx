@@ -196,6 +196,7 @@ function UserSearchBar() {
 				value={searchQuery}
 				open={open}
 				resultRenderer={resultRenderer}
+				input={{ fluid: true }}
 			/>
 		</div>
 	);

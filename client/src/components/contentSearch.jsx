@@ -1,3 +1,5 @@
+// TODO - move inline styles to a css file
+
 import { useRef, useCallback, useEffect } from 'react';
 import { Search, Button, Image, List } from 'semantic-ui-react';
 
@@ -113,14 +115,18 @@ const ContentSearch = ({
 				value={value}
 				style={{ flex: 1 }}
 				resultRenderer={resultRenderer}
+				input={{ fluid: true }}
 			/>
-			<Button
-				circular
-				basic
-				color="red"
-				icon="close"
-				onClick={handleClearSearch}
-			/>
+			{value && (
+				<Button
+					circular
+					basic
+					color="red"
+					icon="close"
+					onClick={handleClearSearch}
+					style={{ marginLeft: '1rem' }}
+				/>
+			)}
 		</div>
 	);
 };

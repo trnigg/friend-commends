@@ -4,6 +4,44 @@
 
 /* ================================================================================================= */
 
+/* ============ GLOBAL STYLES ============ */
+
+/* ============ PAGE STYLES ============ */
+
+/* ------------ LandingPage.jsx ------------ */
+
+/*  Centers the logo and form vertically and horizontally within viewport */
+.landing-page-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+/* Defines the size of the logo */
+.landing-page-logo {
+	width: 300px;
+	height: auto;
+	margin: 2em;
+}
+
+.landing-page-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 1em; /* Creates space between form using Semantic UI's default size */
+}
+
+/* Sets the width of the form to 100% of the container, but max-width of 700px - width as ..landing-page-content */
+.landing-page-form {
+	width: 100%;
+	max-width: 700px;
+}
+
+/* ============ COMPONENT STYLES ============ */
+
 /* ------------ pageContent.jsx ------------ */
 
 /*  Groups header and filter-components and stacks vertically  */

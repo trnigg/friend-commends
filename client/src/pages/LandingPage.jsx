@@ -11,7 +11,7 @@ import Signup from '../components/signUp'; // Import your Signup component
 import { Button, Container, Header, Image, Segment } from 'semantic-ui-react';
 
 // TODO: Replace logo with our logo. Preferably a .svg file or png with transparent background
-import Logo from '../assets/images/logo.jpg';
+import Logo from '../assets/images/logo-transparent.png';
 
 function LandingPage({ setIsLoggedIn }) {
 	// recieve setIsLoggedIn as a prop to update state in App.jsx
@@ -37,26 +37,34 @@ function LandingPage({ setIsLoggedIn }) {
 	};
 
 	return (
-		<Container className="landing-page">
-			<Header as="h1">Welcome to Our App</Header>
-			<Image
-				src={Logo}
-				alt="Logo"
-				className="logo"
-				style={{ width: '300px', height: 'auto' }}
-			/>{' '}
-			{/* Add your logo here */}
-			<p>This is a description of our app.</p>
-			<Segment raised>
-				{isLogin ? (
-					<Login onAuthenticated={handleAuth} />
-				) : (
-					<Signup onAuthenticated={handleAuth} />
-				)}
-			</Segment>
-			<Button onClick={toggleLoginSignup}>
-				{isLogin ? 'Need to create an account?' : 'Already have an account?'}
-			</Button>
+		<Container>
+			<div className="landing-page-container">
+				<div className="landing-page-content">
+					<Header as="h1">FriendCommends</Header>
+					<Image
+						src={Logo}
+						alt="Logo"
+						className="logo landing-page-logo"
+					/>{' '}
+					{/* Add your logo here */}
+					<Container text textAlign="center">
+						<p>
+							A stripped-back social media platform for sharing your favourite
+							entertainment with your <strong>friends</strong>.
+						</p>
+					</Container>
+				</div>
+				<Segment raised className="landing-page-form">
+					{isLogin ? (
+						<Login onAuthenticated={handleAuth} />
+					) : (
+						<Signup onAuthenticated={handleAuth} />
+					)}
+				</Segment>
+				<Button basic primary onClick={toggleLoginSignup}>
+					{isLogin ? 'Need to create an account?' : 'Already have an account?'}
+				</Button>
+			</div>
 		</Container>
 	);
 }

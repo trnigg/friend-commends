@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Sixtyfour&display=swap');
 /* TO BE DELETED
 Temporarily inserted this because Semantics was 
 using white color text on white background for Input fields */
@@ -81,7 +82,22 @@ h2 {
 .landing-page-title {
 	font-size: 3.5em !important; /* Increase the font size */
 	color: var(--primary-color); /* Set the color */
-	text-shadow: 2px 2px 4px var(--secondary-color); /* Add a text shadow */
+	text-shadow: 2px 3px 5px var(--secondary-color); /* Add a text shadow */
+	font-family: 'Sixtyfour', sans-serif !important;
 	/* FIND A FONT FOR LANDING PAGE TITLE */
 	/* font-family: 'Brush Script MT', cursive !important; */
+}
+
+/* When the viewport is 800px or less, decrease the font size */
+@media (max-width: 800px) {
+	.landing-page-title {
+		font-size: 2.5em !important;
+	}
+}
+
+/* When the viewport is 500px or less, decrease the font size even more */
+@media (max-width: 500px) {
+	.landing-page-title {
+		font-size: 1.8em !important;
+	}
 }

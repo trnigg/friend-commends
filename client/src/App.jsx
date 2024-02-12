@@ -12,7 +12,7 @@ const cache = new InMemoryCache();
 persistCache({
 	cache,
 	storage: window.localStorage,
-  });
+});
 
 // For authentication
 import { setContext } from '@apollo/client/link/context';
@@ -80,16 +80,14 @@ function App() {
 
 	return (
 		<ApolloProvider client={client}>
-			<div className="contentDiv">
-				{isLoggedIn ? (
-					<>
-						<Navbar handleLogout={handleLogout} user={user} />
-						<Outlet />
-					</>
-				) : (
-					<LandingPage setIsLoggedIn={setIsLoggedIn} /> // Render LandingPage if not logged in
-				)}
-			</div>
+			{isLoggedIn ? (
+				<>
+					<Navbar handleLogout={handleLogout} user={user} />
+					<Outlet />
+				</>
+			) : (
+				<LandingPage setIsLoggedIn={setIsLoggedIn} /> // Render LandingPage if not logged in
+			)}
 		</ApolloProvider>
 	);
 }

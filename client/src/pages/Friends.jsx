@@ -7,7 +7,7 @@ import { QUERY_USER } from '../utils/queries';
 import AuthService from '../utils/auth';
 
 import FriendRequestCard from '../components/friendRequestCard';
-import FriendCard from '../components/friendCard';
+import FriendItem from '../components/friendItem';
 import UserSearchBar from '../components/userSearchBar';
 
 import {
@@ -100,10 +100,12 @@ function Friends() {
 					</HeaderContent>
 				</Header>
 				{data.user.friends.length > 0 ? (
-					<ItemGroup>
-						{data.user.friends.map((friend) => (
-							<FriendCard key={friend.id} friend={friend} />
-						))}
+					<ItemGroup divided>
+						{[...data.user.friends]
+							.sort((a, b) => a.firstName.localeCompare(b.firstName))
+							.map((friend) => (
+								<FriendItem key={friend.id} friend={friend} />
+							))}
 					</ItemGroup>
 				) : (
 					<Message>

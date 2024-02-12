@@ -123,7 +123,12 @@
 	height: 100%;
 }
 
-/* ------------  ------------ */
+/* ------------ friendItem.jsx ------------ */
+
+.friend-item {
+	display: flex;
+	align-items: center;
+}
 
 /* ------------ recommendedContentCard.jsx & selectedContentCard.jsx ------------ */
 
@@ -191,6 +196,13 @@
 	/* Removes bottom margin from header within container from 768px onward */
 	.header-filter-container h3.ui.header {
 		margin-bottom: 0; /* Override Semantic UI's h3 bottom margin */
+	}
+
+	/* ------------ friendItem.jsx ------------ */
+
+	.friend-item {
+		display: flex;
+		align-items: flex-end;
 	}
 }
 

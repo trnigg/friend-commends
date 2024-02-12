@@ -29,6 +29,8 @@ function Friends() {
 		variables: { userId },
 	});
 
+	console.log('data:', data);
+
 	const [AcceptFriendRequest] = useMutation(ACCEPT_FRIEND_REQUEST);
 	const [rejectFriendRequest] = useMutation(REJECT_FRIEND_REQUEST);
 

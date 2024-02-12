@@ -157,3 +157,11 @@
 		margin-bottom: 0; /* Override Semantic UI's h3 bottom margin */
 	}
 }
+
+/* ------------ MovieItems.jsx ------------ */
+/* Note, this component is used to render content list items on the Recommended for you sections of  Movie and TV Page */
+
+/* The make border radius consistent; NOTE - override happening somewhere */
+.for-you-item-image img {
+	border-radius: 0.5em !important; /* Adds rounded corners to image semingly consistent with Semantic rounding on cards */
+}

@@ -57,12 +57,12 @@ export default function WatchItem(props) {
 		// console.log(props)
 		return (
 			<div>
-				<div>Recommended by </div>
-				<div>
+				<strong>Recommended by </strong>
+				<p>
 					{props.map(function (friend) {
 						return <div key={friend}>{friend}</div>;
 					})}
-				</div>
+				</p>
 			</div>
 		);
 	};
@@ -70,7 +70,7 @@ export default function WatchItem(props) {
 	// console.log(props)
 	return (
 		<Item>
-			<ItemImage src={posterURL} />
+			<ItemImage className="for-you-item-image" src={posterURL} />
 
 			<ItemContent>
 				<ItemHeader as="a">{title}</ItemHeader>

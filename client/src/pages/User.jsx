@@ -48,36 +48,42 @@ function User() {
 			</div>
 			<Segment raised>
 				<Accordion fluid styled>
-					<AccordionTitle
+					<Accordion.Title
 						active={activeIndex === 0}
 						index={0}
 						onClick={handleClick}
 					>
-						<Icon name="dropdown" />
-						Your Watch List:
-					</AccordionTitle>
+						<Header as="h3">
+							<Icon name="dropdown" />
+							Your watchlist:
+						</Header>
+					</Accordion.Title>
 					<AccordionContent active={activeIndex === 0}>
 						<WatchList />
 					</AccordionContent>
-					<AccordionTitle
+					<Accordion.Title
 						active={activeIndex === 1}
 						index={1}
 						onClick={handleClick}
 					>
-						<Icon name="dropdown" />
-						Shares received List:
-					</AccordionTitle>
+						<Header as="h3">
+							<Icon name="dropdown" />
+							Shares received:
+						</Header>
+					</Accordion.Title>
 					<AccordionContent active={activeIndex === 1}>
 						<ShareReceivedList />
 					</AccordionContent>
-					<AccordionTitle
+					<Accordion.Title
 						active={activeIndex === 2}
 						index={2}
 						onClick={handleClick}
 					>
-						<Icon name="dropdown" />
-						Your recommendations:
-					</AccordionTitle>
+						<Header as="h3">
+							<Icon name="dropdown" />
+							Your recommendations:
+						</Header>
+					</Accordion.Title>
 					<AccordionContent active={activeIndex === 2}>
 						<RecommendationList />
 					</AccordionContent>

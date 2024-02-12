@@ -79,6 +79,21 @@
 
 /* ============ COMPONENT STYLES ============ */
 
+/* ------------ navbar.jsx ------------ */
+
+/* Adds margin to the bottom of the navbar to create space between it and the content below */
+/* Override required because of default last-child behaviour */
+.navbar {
+	margin-bottom: 1em !important;
+}
+
+/* used for desktop menus to ensure menu options are on the right */
+.desktop-menu-items-container {
+	display: flex;
+	justify-content: flex-end;
+	flex-grow: 1;
+}
+
 /* ------------ recommendedContentCard.jsx ------------ */
 
 /* Ensures cards don't shift when others' accordions are expanded. */

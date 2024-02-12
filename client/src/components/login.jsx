@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
+import { Form, Button, Message, Icon } from 'semantic-ui-react';
 import { MUTATION_LOGIN } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
@@ -48,7 +48,7 @@ function Login({ onAuthenticated }) {
 			{error && (
 				<Message error header="Oops!" content={getUserFriendlyError(error)} />
 			)}
-			<Form onSubmit={tryLogin}>
+			<Form onSubmit={tryLogin} autoComplete="off">
 				<Form.Field>
 					<label htmlFor="email">Email</label>
 					<Form.Input
@@ -67,7 +67,10 @@ function Login({ onAuthenticated }) {
 						onInput={(e) => setPassword(e.target.value)}
 					/>
 				</Form.Field>
-				<Button type="submit">Login</Button>
+				<Button basic primary type="submit">
+					<Icon name="sign in" />
+					Login
+				</Button>
 			</Form>
 		</div>
 	);

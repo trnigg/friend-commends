@@ -3,7 +3,14 @@
 // TODO: Add global form validation message/translate messages from Apollo.
 
 import { useState, useEffect } from 'react';
-import { Button, Form, FormField, Message, FormGroup } from 'semantic-ui-react';
+import {
+	Button,
+	Form,
+	FormField,
+	Message,
+	FormGroup,
+	Icon,
+} from 'semantic-ui-react';
 import { MUTATION_ADDUSER } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
@@ -117,7 +124,7 @@ function SignUp({ onAuthenticated }) {
 					content={getFriendlyErrorMessage(error)}
 				/>
 			)}
-			<Form onSubmit={handleFormSubmit}>
+			<Form onSubmit={handleFormSubmit} autoComplete="off">
 				<FormField
 					id="form-input-control-username"
 					control={Form.Input}
@@ -217,7 +224,10 @@ function SignUp({ onAuthenticated }) {
 							: null
 					}
 				/>
-				<Button type="submit">Add User</Button>
+				<Button basic primary type="submit">
+					<Icon name="add user" />
+					Sign up
+				</Button>
 			</Form>
 		</div>
 	);

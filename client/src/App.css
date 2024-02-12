@@ -1,0 +1,182 @@
+/* NOTE CSS is written mobile-first with min-width breakpoints */
+/* Semantic UI's default mobile breakpoint is 768px, and it uses a gutter of 1em. After 768px, the gutter is fluid */
+/* https://semantic-ui.com/elements/container.html */
+
+/* ================================================================================================= */
+
+/* ============ GLOBAL STYLES ============ */
+
+/* NEED TO FIND A BETTER WAY TO ADD PADDING TO LAST CONTENT WITHOUT EXTENDING PAGES THAT DON"T NEED IT */
+/* .ui.container {
+	padding-bottom: 2em;
+} */
+
+/* ============ PAGE STYLES ============ */
+
+/* ------------ LandingPage.jsx ------------ */
+
+/*  Centers the logo and form vertically and horizontally within viewport */
+.landing-page-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+}
+
+/* Defines the size of the logo */
+.landing-page-logo {
+	width: 300px;
+	height: auto;
+	margin: 2em;
+}
+
+.landing-page-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 1em; /* Creates space between form using Semantic UI's default size */
+}
+
+/* Sets the width of the form to 100% of the container, but max-width of 700px - width as ..landing-page-content */
+.landing-page-form {
+	width: 100%;
+	max-width: 700px;
+}
+
+/* ------------ LandingPage.jsx ------------ */
+/* Centers the user card within horizontally */
+/* Givers container a max-width that the card in userProfile can take up with the "fluid" tag */
+.user-card-container {
+	display: flex;
+	justify-content: center;
+	max-width: calc(
+		1127px / 3
+	); /* 1127px is the max-width of the Segment, so card is 1/3 */
+	margin: auto;
+}
+
+/* ------------ ForYou.jsx ------------ */
+/* Cleanest solution for responsive centering and alignment regardless of items in displayed */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns */
+/* Used to align recommendedContentCards */
+.centered-cards-group {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	column-gap: 1em; /* Creates space between cards horizontally only */
+	justify-content: center; /* Centers the grid horizontally */
+	padding: 1em;
+}
+
+/* Centers under-construction message horizontally, and adds some margin top and bottom to make it stand out */
+.centered-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-block: 3em;
+}
+
+/* ============ COMPONENT STYLES ============ */
+
+/* ------------ navbar.jsx ------------ */
+
+/* Adds margin to the bottom of the navbar to create space between it and the content below */
+/* Override required because of default last-child behaviour */
+.navbar {
+	margin-bottom: 1em !important;
+}
+
+/* used for desktop menus to ensure menu options are on the right */
+.desktop-menu-items-container {
+	display: flex;
+	justify-content: flex-end;
+	flex-grow: 1;
+}
+
+/* ------------ recommendedContentCard.jsx ------------ */
+
+/* Ensures cards don't shift when others' accordions are expanded. */
+.recommended-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+/* ------------ recommendedContentCard.jsx & selectedContentCard.jsx ------------ */
+
+/* Adds margin around three sides of image to bring it in */
+.content-card-image {
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	border-radius: 0.5em; /* Adds rounded corners to image semingly consistent with Semantic rounding on cards */
+}
+
+/* Ads consistent margin around the meta data */
+.content-card-meta {
+	display: flex;
+	align-items: center;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+}
+
+/* Lines up buttons in one row and centers horizontallu */
+.content-card-button-container {
+	display: flex;
+	justify-content: center;
+	gap: 1em;
+}
+
+/* ------------ pageContent.jsx ------------ */
+
+/*  Groups header and filter-components and stacks vertically  */
+.header-filter-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/*  Groups filter-options and creates space between  */
+.filter-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	align-items: center;
+}
+
+/*  Sets bottom margin from header within container on mobile */
+.header-filter-container h3.ui.header {
+	margin-bottom: 1em; /* Semantic UI's default h3 bottom margin */
+}
+
+/* When screen becomes wide enough, the filter-components will be side by side */
+@media (min-width: 559px) {
+	.filter-container {
+		flex-direction: row;
+	}
+}
+
+/* At 768px or more, the items within .header-filter-container will be side by side */
+/* This is semantic Mobile breakpoint */
+@media (min-width: 768px) {
+	.header-filter-container {
+		flex-direction: row;
+	}
+
+	/* Removes bottom margin from header within container from 768px onward */
+	.header-filter-container h3.ui.header {
+		margin-bottom: 0; /* Override Semantic UI's h3 bottom margin */
+	}
+}
+
+/* ------------ MovieItems.jsx ------------ */
+/* Note, this component is used to render content list items on the Recommended for you sections of  Movie and TV Page */
+
+/* The make border radius consistent; NOTE - override happening somewhere */
+.for-you-item-image img {
+	border-radius: 0.5em !important; /* Adds rounded corners to image semingly consistent with Semantic rounding on cards */
+}

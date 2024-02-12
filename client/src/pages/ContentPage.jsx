@@ -59,7 +59,7 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 
 		const source = await searchSource(data.id);
 		const userRegion = 'AU';
-		
+
 		if (source.results[userRegion]) {
 			const providers = source.results[userRegion].flatrate;
 			providers.sort((a, b) => a.display_priority - b.display_priority);
@@ -102,8 +102,6 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 					<Icon name="thumbs up" />
 					<HeaderContent>Recommended for you</HeaderContent>
 				</Header>
-			</Segment>
-			<Segment>
 				<PageCont />
 			</Segment>
 		</Container>

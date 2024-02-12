@@ -1,4 +1,5 @@
-// TODO - move inline CSS to a separate file search "style" tags in jsx
+// Most of inline CSS has been removed here, but media queries are still inline
+// This is becuase query determines which menu to display based on the screen size/media types
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,10 +9,12 @@ import { QUERY_MYDETAILS } from '../utils/selfQueries';
 import { useQuery } from '@apollo/client';
 import { useLocation } from 'react-router-dom'; // to get the current location and set the active item in the menu
 
+import FriendCommendsLogo from '../assets/images/logo-transparent.png';
+
 // Pass in handleLogout and  as a prop from App.jsx
 function Navbar({ handleLogout, user }) {
 	//console.log("user:", user);
-	const isMobile = useMediaQuery({ maxWidth: 901 });
+	const isMobile = useMediaQuery({ maxWidth: 991 });
 	const [sidebarVisible, setSidebarVisible] = useState(false);
 	const { loading, error, data } = useQuery(QUERY_MYDETAILS);
 
@@ -42,8 +45,10 @@ function Navbar({ handleLogout, user }) {
 		<div>
 			{isMobile ? (
 				<>
-					<Menu as="nav" size="large" style={{ marginBottom: '1rem' }}>
-						<Menu.Item header>Friend-commend</Menu.Item>
+					<Menu as="nav" size="large" className="navbar">
+						<Menu.Item header>
+							<img alt="FriendCcmmends logo" src={FriendCommendsLogo} />
+						</Menu.Item>
 						<Menu.Item
 							position="right"
 							active={sidebarVisible}
@@ -123,11 +128,9 @@ function Navbar({ handleLogout, user }) {
 					</Sidebar>
 				</>
 			) : (
-				<Menu as="nav" size="large" style={{ marginBottom: '1rem' }}>
-					<Menu.Item header>Friend-commend</Menu.Item>
-					<div
-						style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: 1 }}
-					>
+				<Menu as="nav" size="large" className="navbar">
+					<Menu.Item header>FriendCommends</Menu.Item>
+					<div className="desktop-menu-items-container">
 						<Menu.Item
 							as={Link}
 							to="/user"

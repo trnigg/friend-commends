@@ -14,7 +14,6 @@ import { useState } from 'react';
 import auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER } from '../utils/queries';
-import CardExampleCard from '../components/CardPics';
 import './Nav_Page.css';
 import { QUERY_FRIENREQ } from '../utils/queries';
 // import { useEffect, useState } from 'react';
@@ -108,7 +107,7 @@ function ForYou() {
 							</HeaderSubheader>
 						</HeaderContent>
 					</Header>
-					<CardGroup>
+					<CardGroup className="centered-cards-group">
 						{movieRecommend.map(function (data) {
 							return (
 								<RecommendedContentCard
@@ -141,7 +140,7 @@ function ForYou() {
 							</HeaderSubheader>
 						</HeaderContent>
 					</Header>
-					<CardGroup>
+					<CardGroup className="centered-cards-group">
 						{tvRecommend.map(function (data) {
 							return (
 								<RecommendedContentCard
@@ -169,7 +168,9 @@ function ForYou() {
 						<Icon name="book" />
 						<HeaderContent>Books recommended for you</HeaderContent>
 					</Header>
-					<UnderConstructionMessage />
+					<div className="centered-message">
+						<UnderConstructionMessage />
+					</div>
 				</Segment>
 			</Container>
 		);

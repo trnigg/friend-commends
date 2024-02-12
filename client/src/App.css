@@ -1,0 +1,48 @@
+/* NOTE CSS is written mobile-first with min-width breakpoints */
+/* Semantic UI's default mobile breakpoint is 768px, and it uses a gutter of 1em. After 768px, the gutter is fluid */
+/* https://semantic-ui.com/elements/container.html */
+
+/* ================================================================================================= */
+
+/* ------------ pageContent.jsx ------------ */
+
+/*  Groups header and filter-components and stacks vertically  */
+.header-filter-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
+/*  Groups filter-options and creates space between  */
+.filter-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	align-items: center;
+}
+
+/*  Sets bottom margin from header within container on mobile */
+.header-filter-container h3.ui.header {
+	margin-bottom: 1em; /* Semantic UI's default h3 bottom margin */
+}
+
+/* When screen becomes wide enough, the filter-components will be side by side */
+@media (min-width: 559px) {
+	.filter-container {
+		flex-direction: row;
+	}
+}
+
+/* At 768px or more, the items within .header-filter-container will be side by side */
+/* This is semantic Mobile breakpoint */
+@media (min-width: 768px) {
+	.header-filter-container {
+		flex-direction: row;
+	}
+
+	/* Removes bottom margin from header within container from 768px onward */
+	.header-filter-container h3.ui.header {
+		margin-bottom: 0; /* Override Semantic UI's h3 bottom margin */
+	}
+}

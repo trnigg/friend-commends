@@ -3,7 +3,14 @@ import { QUERY_FRIENREQ } from '../utils/queries';
 import auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
 import MovieItems from '../components/MovieItems';
-import { ItemGroup, Button, Dropdown } from 'semantic-ui-react';
+import {
+	ItemGroup,
+	Button,
+	Header,
+	Divider,
+	Select,
+	Icon,
+} from 'semantic-ui-react';
 
 function PageCont() {
 	// let state = useLocation();
@@ -124,56 +131,62 @@ function PageCont() {
 		});
 
 		return (
-			<div>
-				<h1>This is the {format} page</h1>
-				<h3>would you like to sort by</h3>
-				{/* <select name="selectFilter" id="selectFilter" onChange={sortBy}>
+			<>
+				<div className="header-filter-container">
+					<Header as="h3">Refine your results:</Header>
+					{/* <select name="selectFilter" id="selectFilter" onChange={sortBy}>
 				<option value="recent">most recent</option>
 				<option value="recommended">most recommended</option>
 			</select> */}
-				<Dropdown
-					name="selectFilter"
-					id="selectFilter"
-					placeholder="Refine results by:"
-					options={[
-						{ key: 'recent', value: 'recent', text: 'most recent' },
-						{
-							key: 'recommended',
-							value: 'recommended',
-							text: 'most recommended',
-						},
-					]}
-					onChange={sortBy}
-				/>
-				<Dropdown
-					placeholder="Search by friends"
-					options={friendArray}
-					onChange={refineFriends}
-					id="friendSearch"
-				/>
-				<Button onClick={resetAll}>Reset</Button>
-				<div className="recommendBox">
-					<ItemGroup divided>
-						{date2.map(function (data) {
-							return (
-								<MovieItems
-									key={data?.original_title || data.original_name}
-									movietitle={data?.original_title || data.original_name}
-									original_title={data?.original_title || data.original_name}
-									poster_path={data.poster_path}
-									description={data.overview}
-									overview={data.overview}
-									friendRecommend={data.count}
-									platforms={data.AU_platforms}
-									type={format}
-									tmdbID={data.tmdbID}
-									friendArray={friendOmmend(data.tmdbID)}
-								/>
-							);
-						})}
-					</ItemGroup>
+					<div className="filter-container">
+						<Select
+							name="selectFilter"
+							id="selectFilter"
+							placeholder="Sort by"
+							options={[
+								{ key: 'recent', value: 'recent', text: 'most recent' },
+								{
+									key: 'recommended',
+									value: 'recommended',
+									text: 'most recommended',
+								},
+							]}
+							onChange={sortBy}
+						/>
+						<Select
+							placeholder="Search by friends"
+							search
+							options={friendArray}
+							onChange={refineFriends}
+							id="friendSearch"
+						/>
+						<Button basic primary onClick={resetAll}>
+							<Icon name="refresh" />
+							Reset
+						</Button>
+					</div>
 				</div>
-			</div>
+				<Divider section />
+				<ItemGroup divided>
+					{date2.map(function (data) {
+						return (
+							<MovieItems
+								key={data?.original_title || data.original_name}
+								movietitle={data?.original_title || data.original_name}
+								original_title={data?.original_title || data.original_name}
+								poster_path={data.poster_path}
+								description={data.overview}
+								overview={data.overview}
+								friendRecommend={data.count}
+								platforms={data.AU_platforms}
+								type={format}
+								tmdbID={data.tmdbID}
+								friendArray={friendOmmend(data.tmdbID)}
+							/>
+						);
+					})}
+				</ItemGroup>
+			</>
 		);
 	}
 }

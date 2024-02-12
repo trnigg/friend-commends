@@ -54,7 +54,7 @@ export default function WatchItem(props) {
 	};
 
 	const friendArray = (props) => {
-		// console.log(props)
+		console.log(props)
 		return (
 			<div>
 				<strong>Recommended by </strong>

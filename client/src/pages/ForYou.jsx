@@ -83,7 +83,7 @@ function ForYou() {
 	let userDetails = {};
 	let friendsDetails = {};
 	const idNum = auth.getProfile();
-	console.log(idNum.data._id);
+	// console.log(idNum.data._id);
 	const {
 		loading: loading2,
 		error: error2,
@@ -98,6 +98,7 @@ function ForYou() {
 		return <div>Please Wait.....</div>;
 	}
 	if (data && data2) {
+		console.log(data2)
 		userDetails = data;
 		console.log('Yellow');
 		friendsDetails = data2.friendRecommendations;
@@ -116,8 +117,23 @@ function ForYou() {
 		const bookRecommend = workingArray
 			.filter((entry) => entry.__typename === 'Book')
 			.slice(-3);
-		console.log(movieRecommend, tvRecommend, bookRecommend);
+		// console.log(movieRecommend, tvRecommend, bookRecommend);
 
+		const friendOmmend = (id) => {
+			const newUsers = data2.friendRecommendations;
+			const loopArray = [];
+			newUsers.forEach((friend) => {
+				friend.recommendations.forEach((recommendation) => {
+					if (recommendation.tmdbID === id) {
+						loopArray.push(friend.userName);
+					}
+				});
+			});
+			console.log(loopArray);
+			return loopArray;
+		};
+	
+		console.log(data)
 		return (
 			<Container>
 				<Segment className="page-header-segment">
@@ -155,6 +171,7 @@ function ForYou() {
 									cardId={data.id}
 									handleClick={handleClick}
 									activeIndex={data.id === activeCard ? activeIndex : -1}
+									friendArray={friendOmmend(data.tmdbID)}
 								/>
 							);
 						})}
@@ -188,6 +205,7 @@ function ForYou() {
 									cardId={data.id}
 									handleClick={handleClick}
 									activeIndex={data.id === activeCard ? activeIndex : -1}
+									friendArray={friendOmmend(data.tmdbID)}
 								/>
 							);
 						})}

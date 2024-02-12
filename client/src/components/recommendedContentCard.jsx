@@ -35,6 +35,7 @@ function RecommendedContentCard({
 	handleClick,
 	activeIndex,
 	type, // type of content; used to determine which mutation to use
+	friendArray,
 }) {
 	const [isAddContentClicked, setIsAddContentClicked] = useState(false); // state for determing if the add content button has been clicked
 	const [isAddToWatchClicked, setIsAddToWatchClicked] = useState(false); // state for determing if the add to watch button has been clicked
@@ -158,6 +159,7 @@ function RecommendedContentCard({
 		handleClick(cardId, index);
 	};
 
+	console.log(selectedContent);
 	// Inline style for label has been retained due to Semanntic overriding, and limited time to solve
 	const panels = [
 		{
@@ -200,7 +202,7 @@ function RecommendedContentCard({
 					<Icon name="thumbs up outline" size="large" />
 					<span>
 						{' '}
-						Recommended by <strong>4 friends</strong>.
+						Recommended by {friendArray.length} friend/s.
 					</span>
 				</CardMeta>
 				<CardContent extra>

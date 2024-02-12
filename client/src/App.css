@@ -107,7 +107,7 @@
 
 /* ------------ friendRequestCard.jsx ------------ */
 /* Used to center OR buttons within card horizontally. */
-.extra.content {
+.accept-decline-button-group {
 	display: flex;
 	justify-content: center;
 	align-items: center;

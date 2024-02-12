@@ -48,7 +48,7 @@ function LandingPage({ setIsLoggedIn }) {
 					/>{' '}
 					{/* Add your logo here */}
 					<Container text textAlign="center">
-						<p>
+						<p className="page-description">
 							A stripped-back social media platform for sharing your favourite
 							entertainment with your <strong>friends</strong>.
 						</p>
@@ -61,7 +61,7 @@ function LandingPage({ setIsLoggedIn }) {
 						<Signup onAuthenticated={handleAuth} />
 					)}
 				</Segment>
-				<Button basic primary onClick={toggleLoginSignup}>
+				<Button className="toggle-user-form-button" onClick={toggleLoginSignup}>
 					{isLogin ? 'Need to create an account?' : 'Already have an account?'}
 				</Button>
 			</div>

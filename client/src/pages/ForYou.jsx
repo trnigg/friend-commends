@@ -40,7 +40,8 @@ class DismissibleMessage extends Component {
 					content={
 						<Link to="/friends">
 							You have <strong>{this.props.count}</strong> pending
-							friend-requests. Click here to go to the Friends page.
+							friend-request{this.props.count === 1 ? '' : 's'}. Click here to
+							go to the Friends page.
 						</Link>
 					}
 				/>

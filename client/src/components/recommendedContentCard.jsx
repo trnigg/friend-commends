@@ -136,7 +136,6 @@ function RecommendedContentCard({
 	};
 
 	let modalData = {};
-	console.log(selectedContent);
 	if (selectedContent) {
 		modalData = {
 			original_title: selectedContent.title,
@@ -147,7 +146,6 @@ function RecommendedContentCard({
 		};
 	}
 
-	console.log(modalData);
 	// panels for the accordion
 	// requires ternary to check if the selectedTVShow is null;
 	// otherwise it will throw an error before a TV show is selected

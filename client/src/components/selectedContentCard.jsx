@@ -22,6 +22,7 @@ import {
 	ADD_MOVIE_WATCHLIST,
 	ADD_TV_WATCHLIST,
 } from '../utils/mutations';
+import { MUTATION_ADDRECOMMENDTV } from '../utils/selfMutations';
 import {
 	QUERY_MYRECOMMENDATIONS,
 	QUERY_MYWATCHLIST,

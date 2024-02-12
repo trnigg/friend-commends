@@ -98,7 +98,7 @@ function ForYou() {
 		return <div>Please Wait.....</div>;
 	}
 	if (data && data2) {
-		console.log(data2)
+		console.log(data2);
 		userDetails = data;
 		console.log('Yellow');
 		friendsDetails = data2.friendRecommendations;
@@ -132,17 +132,19 @@ function ForYou() {
 			console.log(loopArray);
 			return loopArray;
 		};
-	
-		console.log(data)
+
+		console.log(data);
 		return (
 			<Container>
 				<Segment className="page-header-segment">
 					<Header as="h1">For You</Header>
 				</Segment>
 
-				<DismissibleMessage
-					count={userDetails.user.pendingFriendRequests.length}
-				/>
+				{userDetails.user.pendingFriendRequests.length > 0 && (
+					<DismissibleMessage
+						count={userDetails.user.pendingFriendRequests.length}
+					/>
+				)}
 				<Segment>
 					<Header as="h2">
 						<Icon name="film" />

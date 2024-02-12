@@ -181,6 +181,9 @@ function SelectedContentCard({
 	// requires ternary to check if the selectedTVShow is null;
 	// otherwise it will throw an error before a TV show is selected
 	// renders the description and streaming providers, if available, else displays a message
+
+	// Inline style for label has been retained due to Semanntic overriding, and limited time to solve
+
 	const panels = [
 		{
 			key: 'description',

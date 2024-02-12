@@ -157,6 +157,8 @@ function RecommendedContentCard({
 		const { index } = titleProps;
 		handleClick(cardId, index);
 	};
+
+	// Inline style for label has been retained due to Semanntic overriding, and limited time to solve
 	const panels = [
 		{
 			key: 'description',

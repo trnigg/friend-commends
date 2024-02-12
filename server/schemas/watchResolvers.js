@@ -8,14 +8,12 @@ const watchResolvers = {
   Watch: {
     //__resolveType functions provides concrete types (ie. movies or tv shows or books) to the abstract interfaces
     __resolveType(watch, context, info) {
-      //console.log("watch:",watch)
       if (watch.type) {
         return watch.type;
       }
       return null; // GraphQLError is thrown
     },
     __resolveType(user, context, info) {
-      //console.log("user:", user);
       if (user.type) {
         return user.type;
       }
@@ -25,7 +23,6 @@ const watchResolvers = {
   Query: {
     myWatchList: async (parent, args, context) => {
       if (context.user) {
-        //console.log("context.user:",context.user);
         return User.findById(context.user._id)
           .select("watchList")
           .populate("watchList");
@@ -37,15 +34,12 @@ const watchResolvers = {
     //add Movie to users watch list
     addMovieToWatch: async (parent, args, context) => {
       if (context.user) {
-        console.log("args:", args.input);
-        console.log("context.user._id:", context.user._id);
         const watch = await Watch.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
           { upsert: true,
             new: true },
         );
-        console.log("watch", watch);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -57,15 +51,12 @@ const watchResolvers = {
     //add TV show to users watch list
     addTVToWatch: async (parent, args, context) => {
       if (context.user) {
-        //console.log("args:", args.input);
-        //console.log("context.user._id:", context.user._id);
         const watch = await Watch.findOneAndUpdate(
           { tmdbID: args.input.tmdbID },
           { ...args.input },
           { upsert: true,
             new: true }
         );
-        //console.log("watch", watch);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -76,10 +67,7 @@ const watchResolvers = {
     },
     removeFromWatchList: async (parent, { id }, context) => {
       if (context.user) {
-        console.log("id:", id);
-        console.log("context.user._id:", context.user._id);
         const watch = await Watch.findByIdAndDelete(id);
-        console.log("watch", watch);
 
         return await User.findOneAndUpdate(
           { _id: context.user._id },

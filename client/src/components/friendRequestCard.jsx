@@ -22,7 +22,7 @@ function FriendRequestCard({ request, onAccept, onReject }) {
 					{request.firstName} wants to add you as a <strong>friend</strong>.
 				</CardDescription>
 			</CardContent>
-			<CardContent extra>
+			<CardContent extra className="accept-decline-button-group">
 				<ButtonGroup>
 					<Button basic color="green" onClick={() => onAccept(request.id)}>
 						<Icon name="user plus" />

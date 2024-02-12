@@ -104,7 +104,7 @@ function ForYou() {
 						<HeaderContent>
 							Movies recommended for you
 							<HeaderSubheader>
-								<a href="/Movies">See more movie recommendations...</a>
+								<a href="/movies">See more movie recommendations...</a>
 							</HeaderSubheader>
 						</HeaderContent>
 					</Header>

@@ -36,7 +36,6 @@ const userResolvers = {
                         { path: "sharedFrom", model: "User" },]
             });
         
-            //console.log("users: ",users);
 
         return users;
 
@@ -85,7 +84,6 @@ const userResolvers = {
     friendRecommendations: async (parent, {id}, context) => {
       if (context.user) {
 
-        console.log(`Hello ${id}`)
           return (
             User.find({friends: id})
             // User.find({})
@@ -155,8 +153,6 @@ const userResolvers = {
     // If so, require password to confirm changes?
     updateUser: async (parent, { input }, context) => {
       if (context.user) {
-        console.log("input.password: ",input.password)
-        console.log("context.user._id: ",context.user._id)
 
         return await User.findOneAndUpdate({_id: context.user._id}, input, { new: true });
       }
@@ -174,7 +170,6 @@ const userResolvers = {
     // Context is not required as this is an unauthenticated mutation that results in authentication
     // Input destructured to get email and password
     login: async (parent, { input: { email, password } }) => {
-      console.log("Logging in");
       // Find user by email
       const user = await User.findOne({ email });
       // If user does not exist, throw error

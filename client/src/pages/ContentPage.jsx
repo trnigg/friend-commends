@@ -73,8 +73,8 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 
 	return (
 		<Container>
-			<Segment raised>
-				<Header as="h1">{contentType}</Header>
+			<Segment raised className="page-header-segment">
+				<Header as="h1">{contentType}s</Header>
 			</Segment>
 
 			<Segment raised>

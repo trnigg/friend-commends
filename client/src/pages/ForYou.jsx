@@ -89,7 +89,7 @@ function ForYou() {
 
 		return (
 			<Container>
-				<Segment>
+				<Segment className="page-header-segment">
 					<Header as="h1">For You</Header>
 				</Segment>
 

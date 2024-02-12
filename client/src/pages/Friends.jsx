@@ -45,7 +45,7 @@ function Friends() {
 
 	return (
 		<Container>
-			<Segment raised>
+			<Segment raised className="page-header-segment">
 				<Header as="h1">Friends</Header>{' '}
 			</Segment>
 			<Segment raised>

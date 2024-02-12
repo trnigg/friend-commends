@@ -105,6 +105,14 @@
 	flex-grow: 1;
 }
 
+/* ------------ friendRequestCard.jsx ------------ */
+/* Used to center OR buttons within card horizontally. */
+.extra.content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 /* ------------ recommendedContentCard.jsx ------------ */
 
 /* Ensures cards don't shift when others' accordions are expanded. */

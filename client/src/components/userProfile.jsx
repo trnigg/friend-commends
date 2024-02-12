@@ -21,7 +21,7 @@ const UserCard = (props) => {
 	);
 
 	return (
-		<Card raised>
+		<Card raised className="user-card" fluid>
 			<Image src="avatars/default_avatar.svg" wrapped ui={false} />
 			<CardContent>
 				<CardHeader>{`${firstName} ${lastName}`}</CardHeader>

@@ -43,8 +43,9 @@ function User() {
 			<Segment raised>
 				<Header as="h1">Hi {data.user.firstName} </Header>
 			</Segment>
-			<UserCard data={data.user} />
-
+			<div className="user-card-container">
+				<UserCard data={data.user} />
+			</div>
 			<Segment raised>
 				<Accordion fluid styled>
 					<AccordionTitle

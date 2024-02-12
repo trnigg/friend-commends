@@ -228,7 +228,6 @@ function RecommendedContentCard({
 							/>
 						}
 					/>
-					{/* <Button circular icon="share" size="big" onClick={shareContent}/> */}
 					<ShareModal key={selectedContent.id} {...modalData} icon="add" />
 					<Popup
 						content={

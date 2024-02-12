@@ -18,6 +18,8 @@ function PageCont() {
 	const [date, setDate] = useState();
 	const [date2, setDate2] = useState();
 	const [format, setFormat] = useState();
+	const [dropdownState, setDropdownState] = useState(""||null)
+
 
 	let url = window.location.href;
 	let newurl = url.substr(1 + url.lastIndexOf('/'));
@@ -97,7 +99,9 @@ function PageCont() {
 			: console.log('Wrong');
 	};
 
+
 	const refineFriends = (e) => {
+		setDropdownState(e.target.innerText)
 		const objectFilter = userData.friendRecommendations.filter(
 			(user) => user.userName === e.target.innerText
 		);
@@ -118,6 +122,7 @@ function PageCont() {
 	};
 
 	const resetAll = () => {
+		setDropdownState(null);
 		setDate();
 	};
 
@@ -134,13 +139,9 @@ function PageCont() {
 			<>
 				<div className="header-filter-container">
 					<Header as="h3">Refine your results:</Header>
-					{/* <select name="selectFilter" id="selectFilter" onChange={sortBy}>
-				<option value="recent">most recent</option>
-				<option value="recommended">most recommended</option>
-			</select> */}
 					<div className="filter-container">
 						<Select
-							name="selectFilter"
+							search
 							id="selectFilter"
 							placeholder="Sort by"
 							options={[
@@ -159,6 +160,7 @@ function PageCont() {
 							options={friendArray}
 							onChange={refineFriends}
 							id="friendSearch"
+							value={dropdownState}
 						/>
 						<Button basic primary onClick={resetAll}>
 							<Icon name="refresh" />
@@ -168,7 +170,8 @@ function PageCont() {
 				</div>
 				<Divider section />
 				<ItemGroup divided>
-					{date2.map(function (data) {
+					{date2.map(function (data, index) {
+						if (index <=29){
 						return (
 							<MovieItems
 								key={data?.original_title || data.original_name}
@@ -184,6 +187,7 @@ function PageCont() {
 								friendArray={friendOmmend(data.tmdbID)}
 							/>
 						);
+						}
 					})}
 				</ItemGroup>
 			</>

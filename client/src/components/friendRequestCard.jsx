@@ -12,7 +12,7 @@ import {
 
 function FriendRequestCard({ request, onAccept, onReject }) {
 	return (
-		<Card>
+		<Card raised>
 			<CardContent>
 				<CardHeader>
 					{request.firstName} {request.lastName}

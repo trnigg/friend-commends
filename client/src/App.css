@@ -79,7 +79,7 @@
 
 /* ============ COMPONENT STYLES ============ */
 
-/* recommendedContentCard.jsx*/
+/* ------------ recommendedContentCard.jsx ------------ */
 
 /* Ensures cards don't shift when others' accordions are expanded. */
 .recommended-card {
@@ -89,26 +89,30 @@
 	height: 100%;
 }
 
-/* recommendedContentCard.jsx & selectedContentCard.jsx*/
+/* ------------ recommendedContentCard.jsx & selectedContentCard.jsx ------------ */
+
+/* Adds margin around three sides of image to bring it in */
 .content-card-image {
-	margin-left: 15px;
-	margin-right: 15px;
-	margin-bottom: 15px;
-	border-radius: 5px; /* Adds rounded corners to image consistent with Semantic rounding on cards */
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	border-radius: 0.5em; /* Adds rounded corners to image semingly consistent with Semantic rounding on cards */
 }
 
+/* Ads consistent margin around the meta data */
 .content-card-meta {
 	display: flex;
 	align-items: center;
-	margin-left: 15px;
-	margin-right: 15px;
-	margin-bottom: 15px;
+	margin-left: 1em;
+	margin-right: 1em;
+	margin-bottom: 1em;
 }
 
+/* Lines up buttons in one row and centers horizontallu */
 .content-card-button-container {
 	display: flex;
 	justify-content: center;
-	gap: 15px;
+	gap: 1em;
 }
 
 /* ------------ pageContent.jsx ------------ */

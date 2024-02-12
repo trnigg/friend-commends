@@ -6,6 +6,11 @@
 
 /* ============ GLOBAL STYLES ============ */
 
+/* NEED TO FIND A BETTER WAY TO ADD PADDING TO LAST CONTENT WITHOUT EXTENDING PAGES THAT DON"T NEED IT */
+/* .ui.container {
+	padding-bottom: 2em;
+} */
+
 /* ============ PAGE STYLES ============ */
 
 /* ------------ LandingPage.jsx ------------ */
@@ -52,9 +57,27 @@
 	margin: auto;
 }
 
-/* ============ COMPONENT STYLES ============ */
+/* ------------ ForYou.jsx ------------ */
+/* Cleanest solution for responsive centering and alignment regardless of items in displayed */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns */
+/* Used to align recommendedContentCards */
+.centered-cards-group {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	column-gap: 1em; /* Creates space between cards horizontally only */
+	justify-content: center; /* Centers the grid horizontally */
+	padding: 1em;
+}
 
-/* ------------ UserProfile.jsx ------------ */
+/* Centers under-construction message horizontally, and adds some margin top and bottom to make it stand out */
+.centered-message {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-block: 3em;
+}
+
+/* ============ COMPONENT STYLES ============ */
 
 /* ------------ pageContent.jsx ------------ */
 

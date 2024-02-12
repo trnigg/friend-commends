@@ -89,13 +89,15 @@ function ContentPage({ searchByQuery, searchSource, contentType }) {
 					onResultSelect={handleSelectContent}
 					setSelectedContent={setSelectedContent}
 				/>
-				<SelectedContentCard
-					selectedContent={selectedContent}
-					contentSource={contentSource}
-					noStreamingAvailable={noStreamingAvailable}
-					activeIndex={activeIndex}
-					setActiveIndex={setActiveIndex}
-				/>
+				<div className="centered-single-card">
+					<SelectedContentCard
+						selectedContent={selectedContent}
+						contentSource={contentSource}
+						noStreamingAvailable={noStreamingAvailable}
+						activeIndex={activeIndex}
+						setActiveIndex={setActiveIndex}
+					/>
+				</div>
 			</Segment>
 			<Segment raised>
 				<Header as="h2">

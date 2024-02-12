@@ -73,7 +73,7 @@ function Friends() {
 					</HeaderContent>
 				</Header>
 				{data.user.pendingFriendRequests.length > 0 ? (
-					<CardGroup>
+					<CardGroup className="centered-cards-group">
 						{data.user.pendingFriendRequests.map((request) => (
 							<FriendRequestCard
 								key={request.id}

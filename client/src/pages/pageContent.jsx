@@ -18,8 +18,7 @@ function PageCont() {
 	const [date, setDate] = useState();
 	const [date2, setDate2] = useState();
 	const [format, setFormat] = useState();
-	let any ="";
-	const [dropdownState, setDropdownState] = useState(any||null)
+	const [dropdownState, setDropdownState] = useState(""||null)
 
 
 	let url = window.location.href;
@@ -102,9 +101,7 @@ function PageCont() {
 
 
 	const refineFriends = (e) => {
-		any = e.target.innerText;
 		setDropdownState(e.target.innerText)
-		console.log(any, dropdownState)
 		const objectFilter = userData.friendRecommendations.filter(
 			(user) => user.userName === e.target.innerText
 		);
@@ -126,7 +123,6 @@ function PageCont() {
 
 	const resetAll = () => {
 		setDropdownState(null);
-		// setDropdownState2(null);
 		setDate();
 	};
 
@@ -143,13 +139,9 @@ function PageCont() {
 			<>
 				<div className="header-filter-container">
 					<Header as="h3">Refine your results:</Header>
-					{/* <select name="selectFilter" id="selectFilter" onChange={sortBy}>
-				<option value="recent">most recent</option>
-				<option value="recommended">most recommended</option>
-			</select> */}
 					<div className="filter-container">
 						<Select
-							name="selectFilter"
+							search
 							id="selectFilter"
 							placeholder="Sort by"
 							options={[
@@ -178,7 +170,8 @@ function PageCont() {
 				</div>
 				<Divider section />
 				<ItemGroup divided>
-					{date2.map(function (data) {
+					{date2.map(function (data, index) {
+						if (index <=29){
 						return (
 							<MovieItems
 								key={data?.original_title || data.original_name}
@@ -194,6 +187,7 @@ function PageCont() {
 								friendArray={friendOmmend(data.tmdbID)}
 							/>
 						);
+						}
 					})}
 				</ItemGroup>
 			</>

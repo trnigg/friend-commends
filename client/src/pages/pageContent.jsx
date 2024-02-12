@@ -18,6 +18,9 @@ function PageCont() {
 	const [date, setDate] = useState();
 	const [date2, setDate2] = useState();
 	const [format, setFormat] = useState();
+	let any ="";
+	const [dropdownState, setDropdownState] = useState(any||null)
+
 
 	let url = window.location.href;
 	let newurl = url.substr(1 + url.lastIndexOf('/'));
@@ -97,7 +100,11 @@ function PageCont() {
 			: console.log('Wrong');
 	};
 
+
 	const refineFriends = (e) => {
+		any = e.target.innerText;
+		setDropdownState(e.target.innerText)
+		console.log(any, dropdownState)
 		const objectFilter = userData.friendRecommendations.filter(
 			(user) => user.userName === e.target.innerText
 		);
@@ -118,6 +125,8 @@ function PageCont() {
 	};
 
 	const resetAll = () => {
+		setDropdownState(null);
+		// setDropdownState2(null);
 		setDate();
 	};
 
@@ -159,6 +168,7 @@ function PageCont() {
 							options={friendArray}
 							onChange={refineFriends}
 							id="friendSearch"
+							value={dropdownState}
 						/>
 						<Button basic primary onClick={resetAll}>
 							<Icon name="refresh" />

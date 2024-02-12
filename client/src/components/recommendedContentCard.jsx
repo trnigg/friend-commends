@@ -181,45 +181,21 @@ function RecommendedContentCard({
 
 	return (
 		selectedContent && (
-			<Card
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'space-between',
-					height: '100%',
-				}}
-			>
+			<Card className="recommended-card">
 				<CardContent>
 					<Card.Header> {selectedContent.title}</Card.Header>
 				</CardContent>
 				{selectedContent.backdropImage && (
 					<Image
+						className="content-card-image"
 						src={`http://image.tmdb.org/t/p/w342/${selectedContent.backdropImage}`}
 						wrapped
 						ui={false}
 						rounded
-						style={{
-							marginLeft: '15px',
-							marginRight: '15px',
-							marginBottom: '15px',
-							borderRadius: '5px',
-						}}
 					/>
 				)}
-				<CardMeta
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						marginLeft: '15px',
-						marginRight: '15px',
-						marginBottom: '15px',
-					}}
-				>
-					<Icon
-						name="thumbs up outline"
-						size="large"
-						style={{ marginRight: '10px' }}
-					/>
+				<CardMeta className="content-card-meta">
+					<Icon name="thumbs up outline" size="large" />
 					<span>
 						{' '}
 						Recommended by <strong>4 friends</strong>.
@@ -232,10 +208,7 @@ function RecommendedContentCard({
 						panels={panels}
 					/>
 				</CardContent>
-				<CardContent
-					extra
-					style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
-				>
+				<CardContent className="content-card-button-container" extra>
 					<Popup
 						content={
 							isAddContentClicked

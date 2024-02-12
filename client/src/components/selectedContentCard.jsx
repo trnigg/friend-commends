@@ -22,7 +22,10 @@ import {
 	ADD_MOVIE_WATCHLIST,
 	ADD_TV_WATCHLIST,
 } from '../utils/mutations';
-import { QUERY_MYRECOMMENDATIONS, QUERY_MYWATCHLIST } from '../utils/selfQueries';
+import {
+	QUERY_MYRECOMMENDATIONS,
+	QUERY_MYWATCHLIST,
+} from '../utils/selfQueries';
 // import { ADD_MOVIE_RECOMMENDATION } from '../utils/mutations';
 import { useMutation, useQuery } from '@apollo/client';
 // import { ADD_MOVIE_WATCHLIST } from '../utils/mutations';
@@ -42,26 +45,36 @@ function SelectedContentCard({
 	const [isAddToWatchClicked, setIsAddToWatchClicked] = useState(false); // state for determing if the add to watch button has been clicked
 	const [friends, setFriends] = useState();
 
-
 	useEffect(() => {
 		// Reset the state of the buttons whenever the selectedContent changes
 		setIsAddContentClicked(false);
 		setIsAddToWatchClicked(false);
 	}, [selectedContent]);
 
-	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION,{refetchQueries: [{query: QUERY_MYRECOMMENDATIONS}]});
+	const [addShow, { error, data }] = useMutation(ADD_TV_RECOMMENDATION, {
+		refetchQueries: [{ query: QUERY_MYRECOMMENDATIONS }],
+	});
 	const [addMovie, { error: error2, data: data2 }] = useMutation(
-		ADD_MOVIE_RECOMMENDATION,{refetchQueries: [{query: QUERY_MYRECOMMENDATIONS}]});
-	const [addWatch, { error: error3, data: data3 }] =
-		useMutation(ADD_MOVIE_WATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
-	const [addTVWatch, { error: error4, data: data4 }] =
-		useMutation(ADD_TV_WATCHLIST,{refetchQueries: [{query: QUERY_MYWATCHLIST}]});
-	
+		ADD_MOVIE_RECOMMENDATION,
+		{ refetchQueries: [{ query: QUERY_MYRECOMMENDATIONS }] }
+	);
+	const [addWatch, { error: error3, data: data3 }] = useMutation(
+		ADD_MOVIE_WATCHLIST,
+		{ refetchQueries: [{ query: QUERY_MYWATCHLIST }] }
+	);
+	const [addTVWatch, { error: error4, data: data4 }] = useMutation(
+		ADD_TV_WATCHLIST,
+		{ refetchQueries: [{ query: QUERY_MYWATCHLIST }] }
+	);
+
 	const idNum = auth.getProfile();
-	const { loading: loading2, error: error5, data: data5 } = useQuery(QUERY_FRIENREQ, {
+	const {
+		loading: loading2,
+		error: error5,
+		data: data5,
+	} = useQuery(QUERY_FRIENREQ, {
 		variables: { userId: idNum.data._id },
-	})
-	
+	});
 
 	const addToWatch = async () => {
 		const newNumber = selectedContent.id.toString();
@@ -198,22 +211,22 @@ function SelectedContentCard({
 	];
 
 	let matchingFriends;
-	
-	if (!friends&&selectedContent){
-		setFriends(data5)
+
+	if (!friends && selectedContent) {
+		setFriends(data5);
 	}
 
-	if (friends){
-		const newNumber = selectedContent?.id.toString()||""
+	if (friends) {
+		const newNumber = selectedContent?.id.toString() || '';
 
 		let friendsArray = [];
-		friends.friendRecommendations.forEach((friend) =>{
-			for(let i=0; i<friend.recommendations.length; i++){
-				if(friend.recommendations[i].tmdbID===newNumber){
-					friendsArray.push(friend)
+		friends.friendRecommendations.forEach((friend) => {
+			for (let i = 0; i < friend.recommendations.length; i++) {
+				if (friend.recommendations[i].tmdbID === newNumber) {
+					friendsArray.push(friend);
 				}
 			}
-		})
+		});
 		matchingFriends = friendsArray.length;
 	}
 
@@ -225,35 +238,18 @@ function SelectedContentCard({
 				</CardContent>
 				{selectedContent.backdropImage && (
 					<Image
+						className="content-card-image"
 						src={`http://image.tmdb.org/t/p/w342/${selectedContent.backdropImage}`}
 						wrapped
 						ui={false}
 						rounded
-						style={{
-							marginLeft: '15px',
-							marginRight: '15px',
-							marginBottom: '15px',
-							borderRadius: '5px',
-						}}
 					/>
 				)}
-				<CardMeta
-					style={{
-						display: 'flex',
-						alignItems: 'center',
-						marginLeft: '15px',
-						marginRight: '15px',
-						marginBottom: '15px',
-					}}
-				>
-					<Icon
-						name="thumbs up outline"
-						size="big"
-						style={{ marginRight: '10px' }}
-					/>
+				<CardMeta className="content-card-meta">
+					<Icon name="thumbs up outline" size="big" />
 					<div>
 						{' '}
-						<strong>Recommended by {matchingFriends} other friends</strong>.
+						Recommended by <strong>{matchingFriends} friends</strong>.
 					</div>
 				</CardMeta>
 				<CardContent extra>
@@ -266,10 +262,7 @@ function SelectedContentCard({
 						panels={panels}
 					/>
 				</CardContent>
-				<CardContent
-					extra
-					style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}
-				>
+				<CardContent className="content-card-button-container" extra>
 					<Popup
 						content={
 							isAddContentClicked

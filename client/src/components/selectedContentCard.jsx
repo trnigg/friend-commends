@@ -235,7 +235,7 @@ function SelectedContentCard({
 
 	return (
 		selectedContent && (
-			<Card>
+			<Card raised>
 				<CardContent>
 					<Card.Header> {selectedContent.title}</Card.Header>
 				</CardContent>

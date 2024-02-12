@@ -53,19 +53,6 @@ class DismissibleMessage extends Component {
 }
 
 function ForYou() {
-	// const [type, setType] = useState()
-	// const [funnArray, setFunArray] = useState()
-	// const handleClick = (workingArray) => {
-	// 							setType("Movie")
-	// 							setFunArray(workingArray)
-	// 							console.log(funnArray)
-	// 							}
-
-	// useEffect(() => {
-	//   console.log('You are ' + type + ' years old!')
-	// })
-
-	console.log('Hello');
 
 	const [activeCard, setActiveCard] = useState(null); // lifted state for the active index of the accordion
 	const [activeIndex, setActiveIndex] = useState(-1);
@@ -98,9 +85,7 @@ function ForYou() {
 		return <div>Please Wait.....</div>;
 	}
 	if (data && data2) {
-		console.log(data2);
 		userDetails = data;
-		console.log('Yellow');
 		friendsDetails = data2.friendRecommendations;
 		const friendArray = [];
 		friendsDetails.forEach((entry) => {
@@ -129,11 +114,9 @@ function ForYou() {
 					}
 				});
 			});
-			console.log(loopArray);
 			return loopArray;
 		};
 
-		console.log(data);
 		return (
 			<Container>
 				<Segment className="page-header-segment">

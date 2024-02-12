@@ -122,7 +122,7 @@ function Navbar({ handleLogout, user }) {
 						>
 							<Icon name="users" /> Friends
 						</Menu.Item>
-						<Menu.Item onClick={handleLogout}>
+						<Menu.Item onClick={handleLogout} className="logout-link">
 							<Icon name="sign out" /> Logout
 						</Menu.Item>
 					</Sidebar>
@@ -172,7 +172,7 @@ function Navbar({ handleLogout, user }) {
 						>
 							<Icon name="users" /> Friends
 						</Menu.Item>
-						<Menu.Item onClick={handleLogout}>
+						<Menu.Item onClick={handleLogout} className="logout-link">
 							<Icon name="sign out" /> Logout
 						</Menu.Item>
 					</div>

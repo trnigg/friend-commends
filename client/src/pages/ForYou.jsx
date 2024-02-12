@@ -9,7 +9,8 @@ import {
 	CardGroup,
 } from 'semantic-ui-react';
 
-import { useState } from 'react';
+import { useState, Component } from 'react'; // we will extend component with semantic
+import { Link } from 'react-router-dom';
 
 import auth from '../utils/auth';
 import { useQuery } from '@apollo/client';
@@ -20,6 +21,36 @@ import { QUERY_FRIENREQ } from '../utils/queries';
 
 import RecommendedContentCard from '../components/recommendedContentCard';
 import UnderConstructionMessage from '../components/underConstructionMessage';
+
+// https://react.semantic-ui.com/collections/message/#types-dismissible-block
+class DismissibleMessage extends Component {
+	state = { visible: true };
+
+	handleDismiss = () => {
+		this.setState({ visible: false });
+	};
+
+	render() {
+		if (this.state.visible) {
+			return (
+				<Message
+					color="blue"
+					onDismiss={this.handleDismiss}
+					header="You have new friend requests!"
+					content={
+						<Link to="/friends">
+							You have <strong>{this.props.count}</strong> pending
+							friend-request{this.props.count === 1 ? '' : 's'}. Click here to
+							go to the Friends page.
+						</Link>
+					}
+				/>
+			);
+		}
+
+		return null;
+	}
+}
 
 function ForYou() {
 	// const [type, setType] = useState()
@@ -89,14 +120,13 @@ function ForYou() {
 
 		return (
 			<Container>
-				<Segment>
+				<Segment className="page-header-segment">
 					<Header as="h1">For You</Header>
 				</Segment>
 
-				<Message>
-					You have {userDetails.user.pendingFriendRequests.length} friend
-					requests
-				</Message>
+				<DismissibleMessage
+					count={userDetails.user.pendingFriendRequests.length}
+				/>
 				<Segment>
 					<Header as="h2">
 						<Icon name="film" />

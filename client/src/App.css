@@ -60,7 +60,9 @@
 /* ------------ ForYou.jsx ------------ */
 /* Cleanest solution for responsive centering and alignment regardless of items in displayed */
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns */
+
 /* Used to align recommendedContentCards */
+/* NOTE, also used on Friends.jsx page to center FriendRequestCards */
 .centered-cards-group {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -75,6 +77,15 @@
 	flex-direction: column;
 	justify-content: center;
 	margin-block: 3em;
+}
+
+/* ------------ contentPage.jsx ------------ */
+/* used to center selectedContentCard */
+.centered-single-card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 1em; /* hacky way to reintroduce default Semantic margin lost by wrapping in div */
 }
 
 /* ============ COMPONENT STYLES ============ */
@@ -103,6 +114,8 @@
 	justify-content: space-between;
 	height: 100%;
 }
+
+/* ------------  ------------ */
 
 /* ------------ recommendedContentCard.jsx & selectedContentCard.jsx ------------ */
 

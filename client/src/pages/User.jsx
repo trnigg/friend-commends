@@ -40,7 +40,7 @@ function User() {
 
 	return (
 		<Container>
-			<Segment raised>
+			<Segment raised className="page-header-segment">
 				<Header as="h1">Hi {data.user.firstName} </Header>
 			</Segment>
 			<div className="user-card-container">

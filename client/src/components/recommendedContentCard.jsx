@@ -183,7 +183,7 @@ function RecommendedContentCard({
 
 	return (
 		selectedContent && (
-			<Card className="recommended-card">
+			<Card raised className="recommended-card">
 				<CardContent>
 					<Card.Header> {selectedContent.title}</Card.Header>
 				</CardContent>

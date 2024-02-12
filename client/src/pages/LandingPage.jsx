@@ -40,15 +40,13 @@ function LandingPage({ setIsLoggedIn }) {
 		<Container>
 			<div className="landing-page-container">
 				<div className="landing-page-content">
-					<Header as="h1">FriendCommends</Header>
-					<Image
-						src={Logo}
-						alt="Logo"
-						className="logo landing-page-logo"
-					/>{' '}
+					<Header as="h1" className="landing-page-title">
+						FriendCommends
+					</Header>
+					<Image src={Logo} alt="Logo" className="logo landing-page-logo" />{' '}
 					{/* Add your logo here */}
 					<Container text textAlign="center">
-						<p>
+						<p className="page-description">
 							A stripped-back social media platform for sharing your favourite
 							entertainment with your <strong>friends</strong>.
 						</p>
@@ -61,7 +59,7 @@ function LandingPage({ setIsLoggedIn }) {
 						<Signup onAuthenticated={handleAuth} />
 					)}
 				</Segment>
-				<Button basic primary onClick={toggleLoginSignup}>
+				<Button className="toggle-user-form-button" onClick={toggleLoginSignup}>
 					{isLogin ? 'Need to create an account?' : 'Already have an account?'}
 				</Button>
 			</div>

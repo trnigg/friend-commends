@@ -148,7 +148,7 @@ function SignUp({ onAuthenticated }) {
 						onInput={(e) => setFirstName(e.target.value)}
 						error={
 							firstNameError
-								? { content: 'Please enter a first name', pointing: 'below' }
+								? { content: 'Please enter a first name', pointing: 'above' }
 								: null
 						}
 					/>
@@ -161,7 +161,7 @@ function SignUp({ onAuthenticated }) {
 						onInput={(e) => setLastName(e.target.value)}
 						error={
 							lastNameError
-								? { content: 'Please enter a last name', pointing: 'below' }
+								? { content: 'Please enter a last name', pointing: 'above' }
 								: null
 						}
 					/>
@@ -191,7 +191,7 @@ function SignUp({ onAuthenticated }) {
 						onInput={(e) => setPassword(e.target.value)}
 						error={
 							passwordError
-								? { content: passwordErrorMessage, pointing: 'below' }
+								? { content: passwordErrorMessage, pointing: 'above' }
 								: null
 						}
 					/>
@@ -205,7 +205,7 @@ function SignUp({ onAuthenticated }) {
 						onInput={(e) => setConfirmPassword(e.target.value)}
 						error={
 							confirmPasswordError
-								? { content: confirmPasswordErrorMessage, pointing: 'below' }
+								? { content: confirmPasswordErrorMessage, pointing: 'above' }
 								: null
 						}
 					/>

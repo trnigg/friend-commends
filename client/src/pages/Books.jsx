@@ -1,16 +1,20 @@
+import { Header, Container, Segment } from 'semantic-ui-react';
 
-import MovieItems from "../components/MovieItems";
-
-
+import UnderConstructionMessage from '../components/underConstructionMessage';
 
 function Books() {
-
 	return (
-		<div>
-			{/* <MovieItems /> */}
-			<img src="images/page-under-construction.gif" alt="Page under construction" />
-		</div>
+		<Container>
+			<Segment raised>
+				<Header as="h1">Books</Header>
+			</Segment>
 
+			<Segment raised>
+				<div className="centered-message">
+					<UnderConstructionMessage />
+				</div>
+			</Segment>
+		</Container>
 	);
 }
 

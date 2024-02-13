@@ -45,7 +45,7 @@ function Navbar({ handleLogout, user }) {
 		<div>
 			{isMobile ? (
 				<>
-					<Menu as="nav" size="large" className="navbar">
+					<Menu as="nav" size="large" className="navbar" fixed="top">
 						<Menu.Item header>
 							<img alt="FriendCcmmends logo" src={FriendCommendsLogo} />
 						</Menu.Item>
@@ -128,7 +128,7 @@ function Navbar({ handleLogout, user }) {
 					</Sidebar>
 				</>
 			) : (
-				<Menu as="nav" size="large" className="navbar">
+				<Menu as="nav" size="large" className="navbar" fixed="top">
 					<Menu.Item header>FriendCommends</Menu.Item>
 					<div className="desktop-menu-items-container">
 						<Menu.Item

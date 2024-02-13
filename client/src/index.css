@@ -30,6 +30,7 @@ body {
 body {
 	/* https://cssgradient.io/gradient-backgrounds/ as "070 Aqua Splash" */
 	background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%) !important;
+	padding-top: 4.5em !important;
 }
 
 .ui.large.navbar.menu,
@@ -80,7 +81,7 @@ h2 {
 
 /* for page title on landing page */
 .landing-page-title {
-	font-size: 3.5em !important; /* Increase the font size */
+	font-size: 1.6em !important; /* Base font size for mobile */
 	color: var(--primary-color); /* Set the color */
 	text-shadow: 2px 3px 5px var(--secondary-color); /* Add a text shadow */
 	font-family: 'Sixtyfour', sans-serif !important;
@@ -89,15 +90,30 @@ h2 {
 }
 
 /* When the viewport is 800px or less, decrease the font size */
-@media (max-width: 800px) {
+/* When the viewport is 428px or more, increase the font size */
+@media (min-width: 428px) {
+	.landing-page-title {
+		font-size: 1.8em !important;
+	}
+}
+
+/* When the viewport is 559px or more, increase the font size even more */
+@media (min-width: 559px) {
 	.landing-page-title {
 		font-size: 2.5em !important;
 	}
 }
 
-/* When the viewport is 500px or less, decrease the font size even more */
-@media (max-width: 500px) {
+/* When the viewport is 801px or more, increase the font size even more */
+@media (min-width: 801px) {
 	.landing-page-title {
-		font-size: 1.8em !important;
+		font-size: 3.5em !important;
+	}
+}
+
+/* For reduced padding with slimmer menu on the desktop view */
+@media (min-width: 991px) {
+	body {
+		padding-top: 4em !important;
 	}
 }

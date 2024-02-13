@@ -198,7 +198,7 @@ function UpdateProfileModal({ ...props }) {
 									firstNameError
 										? {
 												content: 'Please enter a first name',
-												pointing: 'below',
+												pointing: 'above',
 										  }
 										: null
 								}
@@ -213,7 +213,7 @@ function UpdateProfileModal({ ...props }) {
 								onInput={handleInputChange}
 								error={
 									lastNameError
-										? { content: 'Please enter a last name', pointing: 'below' }
+										? { content: 'Please enter a last name', pointing: 'above' }
 										: null
 								}
 							/>
@@ -245,7 +245,7 @@ function UpdateProfileModal({ ...props }) {
 								onInput={handleInputChange}
 								error={
 									passwordError
-										? { content: passwordErrorMessage, pointing: 'below' }
+										? { content: passwordErrorMessage, pointing: 'above' }
 										: null
 								}
 							/>

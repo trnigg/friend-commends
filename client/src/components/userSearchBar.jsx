@@ -139,7 +139,7 @@ function UserSearchBar() {
 			>
 				<div style={{ display: 'flex', alignItems: 'center' }}>
 					<img
-						src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+						src="avatars/default_avatar.svg"
 						alt={`${firstName} ${lastName}`}
 						style={{
 							marginRight: '10px',
@@ -150,12 +150,11 @@ function UserSearchBar() {
 					/>
 					<div>
 						<div>
-							{firstName} {lastName}
+							<strong>
+								{firstName} {lastName}
+							</strong>
 						</div>
 						<div>{userName}</div>
-						<div>
-							<strong>0</strong> recommendations
-						</div>
 					</div>
 				</div>
 				{friendStatus === 'FRIENDS' ? (
